@@ -8,8 +8,7 @@ public class CristalAzul : MonoBehaviour
     
     Animator anim;
     public bool Invertido = false;
-    float time;
-    float AnimationTimePlyaed;
+    
 
 
     // Start is called before the first frame update

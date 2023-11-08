@@ -9,7 +9,7 @@ public class CristalControler : MonoBehaviour
     List<CristalAzul> results = new List<CristalAzul>();
     
 
-    [SerializeField] GameObject Cristal;
+    
     public static CristalControler instance;
     public delegate void MultiDelegate();
     public MultiDelegate myDelegateGrow;

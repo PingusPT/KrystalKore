@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - ground
+  - CristalAzul
+  - CristalRoxo
+  - CristalVermelho
   layers:
   - Default
   - TransparentFX
