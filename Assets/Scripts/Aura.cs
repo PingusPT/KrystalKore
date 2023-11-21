@@ -33,6 +33,7 @@ public class Aura : MonoBehaviour
         }
         if(collision.gameObject.tag == "CristalVermelho" && Input.GetKeyDown(KeyCode.V))
         {
+            script.ChangeColorToRed();
             collision.gameObject.GetComponent<RedCristal>().Explode();
         }
 

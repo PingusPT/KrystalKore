@@ -8,15 +8,21 @@ TagManager:
   - CristalAzul
   - CristalRoxo
   - CristalVermelho
+  - Spike1
+  - Spike2
+  - Spike3
+  - Spike4
+  - Conveyor1
+  - Conveyor2
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Picos
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Player
   - 
   - 
   - 
