@@ -36,7 +36,7 @@ public class Sticky : MonoBehaviour
     private void GroundCheck()
     {
         Hit2D = Physics2D.Raycast(transform.position, -feet.transform.up, 2f, ignorMe);
-
+        Debug.DrawRay(transform.position, -feet.transform.up, Color.blue);
         if(Hit2D != false)
         {
             

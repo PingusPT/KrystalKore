@@ -7,9 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     Aura aura;
     [SerializeField] GameObject GameObjectLuz;
-
+    [SerializeField] private LayerMask ignorMe;
     Light2D luz;
-    
+
+    private RaycastHit2D rayHit;
     
     Rigidbody2D rgd;
 
@@ -19,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     Color CorAtual = new Color();
 
     float horizontal;
-    bool ground;
+    bool ground = false;
     [SerializeField] float speed = 10f;
     [SerializeField] float JumpForce = 600;
     bool CanGrowRoxo = false;
@@ -40,12 +41,24 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, 7);
         
+        Debug.Log(rayHit.distance);
+        if(rayHit.distance < 0.53f && rayHit.distance != 0)
+        {
+            
+            ground = true;
+        }
+        else
+        {
+            
+            ground = false;
+        }
 
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
             rgd.AddForce(transform.up * JumpForce);
-            ground = false;
+           
         }
         if(Input.GetKey(KeyCode.E) && CanGrowBlue)
         {
@@ -87,14 +100,7 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(movement);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "ground" || collision.gameObject.tag == "CristalRoxo" || collision.gameObject.tag == "Conveyor1" || collision.gameObject.tag == "Conveyor2")
-        {
-            ground = true;
-        }
-        
-    }
+    
 
     public void AutorizarAzul()
     {
