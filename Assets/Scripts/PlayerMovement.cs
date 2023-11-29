@@ -8,8 +8,13 @@ public class PlayerMovement : MonoBehaviour
     Aura aura;
     [SerializeField] GameObject GameObjectLuz;
     [SerializeField] private LayerMask ignorMe;
+    [SerializeField] private LayerMask ignorMeGrab;
+    [SerializeField] GameObject GrabPoint;
+    
     Light2D luz;
+    GameObject GrabedObject;
 
+    private RaycastHit2D rayGrab;
     private RaycastHit2D rayHit;
     
     Rigidbody2D rgd;
@@ -18,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     Color CorVermelho = new Color(255, 15, 0);
     Color CorRoxo = new Color(255, 0, 255);
     Color CorAtual = new Color();
+
+    float dir = 0;
 
     float horizontal;
     bool ground = false;
@@ -42,9 +49,32 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, 7);
+
+        if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
+        {
+            //Input.GetMouseButton(0)
+            
+            if (Input.GetMouseButton(0))
+            {
+                
+                GrabedObject = rayGrab.collider.gameObject;
+                GrabedObject.transform.position = GrabPoint.transform.position;
+                GrabedObject.transform.SetParent(GrabPoint.transform);
+            }
+            else
+            {
+                if(GrabedObject)
+                {
+                    GrabedObject.transform.SetParent(null);
+                    GrabedObject = null;
+                }
+               
+
+            }
+        }
         
-        Debug.Log(rayHit.distance);
-        if(rayHit.distance < 0.53f && rayHit.distance != 0)
+        
+        if(rayHit.distance < 0.56f && rayHit.distance != 0)
         {
             
             ground = true;
@@ -53,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         {
             
             ground = false;
+
         }
 
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
@@ -62,14 +93,14 @@ public class PlayerMovement : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.E) && CanGrowBlue)
         {
-            luz.color = Color.Lerp(CorAtual, CorAzul, 10);
+            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
             luz.intensity = 0.002f;
             CristalControler.instance.myDelegateGrow();
             
         }
         else if (Input.GetKey(KeyCode.Q) && CanGrowBlue)
         {
-            luz.color = Color.Lerp(CorAtual, CorAzul, 10);
+            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
             luz.intensity = 0.002f;
             CristalControler.instance.Shrink();
             
@@ -81,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo)
         {
-            luz.color = Color.Lerp(CorAtual, CorRoxo, 10);
+            luz.color = Color.Lerp(CorAtual, CorRoxo, 0.1f);
             luz.intensity = 0.002f;
             CristalRoxoController.instance.myDelegateAppear();
         }
@@ -97,6 +128,37 @@ public class PlayerMovement : MonoBehaviour
 
         movement *= Time.deltaTime;
 
+        if(movement.x > 0f)
+        {
+            rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+           
+            GrabPoint.transform.localPosition = new Vector2(1.27f, 0);
+            dir = 1;
+        }
+        else if(movement.x < 0f)
+        {
+            rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
+            
+            GrabPoint.transform.localPosition = new Vector2(-1.27f, 0);
+            dir = -1;
+        }
+        else
+        {
+            if(dir == 1)
+            {
+                rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+                
+            }
+            else
+            {
+                rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
+                
+            }
+        }
+
+        
+
+        
         transform.Translate(movement);
     }
 

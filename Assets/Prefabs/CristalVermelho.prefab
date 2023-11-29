@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8361828958574178501}
   - component: {fileID: 5528549017551222401}
   - component: {fileID: 4539977451453693353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CristalVermelho
   m_TagString: CristalVermelho
   m_Icon: {fileID: 0}

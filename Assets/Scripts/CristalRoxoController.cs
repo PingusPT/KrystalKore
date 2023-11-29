@@ -41,11 +41,7 @@ public class CristalRoxoController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+   
 
     
 
