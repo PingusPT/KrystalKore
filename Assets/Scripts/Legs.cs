@@ -11,20 +11,24 @@ public class Legs : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
 
     
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && gameObject.tag == "Legs")
         {
             collision.gameObject.GetComponent<PlayerMovement>().CatchLegs();
             Destroy(gameObject);
         }
+        if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoVermelho")
+        {
+            collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
+            Destroy(gameObject);
+        }
     }
+
+
 }

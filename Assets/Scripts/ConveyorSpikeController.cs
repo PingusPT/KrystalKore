@@ -6,6 +6,7 @@ public class ConveyorSpikeController : MonoBehaviour
 {
     GameObject[] Conveyor1;
     GameObject[] Conveyor2;
+    GameObject Conveyor3;
     float SpeedConveyor1 = 0.5f;
     float SpeedConveyor2 = 0.5f;
 
@@ -14,7 +15,10 @@ public class ConveyorSpikeController : MonoBehaviour
     public MultiDelegate myDelegateChangeRotationSpikes1;
     public MultiDelegate myDelegateChangeRotationSpikes2;
     public MultiDelegate myDelegateChangeRotationSpikes3;
-    public MultiDelegate myDelegateChangeRotationSpikes4;
+    public MultiDelegate myDelegateAcivate;
+
+    bool terceiro = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +27,7 @@ public class ConveyorSpikeController : MonoBehaviour
 
         Conveyor1 = GameObject.FindGameObjectsWithTag("Conveyor1");
         Conveyor2 = GameObject.FindGameObjectsWithTag("Conveyor2");
+        Conveyor3 = GameObject.FindGameObjectWithTag("Conveyor3");
         for (var i = 0; i < allObjsAry.Length; ++i)
         {
             if (string.IsNullOrEmpty(allObjsAry[i].transform.root.gameObject.scene.name))
@@ -38,11 +43,10 @@ public class ConveyorSpikeController : MonoBehaviour
             else if(allObjsAry[i].gameObject.tag == "Spike3")
             {
                 myDelegateChangeRotationSpikes3 += allObjsAry[i].GetComponent<Sticky>().ChangeDirection;
+                myDelegateAcivate += allObjsAry[i].GetComponent<Sticky>().Walk;
+                allObjsAry[i].GetComponent<Sticky>().Stop();
             }
-            else if(allObjsAry[i].gameObject.tag == "Spike4")
-            {
-                myDelegateChangeRotationSpikes4 += allObjsAry[i].GetComponent<Sticky>().ChangeDirection;
-            }
+            
             
 
         }
@@ -72,10 +76,18 @@ public class ConveyorSpikeController : MonoBehaviour
     }
     public void ChangeDir3()
     {
-        myDelegateChangeRotationSpikes3();
+        if(terceiro)
+        {
+            Conveyor3.GetComponent<SurfaceEffector2D>().speed = SpeedConveyor1;
+            myDelegateChangeRotationSpikes3();
+        }
+       
     }
-    public void ChangeDir4()
+    
+    public void AticarTereciro()
     {
-        myDelegateChangeRotationSpikes4();
+        terceiro = true;
+
+        myDelegateAcivate();
     }
 }

@@ -4,20 +4,33 @@ using UnityEngine;
 
 public class RedCristal : MonoBehaviour
 {
+    Vector3 point;
+
+    [SerializeField] GameObject aura;
+
+   
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        point = gameObject.transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public void Explode()
     {
+        aura.GetComponent<RedCristalAura>().AtivarBomb();
+
+        RedCristalSpawner.instance.GetRedCristal(gameObject);
+        
+    }
+
+    public void TurnOfff()
+    {
+        RedCristalSpawner.instance.isDestroid();
         gameObject.SetActive(false);
+       
+        
     }
 }

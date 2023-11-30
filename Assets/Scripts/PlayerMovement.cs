@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     bool CanGrowRoxo = false;
     bool CanGrowBlue = false;
     bool hasLegs = false;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -48,8 +49,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, 7);
-
+        
+        rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, ignorMe);
+        Debug.DrawRay(transform.position, -transform.up * 1f, Color.red);
         if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
             //Input.GetMouseButton(0)
@@ -85,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
             ground = false;
 
         }
-
+        Debug.Log(CanGrowBlue);
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
             rgd.AddForce(transform.up * JumpForce);
@@ -191,6 +193,7 @@ public class PlayerMovement : MonoBehaviour
         hasLegs = true;
     }
 
+    
 
     public void ChangeColorToRed()
     {

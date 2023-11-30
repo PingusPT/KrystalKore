@@ -59,4 +59,13 @@ public class Sticky : MonoBehaviour
         speed *= -1;
     }
 
+    public void Stop()
+    {
+        speed = 0;
+    }
+
+    public void Walk()
+    {
+        speed = 0.5f;
+    }
 }

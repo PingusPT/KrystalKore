@@ -30,6 +30,7 @@ public class ButtonCrystal : MonoBehaviour
             else
             {
                 ConveyorSpikeController.instance.ChangeDir1();
+                ConveyorSpikeController.instance.ChangeDir3();
             }
             
             
@@ -50,6 +51,7 @@ public class ButtonCrystal : MonoBehaviour
             else
             {
                 ConveyorSpikeController.instance.ChangeDir1();
+                ConveyorSpikeController.instance.ChangeDir3();
             }
 
         }

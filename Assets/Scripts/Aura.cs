@@ -8,6 +8,7 @@ public class Aura : MonoBehaviour
     PlayerMovement script;
 
     bool isPlayerCanGrow = true;
+    bool hasRedArm = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +16,7 @@ public class Aura : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -31,10 +29,10 @@ public class Aura : MonoBehaviour
         {
             script.AutorizarAzul();
         }
-        if(collision.gameObject.tag == "CristalVermelho" && Input.GetKeyDown(KeyCode.V))
+        if(collision.gameObject.tag == "CristalVermelho" && Input.GetKeyDown(KeyCode.V) && hasRedArm)
         {
             script.ChangeColorToRed();
-            collision.gameObject.GetComponent<RedCristal>().Explode();
+            collision.gameObject.GetComponent<Animator>().SetTrigger("Ativar");
         }
 
     }
@@ -53,5 +51,8 @@ public class Aura : MonoBehaviour
         }
     }
 
-    
+    public void CatchRedArm()
+    {
+        hasRedArm = true;
+    }
 }

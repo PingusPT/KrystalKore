@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5245276948893822103}
   - component: {fileID: 5245276948893822102}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpikeOfConveyor
   m_TagString: Spike1
   m_Icon: {fileID: 0}

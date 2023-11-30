@@ -15,6 +15,10 @@ TagManager:
   - Conveyor1
   - Conveyor2
   - Chave
+  - Legs
+  - BracoVermelho
+  - CoisasDestrutiveis
+  - Conveyor3
   layers:
   - Default
   - TransparentFX

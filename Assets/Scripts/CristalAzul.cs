@@ -8,8 +8,8 @@ public class CristalAzul : MonoBehaviour
     
     Animator anim;
     public bool Invertido = false;
-    
 
+    bool ativador = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,37 +22,40 @@ public class CristalAzul : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
 
     public void Srink()
     {
-
-        if (!Invertido)
+        if(!ativador)
         {
-            anim.SetFloat("Speed", -1);
+            if (!Invertido)
+            {
+                anim.SetFloat("Speed", -1);
+            }
+            else
+            {
+                anim.SetFloat("Speed", 1);
+            }
         }
-        else
-        {
-            anim.SetFloat("Speed", 1);
-        }
+        
 
     }
 
     public void Grow()
     {
-        if(!Invertido)
+        if(!ativador)
         {
-            anim.SetFloat("Speed", 1);
+            if (!Invertido)
+            {
+                anim.SetFloat("Speed", 1);
+            }
+            else
+            {
+                anim.SetFloat("Speed", -1);
+            }
         }
-        else
-        {
-            anim.SetFloat("Speed", -1);
-        }
+        
         
     }
 
@@ -62,11 +65,16 @@ public class CristalAzul : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+
+    public void ModoAtivador()
     {
-        if(collision.gameObject.tag == "Player")
-        {
-            Debug.Log("Entrou");
-        }
+        ativador = true;
     }
+
+    public void DesativarAtivador()
+    {
+        ativador = false;
+    }
+
 }

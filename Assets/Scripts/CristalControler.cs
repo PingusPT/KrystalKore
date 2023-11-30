@@ -23,9 +23,13 @@ public class CristalControler : MonoBehaviour
         {
             if (string.IsNullOrEmpty(allObjsAry[i].transform.root.gameObject.scene.name))
                 continue;
-            myDelegateShrink += allObjsAry[i].GetComponent<CristalAzul>().Srink;
-            myDelegateGrow += allObjsAry[i].GetComponent<CristalAzul>().Grow;
-            myDelegateStop += allObjsAry[i].GetComponent<CristalAzul>().StopAnimation;
+           
+            
+                myDelegateShrink += allObjsAry[i].GetComponent<CristalAzul>().Srink;
+                myDelegateGrow += allObjsAry[i].GetComponent<CristalAzul>().Grow;
+                myDelegateStop += allObjsAry[i].GetComponent<CristalAzul>().StopAnimation;
+            
+            
             results.Add(allObjsAry[i]);
         }
 
