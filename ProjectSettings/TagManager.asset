@@ -19,6 +19,8 @@ TagManager:
   - BracoVermelho
   - CoisasDestrutiveis
   - Conveyor3
+  - CristalAzulElevador
+  - CristalAzulRoldana
   layers:
   - Default
   - TransparentFX

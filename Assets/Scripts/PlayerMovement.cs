@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         aura = gameObject.GetComponentInChildren<Aura>();
         rgd = gameObject.GetComponent<Rigidbody2D>();
         CorAtual = CorAzul;
+
     }
 
     // Update is called once per frame
@@ -87,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
             ground = false;
 
         }
-        Debug.Log(CanGrowBlue);
+        
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
             rgd.AddForce(transform.up * JumpForce);

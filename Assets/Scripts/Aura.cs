@@ -25,7 +25,7 @@ public class Aura : MonoBehaviour
 
             script.AutorizarRoxo();
         }
-        if (collision.gameObject.tag == "CristalAzul")
+        if (collision.gameObject.tag == "CristalAzul" || collision.gameObject.tag == "CristalAzulElevador" || collision.gameObject.tag == "CristalAzulRoldana")
         {
             script.AutorizarAzul();
         }
@@ -45,7 +45,7 @@ public class Aura : MonoBehaviour
         {
             script.DesautorizarRoxo();
         }
-        if (collision.gameObject.tag == "CristalAzul")
+        if (collision.gameObject.tag == "CristalAzul" || collision.gameObject.tag == "CristalAzulElevador" || collision.gameObject.tag == "CristalAzulRoldana")
         {
             script.DesauturizarAzul();
         }
