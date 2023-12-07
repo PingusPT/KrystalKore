@@ -75,11 +75,6 @@ public class CristalAzul : MonoBehaviour
                     anim.Play("CristalRoldana", 0, 0f);
                 }
             }
-
-            
-
-            Debug.Log(info.normalizedTime);
-
             
         }
         
@@ -97,7 +92,7 @@ public class CristalAzul : MonoBehaviour
             if (!Invertido)
             {
                   anim.SetFloat("Speed", -1);
-                    Debug.Log("aaaaa");
+                   
                 
             }
             else

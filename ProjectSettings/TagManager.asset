@@ -21,6 +21,8 @@ TagManager:
   - Conveyor3
   - CristalAzulElevador
   - CristalAzulRoldana
+  - PlataformaMovel
+  - EngrenagemDestrutivel
   layers:
   - Default
   - TransparentFX

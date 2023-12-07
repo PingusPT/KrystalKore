@@ -28,6 +28,12 @@ public class RedCristalAura : MonoBehaviour
                 redCristal.GetComponent<RedCristal>().TurnOfff();
                 Invoke("TurnOff", 0.1f);
             }
+            if(collision.gameObject.tag == "EngrenagemDestrutivel")
+            {
+                collision.gameObject.GetComponent<AberturasExplo>().Ativacao();
+                redCristal.GetComponent<RedCristal>().TurnOfff();
+                Invoke("TurnOff", 0.1f);
+            }
             else
             {
 
