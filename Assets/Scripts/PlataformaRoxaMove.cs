@@ -52,7 +52,7 @@ public class PlataformaRoxaMove : MonoBehaviour
         }
         else
         {
-            Debug.Log(currentTarget);
+            
             if (RoxoCollider.enabled)
             {
                 // se o box collider tiver ativo
@@ -63,7 +63,7 @@ public class PlataformaRoxaMove : MonoBehaviour
 
                     if (transform.position.y <= barrier.transform.position.y + 5f)
                     {
-                        Debug.Log("AAA");
+                        
 
                         currentTarget = pointB.position;
 
@@ -71,7 +71,7 @@ public class PlataformaRoxaMove : MonoBehaviour
                     }
                     if (transform.position == pointB.position)
                     {
-                        Debug.Log("BBB");
+                       
                         currentTarget.y = barrier.transform.position.y + 5f;
                     }
                     
@@ -84,7 +84,7 @@ public class PlataformaRoxaMove : MonoBehaviour
 
                     if (transform.position.y >= barrier.transform.position.y - 5f)
                     {
-                        Debug.Log("AAA");
+                       
                             
                         currentTarget = pointA.position;
 
@@ -94,7 +94,7 @@ public class PlataformaRoxaMove : MonoBehaviour
 
                     if (transform.position == pointA.position)
                     {
-                        Debug.Log("BBB");
+                       
                         currentTarget.y = barrier.transform.position.y - 5f;
                     }
                 }

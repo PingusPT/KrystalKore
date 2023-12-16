@@ -64,7 +64,7 @@ public class AberturasExplo : MonoBehaviour
         if(otherScript.isDestroid() && destroid && flag)
         {
             flag = false;
-            Debug.Log("PPPPPPPPPPPPP");
+            
         }
 
     }

@@ -27,12 +27,14 @@ public class PlayerMovement : MonoBehaviour
     float dir = 0;
 
     float horizontal;
+    float Vertical;
     bool ground = false;
     [SerializeField] float speed = 10f;
     [SerializeField] float JumpForce = 600;
     bool CanGrowRoxo = false;
     bool CanGrowBlue = false;
     bool hasLegs = false;
+    bool PlayerOnWater = false;
     
 
     // Start is called before the first frame update
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
         
         rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, ignorMe);
         Debug.DrawRay(transform.position, -transform.up * 1f, Color.red);
+        Debug.Log(rayHit.collider);
         if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
             //Input.GetMouseButton(0)
@@ -127,10 +130,18 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
 
-        Vector2 movement = new Vector2(speed * horizontal, 0);
+        if(PlayerOnWater)
+        {
+            Vertical = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            Vertical = 0;
+        }
+        Vector2 movement = new Vector2(speed * horizontal, Vertical);
 
         movement *= Time.deltaTime;
-
+        
         if(movement.x > 0f)
         {
             rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
@@ -200,5 +211,16 @@ public class PlayerMovement : MonoBehaviour
     {
         luz.color = Color.Lerp(CorAtual, CorVermelho, 10);
         luz.intensity = 0.002f;
+    }
+
+
+    public void IsOnWater()
+    {
+        PlayerOnWater = true;
+    }
+
+    public void IsNotOnWater()
+    {
+        PlayerOnWater = false;
     }
 }
