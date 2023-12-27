@@ -21,6 +21,7 @@ public class CristalRoxo : MonoBehaviour
         {
             anim.Play("aparecer", 0, 1f);
             anim.SetFloat("speed", 1);
+            collider.enabled = false;
             
         }
         else
@@ -65,10 +66,12 @@ public class CristalRoxo : MonoBehaviour
     {
         if(anim.GetFloat("speed") > 0)
         {
+            Debug.Log("AAAA");
             collider.enabled = false;
         }
         else
         {
+            Debug.Log("BBBB");
             collider.enabled = true;
         }
         

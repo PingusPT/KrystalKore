@@ -27,18 +27,13 @@ public class CristalAzul : MonoBehaviour
         
         
     }
+    
 
     private void Update()
     {
         info = anim.GetCurrentAnimatorStateInfo(0);
-        Debug.Log(info.normalizedTime);
-        if (!Invertido)
-        {
-
-
-            
-            
-        }
+        
+        
 
         if (info.normalizedTime > 1)
         {
@@ -139,7 +134,12 @@ public class CristalAzul : MonoBehaviour
 
     public void StopAnimation()
     {
-        anim.SetFloat("Speed", 0);
+
+        if(anim != null)
+        {
+            anim.SetFloat("Speed", 0);
+        }
+        
 
     }
 

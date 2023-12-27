@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4692284487346930273}
   - component: {fileID: 1582973109171427906}
   - component: {fileID: 7824850721914330622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: WavePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

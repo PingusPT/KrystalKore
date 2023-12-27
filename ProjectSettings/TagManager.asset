@@ -23,6 +23,8 @@ TagManager:
   - CristalAzulRoldana
   - PlataformaMovel
   - EngrenagemDestrutivel
+  - BracoRoxo
+  - agua
   layers:
   - Default
   - TransparentFX

@@ -18,33 +18,25 @@ public class RedCristalSpawner : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    
+
+
+    
+
+    
+
+    private IEnumerator Respawn(GameObject redCristal, Vector2 Spawn, Animator anim)
     {
-        if(destroid)
-        {
-            time -= Time.deltaTime;
+        yield return new WaitForSeconds(6);
 
-            if(time < 0)
-            {
-                redCristal.SetActive(true);
-                redCristal.transform.position = Point.transform.position;
-                destroid = false;
-                time = 4f;
-            }
-        }
-
-
-
+        redCristal.SetActive(true);
+        redCristal.transform.position = Spawn;
+        anim.Play("Explode", 0, 0);
+        anim.SetTrigger("Desativar");
     }
 
-
-    public void GetRedCristal(GameObject gameObject)
+    public void StartRespawnTime(GameObject redCristal, Vector2 Spawn, Animator anim)
     {
-        redCristal = gameObject;
-    }
-
-    public void isDestroid()
-    {
-        destroid = true;
+        StartCoroutine(Respawn(redCristal, Spawn, anim));
     }
 }

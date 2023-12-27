@@ -19,21 +19,32 @@ public class CristalControler : MonoBehaviour
     void Start()
     {
         CristalAzul[] allObjsAry = Resources.FindObjectsOfTypeAll(typeof(CristalAzul)) as CristalAzul[];
-        for (var i = 0; i < allObjsAry.Length; ++i)
+        for (var i = 0; i < allObjsAry.Length ; ++i)
         {
+            if(allObjsAry[i] != null)
+            {
+                Debug.Log("ZZZ");
+                myDelegateShrink += allObjsAry[i].GetComponent<CristalAzul>().Srink;
+                myDelegateGrow += allObjsAry[i].GetComponent<CristalAzul>().Grow;
+                myDelegateStop += allObjsAry[i].GetComponent<CristalAzul>().StopAnimation;
+                results.Add(allObjsAry[i]);
+            }
+
+            /*
             if (string.IsNullOrEmpty(allObjsAry[i].transform.root.gameObject.scene.name))
                 continue;
-           
-            
+
+                Debug.Log("ZZZ");
                 myDelegateShrink += allObjsAry[i].GetComponent<CristalAzul>().Srink;
                 myDelegateGrow += allObjsAry[i].GetComponent<CristalAzul>().Grow;
                 myDelegateStop += allObjsAry[i].GetComponent<CristalAzul>().StopAnimation;
             
             
             results.Add(allObjsAry[i]);
+            */
         }
 
-
+        Debug.Log(results.Count);
         DontDestroyOnLoad(gameObject);
         if (instance == null)
         {

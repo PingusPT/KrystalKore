@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     bool CanGrowRoxo = false;
     bool CanGrowBlue = false;
     bool hasLegs = false;
+    bool hasPurpleArm = false;
     bool PlayerOnWater = false;
     
 
@@ -58,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log(rayHit.collider);
         if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
-            //Input.GetMouseButton(0)
+            
             
             if (Input.GetMouseButton(0))
             {
@@ -94,6 +95,15 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
+            if(PlayerOnWater)
+            {
+                JumpForce = 900;
+                
+            }
+            else
+            {
+                JumpForce = 600;
+            }
             rgd.AddForce(transform.up * JumpForce);
            
         }
@@ -116,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             CristalControler.instance.DelegateStop();
         }
 
-        if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo)
+        if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo && hasPurpleArm)
         {
             luz.color = Color.Lerp(CorAtual, CorRoxo, 0.1f);
             luz.intensity = 0.002f;
@@ -133,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         if(PlayerOnWater)
         {
             Vertical = Input.GetAxis("Vertical");
+            Vertical *= 7;
         }
         else
         {
@@ -205,7 +216,10 @@ public class PlayerMovement : MonoBehaviour
         hasLegs = true;
     }
 
-    
+    public void CatchPurpleArm()
+    {
+        hasPurpleArm = true;
+    }
 
     public void ChangeColorToRed()
     {
@@ -217,10 +231,12 @@ public class PlayerMovement : MonoBehaviour
     public void IsOnWater()
     {
         PlayerOnWater = true;
+        ground = true;
     }
 
     public void IsNotOnWater()
     {
         PlayerOnWater = false;
+        ground = false;
     }
 }
