@@ -9,22 +9,15 @@ public class RedCristalSpawner : MonoBehaviour
     [SerializeField] GameObject Point;
     public static RedCristalSpawner instance;
 
-    bool destroid = false;
-    float time = 4f;
+    
+    
 
     void Start()
     {
         instance = this;
     }
 
-    // Update is called once per frame
     
-
-
-    
-
-    
-
     private IEnumerator Respawn(GameObject redCristal, Vector2 Spawn, Animator anim)
     {
         yield return new WaitForSeconds(6);

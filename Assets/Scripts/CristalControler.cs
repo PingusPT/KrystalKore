@@ -23,7 +23,7 @@ public class CristalControler : MonoBehaviour
         {
             if(allObjsAry[i] != null)
             {
-                Debug.Log("ZZZ");
+                
                 myDelegateShrink += allObjsAry[i].GetComponent<CristalAzul>().Srink;
                 myDelegateGrow += allObjsAry[i].GetComponent<CristalAzul>().Grow;
                 myDelegateStop += allObjsAry[i].GetComponent<CristalAzul>().StopAnimation;
@@ -44,7 +44,7 @@ public class CristalControler : MonoBehaviour
             */
         }
 
-        Debug.Log(results.Count);
+       
         DontDestroyOnLoad(gameObject);
         if (instance == null)
         {

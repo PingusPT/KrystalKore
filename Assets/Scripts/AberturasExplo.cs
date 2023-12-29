@@ -15,7 +15,7 @@ public class AberturasExplo : MonoBehaviour
 
     bool ativarCor = false;
 
-    bool otherObjectDestroid = false;
+    
 
     float delay = 3f;
 

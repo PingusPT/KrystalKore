@@ -25,6 +25,7 @@ TagManager:
   - EngrenagemDestrutivel
   - BracoRoxo
   - agua
+  - UiVida
   layers:
   - Default
   - TransparentFX

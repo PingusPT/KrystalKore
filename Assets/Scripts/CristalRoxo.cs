@@ -7,7 +7,7 @@ public class CristalRoxo : MonoBehaviour
 
     Animator anim;
 
-    BoxCollider2D collider;
+    BoxCollider2D collider2d;
 
     public bool invertido = false;
 
@@ -15,13 +15,13 @@ public class CristalRoxo : MonoBehaviour
     void Start()
     {
         anim = gameObject.GetComponent<Animator>();
-        collider = gameObject.GetComponent<BoxCollider2D>();
+        collider2d = gameObject.GetComponent<BoxCollider2D>();
 
         if(invertido)
         {
             anim.Play("aparecer", 0, 1f);
             anim.SetFloat("speed", 1);
-            collider.enabled = false;
+            collider2d.enabled = false;
             
         }
         else
@@ -66,13 +66,13 @@ public class CristalRoxo : MonoBehaviour
     {
         if(anim.GetFloat("speed") > 0)
         {
-            Debug.Log("AAAA");
-            collider.enabled = false;
+            
+            collider2d.enabled = false;
         }
         else
         {
-            Debug.Log("BBBB");
-            collider.enabled = true;
+            
+            collider2d.enabled = true;
         }
         
     }

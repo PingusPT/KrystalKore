@@ -10,9 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask ignorMe;
     [SerializeField] private LayerMask ignorMeGrab;
     [SerializeField] GameObject GrabPoint;
+    [SerializeField] GameObject JumpPoint;
     
     Light2D luz;
     GameObject GrabedObject;
+    Animator anim;
 
     private RaycastHit2D rayGrab;
     private RaycastHit2D rayHit;
@@ -29,13 +31,14 @@ public class PlayerMovement : MonoBehaviour
     float horizontal;
     float Vertical;
     bool ground = false;
-    [SerializeField] float speed = 10f;
+    [SerializeField] float speed = 2f;
     [SerializeField] float JumpForce = 600;
     bool CanGrowRoxo = false;
     bool CanGrowBlue = false;
     bool hasLegs = false;
     bool hasPurpleArm = false;
     bool PlayerOnWater = false;
+    bool CanWalk = true;
     
 
     // Start is called before the first frame update
@@ -43,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
         luz = GameObjectLuz.GetComponent<Light2D>();
-        
+        anim = gameObject.GetComponent<Animator>();
         aura = gameObject.GetComponentInChildren<Aura>();
         rgd = gameObject.GetComponent<Rigidbody2D>();
         CorAtual = CorAzul;
@@ -53,9 +56,15 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(hasLegs)
+        {
+            speed = 6f;
+        }
+
         
-        rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, ignorMe);
-        Debug.DrawRay(transform.position, -transform.up * 1f, Color.red);
+        rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
+        Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
         Debug.Log(rayHit.collider);
         if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
@@ -156,15 +165,21 @@ public class PlayerMovement : MonoBehaviour
         if(movement.x > 0f)
         {
             rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
-           
-            GrabPoint.transform.localPosition = new Vector2(1.27f, 0);
+           if(GrabPoint.transform.localPosition.x < 0)
+            {
+                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, 0);
+            }
+            
             dir = 1;
         }
         else if(movement.x < 0f)
         {
             rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-            
-            GrabPoint.transform.localPosition = new Vector2(-1.27f, 0);
+
+            if (GrabPoint.transform.localPosition.x > 0)
+            {
+                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, 0);
+            }
             dir = -1;
         }
         else
@@ -180,11 +195,30 @@ public class PlayerMovement : MonoBehaviour
                 
             }
         }
-
+        if(CanWalk)
+        {
+            transform.Translate(movement);
+        }
         
+        Debug.Log(CanWalk);
 
-        
-        transform.Translate(movement);
+        //----------------------------------------------------------------------  Animation Zone ----------------------------------
+
+        if(movement == Vector2.zero)
+        {
+            
+        }
+        else if(dir > 0)
+        {
+            anim.SetFloat("Blend", 1);
+        }
+        else
+        {
+            anim.SetFloat("Blend", -1);
+        }
+
+        //-------------------------------------------------------------------------------------------------------------------------
+
     }
 
     
@@ -213,7 +247,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void CatchLegs()
     {
+        CanWalk = true;
         hasLegs = true;
+        anim.SetBool("HasLegs", hasLegs);
     }
 
     public void CatchPurpleArm()
@@ -239,4 +275,15 @@ public class PlayerMovement : MonoBehaviour
         PlayerOnWater = false;
         ground = false;
     }
+
+    private void Walk()
+    {
+        CanWalk = true;
+    }
+
+    private void canotWalk()
+    {
+        CanWalk = false;
+    }
+
 }

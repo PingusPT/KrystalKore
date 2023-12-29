@@ -114,11 +114,10 @@ public class CristalAzul : MonoBehaviour
             if (!Invertido)
             {
                
-                
+
                     anim.SetFloat("Speed", 1);
                    
-                
-                
+
             }
             else
             {
