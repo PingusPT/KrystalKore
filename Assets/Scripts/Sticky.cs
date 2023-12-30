@@ -68,4 +68,14 @@ public class Sticky : MonoBehaviour
     {
         speed = 0.5f;
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.GetComponent<LifeManager>().TakeDamage();
+        }
+    }
+
+
 }

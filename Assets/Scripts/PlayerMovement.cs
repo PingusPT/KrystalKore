@@ -57,96 +57,116 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if(hasLegs)
-        {
-            speed = 6f;
-        }
-
         
-        rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
-        Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
-        Debug.Log(rayHit.collider);
-        if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
-        {
-            
-            
-            if (Input.GetMouseButton(0))
-            {
-                
-                GrabedObject = rayGrab.collider.gameObject;
-                GrabedObject.transform.position = GrabPoint.transform.position;
-                GrabedObject.transform.SetParent(GrabPoint.transform);
-            }
-            else
-            {
-                if(GrabedObject)
-                {
-                    GrabedObject.transform.SetParent(null);
-                    GrabedObject = null;
-                }
-               
-
-            }
-        }
-        
-        
-        if(rayHit.distance < 0.56f && rayHit.distance != 0)
-        {
-            
-            ground = true;
-        }
-        else
-        {
-            
-            ground = false;
-
-        }
-        
-        if (Input.GetButtonDown("Jump") && ground && hasLegs)
-        {
-            if(PlayerOnWater)
-            {
-                JumpForce = 900;
-                
-            }
-            else
-            {
-                JumpForce = 600;
-            }
-            rgd.AddForce(transform.up * JumpForce);
-           
-        }
-        if(Input.GetKey(KeyCode.E) && CanGrowBlue)
-        {
-            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
-            luz.intensity = 0.002f;
-            CristalControler.instance.myDelegateGrow();
-            
-        }
-        else if (Input.GetKey(KeyCode.Q) && CanGrowBlue)
-        {
-            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
-            luz.intensity = 0.002f;
-            CristalControler.instance.Shrink();
-            
-        }
-        else
-        {
-            CristalControler.instance.DelegateStop();
-        }
-
-        if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo && hasPurpleArm)
-        {
-            luz.color = Color.Lerp(CorAtual, CorRoxo, 0.1f);
-            luz.intensity = 0.002f;
-            CristalRoxoController.instance.myDelegateAppear();
-        }
 
         
 
     }
     private void FixedUpdate()
     {
+        if (hasLegs)
+        {
+            CanWalk = true;
+            speed = 6f;
+        }
+
+
+        rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
+        Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
+        
+        if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
+        {
+
+
+            if (Input.GetMouseButton(0))
+            {
+               
+                GrabedObject = rayGrab.collider.gameObject;
+
+                if(GrabedObject.GetComponent<Rigidbody2D>().gravityScale > 0)
+                {
+                    GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+                }
+
+                GrabedObject.transform.position = GrabPoint.transform.position;
+                GrabedObject.transform.SetParent(GrabPoint.transform);
+            }
+            else
+            {
+                if (GrabedObject)
+                {
+
+                    if (GrabedObject.GetComponent<Rigidbody2D>().gravityScale == 0)
+                    {
+                        GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+
+                    }
+
+                   
+                    GrabedObject.transform.SetParent(null);
+                    GrabedObject = null;
+                }
+
+
+            }
+        }
+
+        Debug.Log(CanWalk);
+
+        if (rayHit.distance < 0.56f && rayHit.distance != 0)
+        {
+
+            ground = true;
+        }
+        else
+        {
+
+            ground = false;
+
+        }
+
+        if (Input.GetButtonDown("Jump") && ground && hasLegs)
+        {
+            if (PlayerOnWater)
+            {
+                JumpForce = 900;
+
+            }
+            else
+            {
+                JumpForce = 600;
+            }
+            rgd.AddForce(transform.up * JumpForce);
+
+        }
+        if (Input.GetKey(KeyCode.E) && CanGrowBlue)
+        {
+            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
+            luz.intensity = 0.002f;
+            CristalControler.instance.myDelegateGrow();
+
+        }
+        else if (Input.GetKey(KeyCode.Q) && CanGrowBlue)
+        {
+            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
+            luz.intensity = 0.002f;
+            CristalControler.instance.Shrink();
+
+        }
+        else
+        {
+            CristalControler.instance.DelegateStop();
+        }
+
+        if (Input.GetKeyDown(KeyCode.R) && CanGrowRoxo && hasPurpleArm)
+        {
+            luz.color = Color.Lerp(CorAtual, CorRoxo, 0.1f);
+            luz.intensity = 0.002f;
+            CristalRoxoController.instance.myDelegateAppear();
+        }
+        //------------------------------------------------------------------------------ Movement Zone ----------------------- And Ray Grab
+
         horizontal = Input.GetAxis("Horizontal");
 
         if(PlayerOnWater)
@@ -164,21 +184,22 @@ public class PlayerMovement : MonoBehaviour
         
         if(movement.x > 0f)
         {
-            rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
+            Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
            if(GrabPoint.transform.localPosition.x < 0)
             {
-                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, 0);
+                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, GrabPoint.transform.localPosition.y);
             }
             
             dir = 1;
         }
         else if(movement.x < 0f)
         {
-            rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-
+            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+            Debug.DrawRay(GrabPoint.transform.position, transform.right * 1.2f, Color.green);
             if (GrabPoint.transform.localPosition.x > 0)
             {
-                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, 0);
+                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, GrabPoint.transform.localPosition.y);
             }
             dir = -1;
         }
@@ -186,21 +207,24 @@ public class PlayerMovement : MonoBehaviour
         {
             if(dir == 1)
             {
-                rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
-                
+                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
+                Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
             }
             else
             {
-                rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-                
+                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+                Debug.DrawRay(GrabPoint.transform.position, transform.right * 1.2f, Color.green);
             }
         }
+
+        //-------------------------------------------------------------------Do Movement -----------------
+
         if(CanWalk)
         {
             transform.Translate(movement);
         }
         
-        Debug.Log(CanWalk);
+        //--------------------------------------------------------------------------------------------------
 
         //----------------------------------------------------------------------  Animation Zone ----------------------------------
 
