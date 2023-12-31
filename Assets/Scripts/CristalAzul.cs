@@ -27,60 +27,56 @@ public class CristalAzul : MonoBehaviour
         
         
     }
+    
 
     private void Update()
     {
         info = anim.GetCurrentAnimatorStateInfo(0);
-        if (!Invertido)
+        
+        
+
+        if (info.normalizedTime > 1)
         {
-           
-            
-            if (info.normalizedTime > 1)
+            if (gameObject.tag == "CristalAzul")
             {
-                if(gameObject.tag == "CristalAzul")
-                {
-                   
-                    anim.Play("TesteCristal", 0, 1f);
-                }
-                else if(gameObject.tag == "CristalAzulElevador")
-                {
-                    
-                    anim.Play("CristalElevador", 0, 1f);
-                }
-                else if(gameObject.tag == "CristalAzulRoldana")
-                {
-                    
-                    anim.Play("CristalRoldana", 0, 1f);
-                }
-                
 
-                
+                anim.Play("TesteCristal", 0, 1f);
+            }
+            else if (gameObject.tag == "CristalAzulElevador")
+            {
+
+                anim.Play("CristalElevador", 0, 1f);
+            }
+            else if (gameObject.tag == "CristalAzulRoldana")
+            {
+
+                anim.Play("CristalRoldana", 0, 1f);
             }
 
-            if(info.normalizedTime < 0)
-            {
-                if (gameObject.tag == "CristalAzul")
-                {
-                    
-                    anim.Play("TesteCristal", 0, 0f);
-                }
-                else if (gameObject.tag == "CristalAzulElevador")
-                {
-                    
-                    anim.Play("CristalElevador", 0, 0f);
-                }
-                else if (gameObject.tag == "CristalAzulRoldana")
-                {
-                    
-                    anim.Play("CristalRoldana", 0, 0f);
-                }
-            }
-            
+
+
         }
-        
-        
 
-        
+        if (info.normalizedTime < 0)
+        {
+            if (gameObject.tag == "CristalAzul")
+            {
+
+                anim.Play("TesteCristal", 0, 0f);
+            }
+            else if (gameObject.tag == "CristalAzulElevador")
+            {
+
+                anim.Play("CristalElevador", 0, 0f);
+            }
+            else if (gameObject.tag == "CristalAzulRoldana")
+            {
+
+                anim.Play("CristalRoldana", 0, 0f);
+            }
+        }
+
+
     }
 
 
@@ -118,11 +114,10 @@ public class CristalAzul : MonoBehaviour
             if (!Invertido)
             {
                
-                
+
                     anim.SetFloat("Speed", 1);
                    
-                
-                
+
             }
             else
             {
@@ -138,7 +133,12 @@ public class CristalAzul : MonoBehaviour
 
     public void StopAnimation()
     {
-        anim.SetFloat("Speed", 0);
+
+        if(anim != null)
+        {
+            anim.SetFloat("Speed", 0);
+        }
+        
 
     }
 
