@@ -15,7 +15,7 @@ public class AberturasExplo : MonoBehaviour
 
     bool ativarCor = false;
 
-    
+    bool otherObjectDestroid = false;
 
     float delay = 3f;
 
@@ -64,7 +64,7 @@ public class AberturasExplo : MonoBehaviour
         if(otherScript.isDestroid() && destroid && flag)
         {
             flag = false;
-            
+            Debug.Log("PPPPPPPPPPPPP");
         }
 
     }

@@ -9,27 +9,42 @@ public class RedCristalSpawner : MonoBehaviour
     [SerializeField] GameObject Point;
     public static RedCristalSpawner instance;
 
-    
-    
+    bool destroid = false;
+    float time = 4f;
 
     void Start()
     {
         instance = this;
     }
 
-    
-    private IEnumerator Respawn(GameObject redCristal, Vector2 Spawn, Animator anim)
+    // Update is called once per frame
+    void Update()
     {
-        yield return new WaitForSeconds(6);
+        if(destroid)
+        {
+            time -= Time.deltaTime;
 
-        redCristal.SetActive(true);
-        redCristal.transform.position = Spawn;
-        anim.Play("Explode", 0, 0);
-        anim.SetTrigger("Desativar");
+            if(time < 0)
+            {
+                redCristal.SetActive(true);
+                redCristal.transform.position = Point.transform.position;
+                destroid = false;
+                time = 4f;
+            }
+        }
+
+
+
     }
 
-    public void StartRespawnTime(GameObject redCristal, Vector2 Spawn, Animator anim)
+
+    public void GetRedCristal(GameObject gameObject)
     {
-        StartCoroutine(Respawn(redCristal, Spawn, anim));
+        redCristal = gameObject;
+    }
+
+    public void isDestroid()
+    {
+        destroid = true;
     }
 }

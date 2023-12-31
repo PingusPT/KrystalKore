@@ -126,7 +126,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pontoEsquerda: {fileID: 2395426522212491718}
   pontoDireita: {fileID: 884546455377729646}
-  DelayTime: 2
   velocidade: 5
 --- !u!1 &4237144007751381169
 GameObject:

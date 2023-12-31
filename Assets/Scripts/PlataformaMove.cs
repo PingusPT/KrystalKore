@@ -65,8 +65,6 @@ public class PlataformaMove : MonoBehaviour
             }
         }
 
-        
-
         if (jaPode)
         {
             DelayTime -= Time.deltaTime;
