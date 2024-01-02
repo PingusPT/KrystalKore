@@ -34,6 +34,10 @@ public class RedCristalAura : MonoBehaviour
                 redCristal.GetComponent<RedCristal>().TurnOfff();
                 Invoke("TurnOff", 0.1f);
             }
+            else if (collision.gameObject.tag == "Player")
+            {
+                collision.gameObject.GetComponent<LifeManager>().TakeDamage();
+            }
             else
             {
 

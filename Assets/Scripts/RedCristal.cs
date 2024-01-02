@@ -6,29 +6,29 @@ public class RedCristal : MonoBehaviour
 {
     Vector3 point;
 
+    Animator anim;
+
     [SerializeField] GameObject aura;
 
-   
+    float RespawnTime = 6f;
 
     // Start is called before the first frame update
     void Start()
     {
-        point = gameObject.transform.position;
+        anim = gameObject.GetComponent<Animator>();
+        point = gameObject.transform.localPosition;
     }
 
-    
 
     public void Explode()
     {
         aura.GetComponent<RedCristalAura>().AtivarBomb();
 
-        RedCristalSpawner.instance.GetRedCristal(gameObject);
-        
     }
 
     public void TurnOfff()
     {
-        RedCristalSpawner.instance.isDestroid();
+        RedCristalSpawner.instance.StartRespawnTime(gameObject,point,anim);
         gameObject.SetActive(false);
        
         

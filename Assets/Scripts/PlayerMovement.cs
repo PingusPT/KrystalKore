@@ -10,9 +10,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask ignorMe;
     [SerializeField] private LayerMask ignorMeGrab;
     [SerializeField] GameObject GrabPoint;
-    
+    [SerializeField] GameObject JumpPoint;
+
     Light2D luz;
     GameObject GrabedObject;
+    Animator anim;
 
     private RaycastHit2D rayGrab;
     private RaycastHit2D rayHit;
@@ -27,20 +29,23 @@ public class PlayerMovement : MonoBehaviour
     float dir = 0;
 
     float horizontal;
+    float Vertical;
     bool ground = false;
     [SerializeField] float speed = 10f;
     [SerializeField] float JumpForce = 600;
     bool CanGrowRoxo = false;
     bool CanGrowBlue = false;
     bool hasLegs = false;
-    
+    bool hasPurpleArm = false;
+    bool PlayerOnWater = false;
+    bool CanWalk = true;
 
     // Start is called before the first frame update
     void Start()
     {
         
         luz = GameObjectLuz.GetComponent<Light2D>();
-        
+        anim = gameObject.GetComponent<Animator>();
         aura = gameObject.GetComponentInChildren<Aura>();
         rgd = gameObject.GetComponent<Rigidbody2D>();
         CorAtual = CorAzul;
@@ -50,17 +55,29 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        rayHit = Physics2D.Raycast(transform.position, -transform.up, 1f, ignorMe);
-        Debug.DrawRay(transform.position, -transform.up * 1f, Color.red);
-        if(rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
+        if (hasLegs)
         {
-            //Input.GetMouseButton(0)
+            CanWalk = true;
+            speed = 6f;
+        }
+
+        rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
+        Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
+        if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
+        {
+            
             
             if (Input.GetMouseButton(0))
             {
                 
                 GrabedObject = rayGrab.collider.gameObject;
+
+                if (GrabedObject.GetComponent<Rigidbody2D>().gravityScale > 0)
+                {
+                    GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+                }
+
                 GrabedObject.transform.position = GrabPoint.transform.position;
                 GrabedObject.transform.SetParent(GrabPoint.transform);
             }
@@ -68,6 +85,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(GrabedObject)
                 {
+                    if (GrabedObject.GetComponent<Rigidbody2D>().gravityScale == 0)
+                    {
+                        GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+
+                    }
+
                     GrabedObject.transform.SetParent(null);
                     GrabedObject = null;
                 }
@@ -91,6 +114,15 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
+            if(PlayerOnWater)
+            {
+                JumpForce = 900;
+                
+            }
+            else
+            {
+                JumpForce = 600;
+            }
             rgd.AddForce(transform.up * JumpForce);
            
         }
@@ -113,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
             CristalControler.instance.DelegateStop();
         }
 
-        if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo)
+        if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo && hasPurpleArm)
         {
             luz.color = Color.Lerp(CorAtual, CorRoxo, 0.1f);
             luz.intensity = 0.002f;
@@ -127,41 +159,81 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
 
-        Vector2 movement = new Vector2(speed * horizontal, 0);
+        if(PlayerOnWater)
+        {
+            Vertical = Input.GetAxis("Vertical");
+            Vertical *= 7;
+        }
+        else
+        {
+            Vertical = 0;
+        }
+        Vector2 movement = new Vector2(speed * horizontal, Vertical);
 
         movement *= Time.deltaTime;
-
+        
         if(movement.x > 0f)
         {
-            rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
-           
-            GrabPoint.transform.localPosition = new Vector2(1.27f, 0);
+            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
+            Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
+
+            if (GrabPoint.transform.localPosition.x < 0)
+            {
+                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, GrabPoint.transform.localPosition.y);
+            }
             dir = 1;
         }
         else if(movement.x < 0f)
         {
-            rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-            
-            GrabPoint.transform.localPosition = new Vector2(-1.27f, 0);
+            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+            Debug.DrawRay(GrabPoint.transform.position, transform.right * 1.2f, Color.green);
+
+            if (GrabPoint.transform.localPosition.x > 0)
+            {
+                GrabPoint.transform.localPosition = new Vector2(GrabPoint.transform.localPosition.x * -1, GrabPoint.transform.localPosition.y);
+            }
             dir = -1;
         }
         else
         {
             if(dir == 1)
             {
-                rayGrab = Physics2D.Raycast(gameObject.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
-                
+                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
+                Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
             }
             else
             {
-                rayGrab = Physics2D.Raycast(gameObject.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-                
+                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
+                Debug.DrawRay(GrabPoint.transform.position, transform.right * 1.2f, Color.green);
+
             }
+        }
+
+        if (CanWalk)
+        {
+            transform.Translate(movement);
         }
 
         
 
-        
+        //----------------------------------------------------------------------  Animation Zone ----------------------------------
+
+        if (movement == Vector2.zero)
+        {
+
+        }
+        else if (dir > 0)
+        {
+            anim.SetFloat("Blend", 1);
+        }
+        else
+        {
+            anim.SetFloat("Blend", -1);
+        }
+
+        //-------------------------------------------------------------------------------------------------------------------------
+
+
         transform.Translate(movement);
     }
 
@@ -191,14 +263,41 @@ public class PlayerMovement : MonoBehaviour
 
     public void CatchLegs()
     {
+        CanWalk = true;
         hasLegs = true;
+        anim.SetBool("HasLegs", hasLegs);
     }
 
-    
+    public void CatchPurpleArm()
+    {
+        hasPurpleArm = true;
+    }
 
+    private void Walk()
+    {
+        CanWalk = true;
+    }
+
+    private void canotWalk()
+    {
+        CanWalk = false;
+    }
     public void ChangeColorToRed()
     {
         luz.color = Color.Lerp(CorAtual, CorVermelho, 10);
         luz.intensity = 0.002f;
+    }
+
+
+    public void IsOnWater()
+    {
+        PlayerOnWater = true;
+        ground = true;
+    }
+
+    public void IsNotOnWater()
+    {
+        PlayerOnWater = false;
+        ground = false;
     }
 }

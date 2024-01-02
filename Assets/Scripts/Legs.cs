@@ -28,6 +28,11 @@ public class Legs : MonoBehaviour
             collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
             Destroy(gameObject);
         }
+        if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoRoxo")
+        {
+            collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
+            Destroy(gameObject);
+        }
     }
 
 
