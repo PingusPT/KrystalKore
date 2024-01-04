@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CristalRoxo : MonoBehaviour
 {
+    Rigidbody2D rb;
 
     Animator anim;
 
@@ -11,18 +12,42 @@ public class CristalRoxo : MonoBehaviour
 
     public bool invertido = false;
 
+    public float MassSet = 60;
+
     // Start is called before the first frame update
     void Start()
     {
-        anim = gameObject.GetComponent<Animator>();
-        collider2d = gameObject.GetComponent<BoxCollider2D>();
+        if (gameObject.layer == 9)
+        {
+            rb = gameObject.GetComponent<Rigidbody2D>();
 
-        if(invertido)
+
+            if (!invertido)
+            {
+                rb.mass = MassSet;
+            }
+
+
+
+        }
+        else
+        {
+            collider2d = gameObject.GetComponent<BoxCollider2D>();
+
+            if(invertido)
+            {
+                collider2d.enabled = false;
+            }
+            
+        }
+        anim = gameObject.GetComponent<Animator>();
+
+        if (invertido)
         {
             anim.Play("aparecer", 0, 1f);
             anim.SetFloat("speed", 1);
-            collider2d.enabled = false;
             
+
         }
         else
         {
@@ -43,9 +68,6 @@ public class CristalRoxo : MonoBehaviour
         {
             anim.Play("aparecer", 0, 1f);
         }
-        
-
-        
 
     }
 
@@ -66,13 +88,27 @@ public class CristalRoxo : MonoBehaviour
     {
         if(anim.GetFloat("speed") > 0)
         {
-            Debug.Log("AAAA");
-            collider2d.enabled = false;
+           if(gameObject.layer == 9)
+            {
+                rb.mass = 1;
+            }
+           else
+            {
+                collider2d.enabled = false;
+            }
+            
         }
         else
         {
-            Debug.Log("BBBB");
-            collider2d.enabled = true;
+            if (gameObject.layer == 9)
+            {
+                rb.mass = MassSet;
+            }
+            else
+            {
+                collider2d.enabled = true;
+            }
+            
         }
         
     }

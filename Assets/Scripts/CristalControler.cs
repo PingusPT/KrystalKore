@@ -33,7 +33,7 @@ public class CristalControler : MonoBehaviour
             
         }
 
-        Debug.Log(results.Count);
+        
         DontDestroyOnLoad(gameObject);
         if (instance == null)
         {

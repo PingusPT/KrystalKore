@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     Color CorRoxo = new Color(255, 0, 255);
     Color CorAtual = new Color();
 
+    Vector2 movement;
+
     float dir = 0;
 
     float horizontal;
@@ -63,14 +65,21 @@ public class PlayerMovement : MonoBehaviour
 
         rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
         Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
+
+        Debug.Log(rayHit.collider);
+
         if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
             
             
             if (Input.GetMouseButton(0))
             {
+                if(!GrabedObject)
+                {
+                    GrabedObject = rayGrab.collider.gameObject;
+                    GrabedObject.transform.SetParent(GrabPoint.transform);
+                }
                 
-                GrabedObject = rayGrab.collider.gameObject;
 
                 if (GrabedObject.GetComponent<Rigidbody2D>().gravityScale > 0)
                 {
@@ -79,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 GrabedObject.transform.position = GrabPoint.transform.position;
-                GrabedObject.transform.SetParent(GrabPoint.transform);
+                
             }
             else
             {
@@ -156,7 +165,10 @@ public class PlayerMovement : MonoBehaviour
 
     }
     private void FixedUpdate()
-    {
+    { 
+
+        //--------------------------------------------------------------------------------------- MovementZone ---------------------------------------------------------------
+
         horizontal = Input.GetAxis("Horizontal");
 
         if(PlayerOnWater)
@@ -168,11 +180,26 @@ public class PlayerMovement : MonoBehaviour
         {
             Vertical = 0;
         }
-        Vector2 movement = new Vector2(speed * horizontal, Vertical);
 
-        movement *= Time.deltaTime;
-        
-        if(movement.x > 0f)
+
+        if (CanWalk)
+        {
+            movement = new Vector2(speed * horizontal, Vertical);
+
+            movement *= Time.deltaTime;
+           
+           
+        }
+        else
+        {
+            movement = Vector2.zero;
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        //------------------------------------------------------------------------------  Grab Hability -----------------------------------------------------------------------
+        if (movement.x > 0f)
         {
             rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
             Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
@@ -208,11 +235,8 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
-
-        if (CanWalk)
-        {
-            transform.Translate(movement);
-        }
+        
+       //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         
 
@@ -220,21 +244,23 @@ public class PlayerMovement : MonoBehaviour
 
         if (movement == Vector2.zero)
         {
-
+            //anim.SetFloat("velocity", 0);
         }
         else if (dir > 0)
         {
+            //anim.SetFloat("velocity", 1);
             anim.SetFloat("Blend", 1);
         }
         else
         {
+            //anim.SetFloat("velocity", 1);
             anim.SetFloat("Blend", -1);
         }
 
         //-------------------------------------------------------------------------------------------------------------------------
 
-
         transform.Translate(movement);
+
     }
 
     

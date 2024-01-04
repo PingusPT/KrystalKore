@@ -43,7 +43,7 @@ public class LifeManager : MonoBehaviour
                 timeInvencible = DefaultTimeInvencible;
             }
         }
-        Debug.Log(life + " - " + invencible);
+       
     }
 
     public void TakeDamage()
