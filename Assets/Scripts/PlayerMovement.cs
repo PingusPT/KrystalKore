@@ -66,7 +66,6 @@ public class PlayerMovement : MonoBehaviour
         rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
         Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
 
-        Debug.Log(rayHit.collider);
 
         if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
@@ -151,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            
             CristalControler.instance.DelegateStop();
         }
 
