@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Aura : MonoBehaviour
 {
-    [SerializeField] GameObject Player;
-    PlayerMovement script;
+    [SerializeField] GameObject Luz;
+
+    ColorAura script;
 
     bool isPlayerCanGrow = true;
     bool hasRedArm = false;
     // Start is called before the first frame update
     void Start()
     {
-        script = Player.GetComponent<PlayerMovement>();
+        script = Luz.GetComponent<ColorAura>();
     }
 
     // Update is called once per frame
@@ -23,15 +24,15 @@ public class Aura : MonoBehaviour
         if (collision.gameObject.tag == "CristalRoxo" && isPlayerCanGrow)
         {
 
-            script.AutorizarRoxo();
+            script.CanGrowPurple();
         }
         if (collision.gameObject.tag == "CristalAzul" || collision.gameObject.tag == "CristalAzulElevador" || collision.gameObject.tag == "CristalAzulRoldana")
         {
-            script.AutorizarAzul();
+            script.CanGrow();
         }
         if(collision.gameObject.tag == "CristalVermelho" && Input.GetKeyDown(KeyCode.V) && hasRedArm)
         {
-            script.ChangeColorToRed();
+            //script.ChangeColorToRed();
             collision.gameObject.GetComponent<Animator>().SetTrigger("Ativar");
         }
 
@@ -43,11 +44,11 @@ public class Aura : MonoBehaviour
     {
         if (collision.gameObject.tag == "CristalRoxo")
         {
-            script.DesautorizarRoxo();
+            script.CantGrowPurple();
         }
         if (collision.gameObject.tag == "CristalAzul" || collision.gameObject.tag == "CristalAzulElevador" || collision.gameObject.tag == "CristalAzulRoldana")
         {
-            script.DesauturizarAzul();
+            script.CantGrow();
         }
     }
 

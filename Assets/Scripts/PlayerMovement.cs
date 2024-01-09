@@ -134,32 +134,9 @@ public class PlayerMovement : MonoBehaviour
             rgd.AddForce(transform.up * JumpForce);
            
         }
-        if(Input.GetKey(KeyCode.E) && CanGrowBlue)
-        {
-            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
-            luz.intensity = 0.002f;
-            CristalControler.instance.myDelegateGrow();
-            
-        }
-        else if (Input.GetKey(KeyCode.Q) && CanGrowBlue)
-        {
-            luz.color = Color.Lerp(CorAtual, CorAzul, 0.1f);
-            luz.intensity = 0.002f;
-            CristalControler.instance.Shrink();
-            
-        }
-        else
-        {
-            
-            CristalControler.instance.DelegateStop();
-        }
 
-        if(Input.GetKeyDown(KeyCode.R) && CanGrowRoxo && hasPurpleArm)
-        {
-            luz.color = Color.Lerp(CorAtual, CorRoxo, 0.1f);
-            luz.intensity = 0.002f;
-            CristalRoxoController.instance.myDelegateAppear();
-        }
+        
+       
 
         
 
