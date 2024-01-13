@@ -8,9 +8,9 @@ public class LifeManager : MonoBehaviour
     [SerializeField] GameObject[] vidas;
     
 
-    Vector2 LastCheckPoint;
+    public  Vector2 LastCheckPoint;
 
-    int life;
+    public int life = 4;
 
     public float DefaultTimeInvencible = 2f;
     float timeInvencible = 0;
@@ -114,5 +114,13 @@ public class LifeManager : MonoBehaviour
         {
             vidas[i].SetActive(true);
         }
+    }
+
+
+    public void SetLifeManagerProperties(int Life, float SpawnX, float SpawnY)
+    {
+        life = Life;
+
+        LastCheckPoint = new Vector2(SpawnX, SpawnY);
     }
 }

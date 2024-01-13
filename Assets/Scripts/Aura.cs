@@ -30,12 +30,15 @@ public class Aura : MonoBehaviour
         {
             script.CanGrow();
         }
-        if(collision.gameObject.tag == "CristalVermelho" && Input.GetKeyDown(KeyCode.V) && hasRedArm)
+        if(collision.gameObject.tag == "CristalVermelho" && hasRedArm)
         {
             //script.ChangeColorToRed();
             collision.gameObject.GetComponent<Animator>().SetTrigger("Ativar");
         }
-
+        if (collision.gameObject.tag == "CristalVermelho")
+        {
+            script.CanExplodeRed();
+        }
     }
 
     
@@ -49,6 +52,10 @@ public class Aura : MonoBehaviour
         if (collision.gameObject.tag == "CristalAzul" || collision.gameObject.tag == "CristalAzulElevador" || collision.gameObject.tag == "CristalAzulRoldana")
         {
             script.CantGrow();
+        }
+        if(collision.gameObject.tag == "CristalVermelho")
+        {
+            script.CantExplodeRed();
         }
     }
 

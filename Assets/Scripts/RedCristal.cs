@@ -10,7 +10,7 @@ public class RedCristal : MonoBehaviour
 
     [SerializeField] GameObject aura;
 
-    float RespawnTime = 6f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,5 +32,10 @@ public class RedCristal : MonoBehaviour
         gameObject.SetActive(false);
        
         
+    }
+
+    public void StartExplo()
+    {
+        anim.SetTrigger("Ativar");
     }
 }

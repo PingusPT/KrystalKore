@@ -5,27 +5,26 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Aura aura;
-    [SerializeField] GameObject GameObjectLuz;
+    
+    
     [SerializeField] private LayerMask ignorMe;
     [SerializeField] private LayerMask ignorMeGrab;
     [SerializeField] GameObject GrabPoint;
     [SerializeField] GameObject JumpPoint;
 
-    Light2D luz;
+    
     GameObject GrabedObject;
     Animator anim;
+
+    [SerializeField] float speed = 10f;
+    [SerializeField] float JumpForce = 600;
 
     private RaycastHit2D rayGrab;
     private RaycastHit2D rayHit;
     
     Rigidbody2D rgd;
 
-    Color CorAzul = new Color(0, 222, 255);
-    Color CorVermelho = new Color(255, 15, 0);
-    Color CorRoxo = new Color(255, 0, 255);
-    Color CorAtual = new Color();
-
+    
     Vector2 movement;
 
     float dir = 0;
@@ -33,12 +32,9 @@ public class PlayerMovement : MonoBehaviour
     float horizontal;
     float Vertical;
     bool ground = false;
-    [SerializeField] float speed = 10f;
-    [SerializeField] float JumpForce = 600;
-    bool CanGrowRoxo = false;
-    bool CanGrowBlue = false;
-    bool hasLegs = false;
-    bool hasPurpleArm = false;
+    
+    public bool hasLegs = false;
+    
     bool PlayerOnWater = false;
     bool CanWalk = true;
 
@@ -46,11 +42,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         
-        luz = GameObjectLuz.GetComponent<Light2D>();
+        
         anim = gameObject.GetComponent<Animator>();
-        aura = gameObject.GetComponentInChildren<Aura>();
+        
         rgd = gameObject.GetComponent<Rigidbody2D>();
-        CorAtual = CorAzul;
+        
 
     }
 
@@ -240,29 +236,6 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    
-
-    public void AutorizarAzul()
-    {
-        CanGrowBlue = true;
-        
-    }
-    public void AutorizarRoxo()
-    {
-        CanGrowRoxo = true;
-        
-    }
-
-    public void DesauturizarAzul()
-    {
-        CanGrowBlue = false;
-        
-    }
-    public void DesautorizarRoxo()
-    {
-        CanGrowRoxo = false;
-        
-    }
 
     public void CatchLegs()
     {
@@ -271,10 +244,7 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("HasLegs", hasLegs);
     }
 
-    public void CatchPurpleArm()
-    {
-        hasPurpleArm = true;
-    }
+    
 
     private void Walk()
     {
@@ -285,11 +255,7 @@ public class PlayerMovement : MonoBehaviour
     {
         CanWalk = false;
     }
-    public void ChangeColorToRed()
-    {
-        luz.color = Color.Lerp(CorAtual, CorVermelho, 10);
-        luz.intensity = 0.002f;
-    }
+    
 
 
     public void IsOnWater()
@@ -302,5 +268,12 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerOnWater = false;
         ground = false;
+    }
+
+    public void SetPlayerMovementPropreties(bool HasLegs, float PositionX, float PositionY)
+    {
+        hasLegs = HasLegs;
+        CatchLegs();
+        gameObject.transform.position = new Vector2(PositionX, PositionY);
     }
 }

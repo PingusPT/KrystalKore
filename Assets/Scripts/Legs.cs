@@ -25,12 +25,14 @@ public class Legs : MonoBehaviour
         }
         if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoVermelho")
         {
-            collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
+            collision.gameObject.GetComponentInChildren<ColorAura>().CatchRedArm();
+            //collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
             Destroy(gameObject);
         }
         if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoRoxo")
         {
-            collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
+            collision.gameObject.GetComponentInChildren<ColorAura>().CatchPuprlePower();
+            //collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
             Destroy(gameObject);
         }
     }

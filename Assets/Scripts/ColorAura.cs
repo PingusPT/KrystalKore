@@ -5,25 +5,36 @@ using UnityEngine.Rendering.Universal;
 
 public class ColorAura : MonoBehaviour
 {
-    
+    public AnimationCurve intensityCurve;
+    public AnimationCurve DiferentCurve;
+
     Light2D light2D;
     Color initialColor;
     public Color CorAzul = new Color(0, 222, 255, 127);
     public Color CorVermelho = new Color(255, 0, 0,127);
     public Color CorRoxo = new Color(255, 0, 255,127);
     public Color CorWhite = new Color(255, 255, 255);
+    public float MaxChangeTime = 0.5f;
 
     public float duration = 1f;
-    float intenceDuration = 0.3f;
+    
+
+    
     bool isChangingColor = false;
+
     bool BlueInRange = false;
     bool PurpleInRange = false;
+    bool RedInRange = false;
+
+    public bool hasRedArm = false;
+    public bool hasPurplePower = false;
+
     bool pressing = false;
 
-    float TimeBetweenKeysQtoE = 1.6f;
-    float TimeBetweenKeysEtoQ = 1.6f;
-   
-    
+    float TimeBetweenKeysQtoE;
+    float TimeBetweenKeysEtoQ;
+
+    public float bottomIntenity = 0.01f;
 
 
     // Start is called before the first frame update
@@ -32,26 +43,36 @@ public class ColorAura : MonoBehaviour
         light2D = gameObject.GetComponent<Light2D>();
         light2D.color = Color.white;
         initialColor = light2D.color;
+
+        TimeBetweenKeysEtoQ = MaxChangeTime;
+        TimeBetweenKeysQtoE = MaxChangeTime;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+       if((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E)) && BlueInRange && light2D.color != CorAzul && initialColor != CorAzul)
+       {
+            
+            StartCoroutine(SoftColorChange(CorAzul));
+            initialColor = CorAzul;
+       }
 
         //---------------------------------------------------------------------------------------------------------
 
         if (Input.GetKey(KeyCode.E) && BlueInRange)
         {
-            
-            
+
+            pressing = true;
             CristalControler.instance.myDelegateGrow();
 
         }
         else if (Input.GetKey(KeyCode.Q) && BlueInRange)
         {
-           
-            
+
+            pressing = true;
             CristalControler.instance.Shrink();
 
         }
@@ -61,20 +82,24 @@ public class ColorAura : MonoBehaviour
             CristalControler.instance.DelegateStop();
         }
         //&& CanGrowRoxo && hasPurpleArm ----------------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.R) )
+        if (Input.GetKeyDown(KeyCode.R) && PurpleInRange && hasPurplePower)
         {
             CristalRoxoController.instance.myDelegateAppear();
-
+            StartCoroutine(ChangeIntensityOverTime(bottomIntenity, false));
             StartCoroutine(SoftColorChange(CorRoxo));
             //StartCoroutine(ChangeIntensityOverTime(0.66f));
             initialColor = CorRoxo;
         }
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V) && RedInRange && hasRedArm)
         {
             StartCoroutine(SoftColorChange(CorVermelho));
-            //StartCoroutine(ChangeIntensityOverTime(0.66f));
             initialColor = CorVermelho;
+            RedCristalController.instance.ActivateBombs();
+
+            
+            //StartCoroutine(ChangeIntensityOverTime(0.66f));
+            
         }
 
         //----------------------------------------------------------------------------
@@ -84,7 +109,7 @@ public class ColorAura : MonoBehaviour
         {
 
             pressing = false;
-            TimeBetweenKeysQtoE = Time.time + 1.6f;
+            TimeBetweenKeysQtoE = Time.time + MaxChangeTime;
 
         }
 
@@ -92,16 +117,14 @@ public class ColorAura : MonoBehaviour
         {
             pressing = false;
 
-            TimeBetweenKeysEtoQ = Time.time + 1.6f;
+            TimeBetweenKeysEtoQ = Time.time + MaxChangeTime;
 
         }
 
-        Debug.Log(light2D.color == CorAzul);
-        Debug.Log("isPressing = " + pressing);
-        Debug.Log("The InitialColor is - " + initialColor);
+        
         //------------------------------------------------------ Caso o Tempo seja maior q x voltar cor normal --------------------------------------------- Fazer mais um bool para saber se esta pressed
         
-        if((Time.time - (TimeBetweenKeysEtoQ - 1.6f) < 1.5f || Time.time - (TimeBetweenKeysQtoE - 1.6f) < 1.5f) && Time.time > 1.6f)
+        if((Time.time - (TimeBetweenKeysEtoQ - MaxChangeTime) < MaxChangeTime || Time.time - (TimeBetweenKeysQtoE - MaxChangeTime) < MaxChangeTime) && Time.time > MaxChangeTime)
         {
             
             //pressing = true;
@@ -117,6 +140,7 @@ public class ColorAura : MonoBehaviour
             if(light2D.color == CorAzul && !pressing && initialColor != CorWhite)
             {
                 Debug.Log("CHANGE COLORRRRRRRRRR");
+                initialColor = CorWhite;
                 ChangeNormalColor();
             }
             //ChangeNormalColor();
@@ -130,8 +154,9 @@ public class ColorAura : MonoBehaviour
             if((light2D.color != CorAzul))
             {
 
-                Debug.Log("TrocarPAra Azul");
+                
                 StopAllCoroutines();
+                //StartCoroutine(ChangeIntensityOverTime(bottomIntenity, false)); -------------------------------------------- Por isto no Pressinggggggggggg
                 StartCoroutine(SoftColorChange(CorAzul));
                 
                 initialColor = CorAzul;
@@ -140,9 +165,7 @@ public class ColorAura : MonoBehaviour
             
 
         }
-        
-        
- 
+       
     }
 
     
@@ -161,7 +184,7 @@ public class ColorAura : MonoBehaviour
                 light2D.color = Color.Lerp(initialColor, targetColor, t);
 
 
-                elapsedTime += Time.deltaTime * 2;
+                elapsedTime += Time.deltaTime *2.5f;
                 yield return null;
             }
 
@@ -170,26 +193,78 @@ public class ColorAura : MonoBehaviour
         }
     }
 
-    IEnumerator ChangeIntensityOverTime(float targetIntensity)
+    IEnumerator ChangeIntensityOverTime(float targetIntensity, bool Inverted)
     {
-        //yield return new WaitForSeconds(0.5f);
-
+        float initialIntensity = 3.07f;
         float elapsedTime = 0f;
-        float initialIntensity = light2D.intensity;
+
+        if (!Inverted)
+        {
+            initialIntensity = 3.07f;
+
+            light2D.intensity = targetIntensity;
+
+           
+        }
+        else
+        {
+            
+
+            light2D.intensity = DiferentCurve.Evaluate(0f);
+            Debug.Log("Intencidade da Luz - " + light2D.intensity);
+        }
         
 
-        while (elapsedTime < intenceDuration)
+        /*
+        while (elapsedTime < transitionDuration)
         {
-            float t = elapsedTime / duration;
-            light2D.intensity = Mathf.Lerp(initialIntensity, targetIntensity, t);
+            float t = elapsedTime / transitionDuration;
+            light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, t);
 
-            elapsedTime += Time.deltaTime * 2;
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        // Garante que a intensidade final seja exatamente a alvo
-        light2D.intensity = targetIntensity;
+        // Garante que a intensidade final seja exatamente a original
+        light2D.intensity = initialIntensity;
+        */
+        
+        if(!Inverted)
+        {
+            while (light2D.intensity != initialIntensity)
+            {
+
+                light2D.intensity = intensityCurve.Evaluate(elapsedTime);
+
+                //light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, curveValue);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Garante que a intensidade final seja exatamente a original
+            light2D.intensity = initialIntensity;
+        }
+        else
+        {
+            while (elapsedTime < 0.8f)
+            {
+                Debug.Log("Light Intencity - " + light2D.intensity);
+                light2D.intensity = DiferentCurve.Evaluate(elapsedTime);
+
+                //light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, curveValue);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            // Garante que a intensidade final seja exatamente a original
+            light2D.intensity = initialIntensity;
+        }
+        
     }
+
+    
 
     public void CantGrow()
     {
@@ -213,28 +288,66 @@ public class ColorAura : MonoBehaviour
         PurpleInRange = true;
     }
 
+    public void CanExplodeRed()
+    {
+        RedInRange = true;
+    }
+
+    public void CantExplodeRed()
+    {
+        isChangingColor = false;
+
+        RedInRange = false;
+
+        ChangeNormalColor();
+    }
+
     public void CantGrowPurple()
     {
         isChangingColor = false;
+
         PurpleInRange = false;
+
+        ChangeNormalColor();
     }
     
     private void ChangeNormalColor()
     {
-        
-        
-            
 
-            StopAllCoroutines();
-            
-            StartCoroutine(SoftColorChange(CorWhite));
-            //StartCoroutine(ChangeIntensityOverTime(4f));
-            initialColor = Color.white;
+
+        
+
+        //StopAllCoroutines();
+        if(light2D.color != CorWhite)
+        {
+            StartCoroutine(ChangeIntensityOverTime(bottomIntenity, true));
+
+        }
+        StartCoroutine(SoftColorChange(CorWhite));
+
+        StopCoroutine(SoftColorChange(CorWhite));
+        //StartCoroutine(ChangeIntensityOverTime(4f));
+        initialColor = CorWhite;
             
         
         
     }
 
-    
+    public void CatchRedArm()
+    {
+        Debug.Log("Apanhou o braço vermelho");
+        hasRedArm = true;
+    }
 
+    public void CatchPuprlePower()
+    {
+        Debug.Log("Apanhou o poder roxo");
+        hasPurplePower = true;
+    }
+    
+    public void SetColorAuraProperties(bool HasRedArm, bool HasPurplePower)
+    {
+        hasPurplePower = HasPurplePower;
+        hasRedArm = HasRedArm;
+    }
 }
