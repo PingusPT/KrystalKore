@@ -116,10 +116,39 @@ public class LifeManager : MonoBehaviour
         }
     }
 
+    public void SetLifes()
+    {
+        /*
+        if(life <= 3)
+        {
+            vidas[3].SetActive(false);
+        }
+
+        if (life < 2)
+        {
+            vidas[2].SetActive(false);
+        }
+        if (life < 1)
+        {
+            vidas[1].SetActive(false);
+        }
+        if (life < 0)
+        {
+            vidas[0].SetActive(false);
+        }
+        */
+        for (int i = 0; i <= vidas.Length - 1; i++)
+        {
+            vidas[i].SetActive(life >= i);
+        }
+
+    }
 
     public void SetLifeManagerProperties(int Life, float SpawnX, float SpawnY)
     {
         life = Life;
+
+        SetLifes();
 
         LastCheckPoint = new Vector2(SpawnX, SpawnY);
     }

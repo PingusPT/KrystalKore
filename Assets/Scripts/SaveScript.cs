@@ -27,7 +27,7 @@ public class SaveScript : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void SaveBinaryGame(PlayerMovement playerMove, LifeManager playerLife, ColorAura playerAura) 
+    public void SaveBinaryPlayer(PlayerMovement playerMove, LifeManager playerLife, ColorAura playerAura) 
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.brocode";
@@ -39,15 +39,50 @@ public class SaveScript : MonoBehaviour
         stream.Close();
     }
 
-    public PlayerData GetBinarySave()//if the file exists save the data in form of int, close the strean and return the data
+    public void SaveBinaryWorld(bool[] WallsDestroid)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/world.brocode";
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        
+
+        formatter.Serialize(stream, WallsDestroid);
+        stream.Close();
+    }
+
+
+    public PlayerData GetBinaryPlayerSave()//if the file exists save the data in form of int, close the strean and return the data
     {
         string path = Application.persistentDataPath + "/player.brocode";
+
         if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
+
+            stream.Close();
+            return data;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+
+    public bool[] GetBinaryWorldSave()//if the file exists save the data in form of int, close the strean and return the data
+    {
+        string path = Application.persistentDataPath + "/world.brocode";
+
+        if (File.Exists(path))
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream stream = new FileStream(path, FileMode.Open);
+
+           bool[] data = formatter.Deserialize(stream) as bool[];
 
             stream.Close();
             return data;

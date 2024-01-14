@@ -28,7 +28,7 @@ public class CristalRoxoController : MonoBehaviour
         }
 
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         if (instance == null)
         {
             instance = this;

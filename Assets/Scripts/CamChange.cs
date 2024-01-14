@@ -58,7 +58,7 @@ public class CamChange : MonoBehaviour
             
             if (camLens >= 1)
             {
-                Debug.Log("Stop");
+                
                 TimeCurve = SetTimeCurve;
                 SoftChange = false;
             }

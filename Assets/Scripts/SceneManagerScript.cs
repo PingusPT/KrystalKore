@@ -60,4 +60,6 @@ public class SceneManagerScript : MonoBehaviour
     {
         Application.Quit();
     }
+
+    
 }

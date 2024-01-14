@@ -24,7 +24,7 @@ public class RedCristalAura : MonoBehaviour
             if (collision.gameObject.tag == "CoisasDestrutiveis")
             {
                 
-                Destroy(collision.gameObject);
+                collision.gameObject.SetActive(false);
                 redCristal.GetComponent<RedCristal>().TurnOfff();
                 Invoke("TurnOff", 0.1f);
             }

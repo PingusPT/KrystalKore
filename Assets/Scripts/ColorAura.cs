@@ -130,16 +130,16 @@ public class ColorAura : MonoBehaviour
             //pressing = true;
             
             
-            Debug.Log("TempoCurto");
+            
             isChangingColor = true;
         }
         else
         {
-            Debug.Log("TempoLongo");
+            
             isChangingColor = false;
             if(light2D.color == CorAzul && !pressing && initialColor != CorWhite)
             {
-                Debug.Log("CHANGE COLORRRRRRRRRR");
+                
                 initialColor = CorWhite;
                 ChangeNormalColor();
             }
@@ -211,7 +211,7 @@ public class ColorAura : MonoBehaviour
             
 
             light2D.intensity = DiferentCurve.Evaluate(0f);
-            Debug.Log("Intencidade da Luz - " + light2D.intensity);
+           // Debug.Log("Intencidade da Luz - " + light2D.intensity);
         }
         
 
@@ -249,7 +249,7 @@ public class ColorAura : MonoBehaviour
         {
             while (elapsedTime < 0.8f)
             {
-                Debug.Log("Light Intencity - " + light2D.intensity);
+                
                 light2D.intensity = DiferentCurve.Evaluate(elapsedTime);
 
                 //light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, curveValue);

@@ -48,7 +48,7 @@ public class BluePulseLight : MonoBehaviour
             time += Time.deltaTime;
             light2d.intensity = animationCurve.Evaluate(time);
 
-            Debug.Log("IsGrowing");
+            
 
             if (light2d.intensity == EndLightIntensity)
             {
@@ -73,7 +73,7 @@ public class BluePulseLight : MonoBehaviour
 
     private void MoreIntensity()
     {
-        Debug.Log("DemandToGrow");
+        
         time = 0f;
         isGrow = true;
         
@@ -81,7 +81,7 @@ public class BluePulseLight : MonoBehaviour
 
     private void LessIntensity()
     {
-        Debug.Log("DemandToSrink");
+        
         time = SwitchIntensityTime;
         isShrink = true;
     }

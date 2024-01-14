@@ -9,11 +9,18 @@ public class PlayerMovement : MonoBehaviour
     
     [SerializeField] private LayerMask ignorMe;
     [SerializeField] private LayerMask ignorMeGrab;
+    [SerializeField] private LayerMask GrabNothing;
+    [SerializeField] private LayerMask GrabAll;
+
     [SerializeField] GameObject GrabPoint;
     [SerializeField] GameObject JumpPoint;
 
     
     GameObject GrabedObject;
+
+    Rigidbody2D rgbGrabed;
+    CircleCollider2D colliderGrabed;
+
     Animator anim;
 
     [SerializeField] float speed = 10f;
@@ -71,14 +78,19 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(!GrabedObject)
                 {
+                    
                     GrabedObject = rayGrab.collider.gameObject;
+                    rgbGrabed = GrabedObject.GetComponent<Rigidbody2D>();
+                    colliderGrabed = GrabedObject.GetComponent<CircleCollider2D>();
                     GrabedObject.transform.SetParent(GrabPoint.transform);
                 }
                 
 
-                if (GrabedObject.GetComponent<Rigidbody2D>().gravityScale > 0)
+                if (rgbGrabed.bodyType == RigidbodyType2D.Dynamic)
                 {
-                    GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    //GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    rgbGrabed.bodyType = RigidbodyType2D.Kinematic;
+                    colliderGrabed.forceReceiveLayers = GrabNothing;
 
                 }
 
@@ -89,9 +101,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(GrabedObject)
                 {
-                    if (GrabedObject.GetComponent<Rigidbody2D>().gravityScale == 0)
+                    if (rgbGrabed.bodyType == RigidbodyType2D.Kinematic)
                     {
-                        GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+                        //GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 1;
+                        rgbGrabed.bodyType = RigidbodyType2D.Dynamic;
+                        colliderGrabed.forceReceiveLayers = GrabAll;
 
                     }
 
@@ -273,7 +287,11 @@ public class PlayerMovement : MonoBehaviour
     public void SetPlayerMovementPropreties(bool HasLegs, float PositionX, float PositionY)
     {
         hasLegs = HasLegs;
-        CatchLegs();
+        if(hasLegs)
+        {
+            CatchLegs();
+        }
+       
         gameObject.transform.position = new Vector2(PositionX, PositionY);
     }
 }

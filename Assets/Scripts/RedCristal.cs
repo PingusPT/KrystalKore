@@ -15,6 +15,18 @@ public class RedCristal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(anim)
+        {
+            Debug.Log("Red Cristal");
+        }
+        else
+        {
+            Debug.Log("Red Cristal Null");
+        }
+    }
+
+    private void Awake()
+    {
         anim = gameObject.GetComponent<Animator>();
         point = gameObject.transform.localPosition;
     }

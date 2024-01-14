@@ -19,10 +19,14 @@ public class GameManagerScript : MonoBehaviour
     ColorAura auraScript;
 
     GameObject[] wallsDestroid; // Falta Salvar isto------------------------------------------------------------------------------
+    bool[] breakedWall = { true, true, true, true };
 
     bool PlayerSeted = false;
     bool newGame = true;
     string path;
+
+    public float timeBetweenSaves = 600f;
+    float time;
 
     //Caso de temppo fazer qual dos estados os cristais roxos estao e os azuis tmb
 
@@ -40,6 +44,8 @@ public class GameManagerScript : MonoBehaviour
             Destroy(gameObject);
         }
 
+        path = Application.persistentDataPath + "/player.brocode";
+        time = timeBetweenSaves;
         DontDestroyOnLoad(gameObject);
         //SampleScene
     }
@@ -54,23 +60,57 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManagerScript.instance.ActualSceneName() == "Joao" && !PlayerSeted)// Trocar para SampleScene dps TA A FAZER NO UPDATE E TA SEMPRE A IR BUSCAR
+        if (SceneManagerScript.instance.ActualSceneName() == "Joao")// Trocar para SampleScene dps TA A FAZER NO UPDATE E TA SEMPRE A IR BUSCAR
         {
+            time -= Time.deltaTime;
+           
 
-            GetComponents();
+            if(time < 0)
+            {
+                Debug.Log("Player Saved");
+                time = timeBetweenSaves;
+                SavePlayer();
+            }
+
+            if(!PlayerSeted)
+            {
+                
+                GetComponents();
+                
+            }
+
+            if(!wallsDestroid[0].activeSelf)
+            {
+                breakedWall[0] = false;
+            }
+            else if (!wallsDestroid[1].activeSelf)
+            {
+                breakedWall[1] = false;
+            }
+            else if (!wallsDestroid[2].activeSelf)
+            {
+                breakedWall[2] = false;
+            }
+            else if (!wallsDestroid[3].activeSelf)
+            {
+                breakedWall[3] = false;
+            }
 
         }
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (SceneManagerScript.instance.ActualSceneName() == "Menu")
         {
-            SavePlayer();
+            PlayerSeted = false;
+            
         }
+
     }
 
 
     public void SavePlayer()
     {
-        SaveScript.instance.SaveBinaryGame(moveScript, lifeScript, auraScript);
+        SaveScript.instance.SaveBinaryPlayer(moveScript, lifeScript, auraScript);
+        SaveScript.instance.SaveBinaryWorld(breakedWall);
     }
 
     public void SetPlayer(PlayerData data)
@@ -92,8 +132,19 @@ public class GameManagerScript : MonoBehaviour
         {
             legss.SetActive(false);
         }
+        
     }
 
+    public void SetWorld(bool[] data)
+    {
+        int inv = wallsDestroid.Length - 1;
+
+        for (int i = 0; i < wallsDestroid.Length - 1; i++)
+        {
+            wallsDestroid[i].SetActive(data[inv]);
+            inv--;
+        }
+    }
     
 
     public void ResetSavedGame()
@@ -104,6 +155,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void GetComponents()
     {
+        PlayerSeted = true;
         Player = GameObject.FindGameObjectWithTag("Player");
         legss = GameObject.FindGameObjectWithTag("Legs");
         redArm = GameObject.FindGameObjectWithTag("BracoVermelho");
@@ -111,18 +163,19 @@ public class GameManagerScript : MonoBehaviour
 
         wallsDestroid = GameObject.FindGameObjectsWithTag("CoisasDestrutiveis"); // Unity allawys get by name declining Break3, Break2, Break1, HavetoBreak
 
-
         lifeScript = Player.GetComponent<LifeManager>();
         moveScript = Player.GetComponent<PlayerMovement>();
         auraScript = Player.GetComponentInChildren<ColorAura>();
         //auraScript = Player.GetComponent<ColorAura>(); //// NAO ESTAS A PEGAR O SCRIPT DO CHILD tens de pegar do child  
 
-        path = Application.persistentDataPath + "/player.brocode";
+        Time.timeScale = 1;
 
         if (File.Exists(path) && !newGame)
         {
-            GameManagerScript.instance.SetPlayer(SaveScript.instance.GetBinarySave());
-            PlayerSeted = true;
+            
+            SetPlayer(SaveScript.instance.GetBinaryPlayerSave());
+            SetWorld(SaveScript.instance.GetBinaryWorldSave());
+            
         }
     }
 
@@ -132,7 +185,9 @@ public class GameManagerScript : MonoBehaviour
 
         if(newGame)
         {
-            path = null;
+            File.Delete(path);
         }
     }
+
+    
 }
