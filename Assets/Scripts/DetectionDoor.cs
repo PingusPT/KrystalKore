@@ -42,14 +42,15 @@ public class DetectionDoor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(SoftChange)
         {
             
-            camLens = Mathf.Lerp(camLens, 13.5f, 0.02f);
+            camLens = Mathf.Lerp(camLens, 15f, 0.02f);
 
             virtCam.m_Lens.OrthographicSize = camLens;
 
-            if(virtCam.m_Lens.OrthographicSize > 13.49f)
+            if(virtCam.m_Lens.OrthographicSize > 14.89f)
             {
                 SoftChange = false;
             }
@@ -66,7 +67,7 @@ public class DetectionDoor : MonoBehaviour
                 VoltarAoNormal = false;
             }
         }
-
+        */
         if(CountDown)
         {
             
@@ -89,34 +90,35 @@ public class DetectionDoor : MonoBehaviour
             Player = collision.gameObject;
             
             flag = false;
-
+            /*
             SoftChange = true;
 
             transposer.m_XDamping = 5f;
             transposer.m_YDamping = 5f;
             transposer.m_ZDamping = 5f;
 
-            anim.SetTrigger("fechar");
+            
 
             virtCam.Follow = CamPoint.transform;
-
+            */
+            anim.SetTrigger("fechar");
             Player.GetComponent<PlayerMovement>().enabled = false;
 
             CountDown = true;
         }
         if(collision.gameObject.tag == "Chave" && flag1)
         {
-            virtCam.Follow = Player.transform;
+            //virtCam.Follow = Player.transform;
             
             anim.SetTrigger("abrir");
 
             VoltarAoNormal = true;
-
+            /*
             transposer.m_XDamping = 1f;
             transposer.m_YDamping = 1f;
             transposer.m_ZDamping = 1f;
 
-
+            */
             Destroy(collision.gameObject);
         }
     }

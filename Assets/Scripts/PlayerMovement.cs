@@ -41,7 +41,8 @@ public class PlayerMovement : MonoBehaviour
     bool ground = false;
     
     public bool hasLegs = false;
-    
+
+    bool stopGrabing = false;
     bool PlayerOnWater = false;
     bool CanWalk = true;
 
@@ -68,13 +69,13 @@ public class PlayerMovement : MonoBehaviour
 
         rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
         Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
-
+        Debug.Log(rayHit.collider);
 
         if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
         {
             
             
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !stopGrabing)
             {
                 if(!GrabedObject)
                 {
@@ -91,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
                     //GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 0;
                     rgbGrabed.bodyType = RigidbodyType2D.Kinematic;
                     colliderGrabed.forceReceiveLayers = GrabNothing;
+                    colliderGrabed.forceSendLayers = GrabNothing;
 
                 }
 
@@ -101,18 +103,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(GrabedObject)
                 {
-                    if (rgbGrabed.bodyType == RigidbodyType2D.Kinematic)
-                    {
-                        //GrabedObject.GetComponent<Rigidbody2D>().gravityScale = 1;
-                        rgbGrabed.bodyType = RigidbodyType2D.Dynamic;
-                        colliderGrabed.forceReceiveLayers = GrabAll;
-
-                    }
-
-                    GrabedObject.transform.SetParent(null);
-                    GrabedObject = null;
+                    DroppGrabed();
                 }
-               
 
             }
         }
@@ -258,7 +250,22 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("HasLegs", hasLegs);
     }
 
-    
+    public void DroppGrabed()
+    {
+        if(GrabedObject)
+        {
+            stopGrabing = true;
+            rgbGrabed.bodyType = RigidbodyType2D.Dynamic;
+            colliderGrabed.forceReceiveLayers = GrabAll;
+            colliderGrabed.forceSendLayers = GrabAll;
+            GrabedObject.transform.SetParent(null);
+            GrabedObject = null;
+            Debug.Log("drop");
+            StartCoroutine(AllowGrabimg());
+        }
+        
+
+    }
 
     private void Walk()
     {
@@ -293,5 +300,15 @@ public class PlayerMovement : MonoBehaviour
         }
        
         gameObject.transform.position = new Vector2(PositionX, PositionY);
+    }
+
+
+    private IEnumerator AllowGrabimg()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        
+        stopGrabing = false;
+        
     }
 }

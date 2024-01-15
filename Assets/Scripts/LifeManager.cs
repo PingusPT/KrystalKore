@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 public class LifeManager : MonoBehaviour
 {
     [SerializeField] GameObject[] vidas;
-    
+
+    PlayerMovement player;
 
     public  Vector2 LastCheckPoint;
 
@@ -23,16 +24,19 @@ public class LifeManager : MonoBehaviour
         LastCheckPoint = gameObject.transform.position;
         timeInvencible = DefaultTimeInvencible;
         life = vidas.Length - 1;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Y))
+        if(GameManagerScript.instance.isPlayerSeted() && !player)
         {
-            
-            TakeDamage();
+            player = GameManagerScript.instance.ReturnPlayer(); 
         }
+        
+
+
         if (invencible)
         {
             timeInvencible -= Time.deltaTime;
@@ -58,8 +62,8 @@ public class LifeManager : MonoBehaviour
                     {
 
                         vidas[life].SetActive(false);
-                        
                         life--;
+                        player.DroppGrabed();
                         Respawn();
                         return;
                     }

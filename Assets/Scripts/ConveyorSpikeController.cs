@@ -7,8 +7,8 @@ public class ConveyorSpikeController : MonoBehaviour
     GameObject[] Conveyor1;
     GameObject[] Conveyor2;
     GameObject Conveyor3;
-    float SpeedConveyor1 = 0.5f;
-    float SpeedConveyor2 = 0.5f;
+    float SpeedConveyor1 = 1.5f;
+    float SpeedConveyor2 = 1.5f;
 
     public static ConveyorSpikeController instance;
     public delegate void MultiDelegate();

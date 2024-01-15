@@ -25,7 +25,7 @@ public class CamChange : MonoBehaviour
     public float DefaultCamLens = 7.5f;
     float camLens = 7.5f;
 
-    [Range(0, 1)] public float percentageGrow = 0.8f;
+    [Range(0, 2f)] public float percentageGrow = 0.8f;
 
     public float SetTimeCurve = 1.5f;
     float TimeCurve = 0f;

@@ -133,10 +133,14 @@ public class GameManagerScript : MonoBehaviour
         
     }
     
-
-    public void ResetSavedGame()
+    public bool isPlayerSeted()
     {
+        return PlayerSeted;
+    }
 
+    public PlayerMovement ReturnPlayer()
+    {
+        return moveScript;
     }
 
 
