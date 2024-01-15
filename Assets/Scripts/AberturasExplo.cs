@@ -5,6 +5,8 @@ using UnityEngine;
 public class AberturasExplo : MonoBehaviour
 {
     [SerializeField] GameObject otherObject;
+
+    [SerializeField] GameObject door;
     AberturasExplo otherScript;
     SpriteRenderer render;
     Color transparent;
@@ -64,7 +66,8 @@ public class AberturasExplo : MonoBehaviour
         if(otherScript.isDestroid() && destroid && flag)
         {
             flag = false;
-            
+            GameManagerScript.instance.ObjectDestroid(door);
+            door.SetActive(false);
         }
 
     }

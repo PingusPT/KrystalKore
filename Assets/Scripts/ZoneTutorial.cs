@@ -4,17 +4,27 @@ using UnityEngine;
 
 public class ZoneTutorial : MonoBehaviour
 {
-    [SerializeField] AudioClip MusicaTutorial, MusicaGeral;
 
+    [SerializeField] float transitionMusicDurantion = 1f;
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player" && gameObject.tag == "TutorialZone")
         {
-            //MusicaGeral = collision.GetComponent<WorldMusicScript>().GetCurrentAudio();
-
-            WorldMusicScript.intance.ChangeTrack(MusicaTutorial);
             
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.TutorialMusic, transitionMusicDurantion);
+
+        }
+        if (collision.gameObject.tag == "Player" && gameObject.tag == "CoveyorZone")
+        {
+
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.TutorialMusic, transitionMusicDurantion);
+
+        }
+        if (collision.gameObject.tag == "Player" && gameObject.tag == "FallZone")
+        {
+
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.TutorialMusic, transitionMusicDurantion);
 
         }
     }
@@ -24,8 +34,8 @@ public class ZoneTutorial : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
 
-            WorldMusicScript.intance.ChangeTrack(MusicaGeral);
-
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.GeneralMusic, transitionMusicDurantion);
+            
         }
     }
 }

@@ -25,6 +25,9 @@ TagManager:
   - EngrenagemDestrutivel
   - BracoRoxo
   - agua
+  - TutorialZone
+  - CoveyorZone
+  - FallZone
   layers:
   - Default
   - TransparentFX

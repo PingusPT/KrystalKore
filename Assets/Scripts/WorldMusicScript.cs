@@ -5,33 +5,27 @@ using UnityEngine;
 public class WorldMusicScript : MonoBehaviour
 {
 
-    [SerializeField] AudioClip GeneralMusic;
+     [SerializeField] public AudioClip GeneralMusic, TutorialMusic;
 
     public static WorldMusicScript intance;
 
     AudioSource src;
 
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         intance = this;
         src = gameObject.GetComponent<AudioSource>();
-        src.volume = 0;
-        src.clip = GeneralMusic;
-        StartCoroutine(Fade(true, src, 2f, 1f));
-        StartCoroutine(Fade(false, src, 2f, 0f));
+        src.clip = TutorialMusic;
+        src.volume = 1f;
+        src.Play();
+
     }
 
     void Update()
     {
-        if(!src.isPlaying)
-        {
-            src.Play();
-            StartCoroutine(Fade(true, src, 2f, 1f));
-            StartCoroutine(Fade(false, src, 2f, 0f));
-
-        }
+        
     }
 
     public IEnumerator Fade(bool fadeIn, AudioSource source, float duration, float targetVolume)
@@ -55,21 +49,46 @@ public class WorldMusicScript : MonoBehaviour
         yield break;
     }
 
-    public AudioClip GetCurrentAudio()
+
+    public void ChangeTrack(AudioClip audio, float duration)
     {
-        Debug.Log(src.clip);
-        return src.clip;
+        if(src.clip != audio)
+        {
+            StopAllCoroutines();
+
+            StartCoroutine(BaixarVolumeEAtualizarMusica(audio, duration));
+        }
+        
     }
 
-    public void ChangeTrack(AudioClip audio)
+
+    private IEnumerator BaixarVolumeEAtualizarMusica(AudioClip newMusic, float durationTransition)
     {
-        StopAllCoroutines();
+        float duracaoTotal = durationTransition;
+        float volumeInicial = src.volume;// 1
+        Debug.Log("Volume Inicio -  " + src.volume + "Volume Inicio -  " + volumeInicial);
+        while (durationTransition > 0)
+        {
+            src.volume = Mathf.Lerp(volumeInicial, 0, 1 - (durationTransition / duracaoTotal));
+            durationTransition -= Time.deltaTime;
+            Debug.Log("Volume Meio -  " + src.volume);
+            yield return null;
+        }
+        
+        src.Stop();
+        Debug.Log( "Volume Final -  " + src.volume);
+        src.clip = newMusic;
+        src.Play();
 
-        src.clip = audio;
+        durationTransition = duracaoTotal;
 
-        src.volume = 0f;
-        StartCoroutine(Fade(true, src, 2f, 1f));
-        StartCoroutine(Fade(false, src, 2f, 0f));
+        while (durationTransition > 0)
+        {
+            src.volume = Mathf.Lerp(0, volumeInicial, 1 - (durationTransition / duracaoTotal));
+            durationTransition -= Time.deltaTime;
+            yield return null;
+        }
+
+        src.volume = volumeInicial;
     }
-    
 }

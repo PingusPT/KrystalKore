@@ -19,9 +19,10 @@ public class GameManagerScript : MonoBehaviour
     ColorAura auraScript;
 
     GameObject[] wallsDestroid; // Falta Salvar isto------------------------------------------------------------------------------
-    bool[] breakedWall = { true, true, true, true };
+    bool[] breakedWall = { true, true, true, true, true };
 
     bool PlayerSeted = false;
+    
     bool newGame = true;
     string path;
 
@@ -78,23 +79,7 @@ public class GameManagerScript : MonoBehaviour
                 GetComponents();
                 
             }
-
-            if(!wallsDestroid[0].activeSelf)
-            {
-                breakedWall[0] = false;
-            }
-            else if (!wallsDestroid[1].activeSelf)
-            {
-                breakedWall[1] = false;
-            }
-            else if (!wallsDestroid[2].activeSelf)
-            {
-                breakedWall[2] = false;
-            }
-            else if (!wallsDestroid[3].activeSelf)
-            {
-                breakedWall[3] = false;
-            }
+           
 
         }
 
@@ -139,11 +124,13 @@ public class GameManagerScript : MonoBehaviour
     {
         int inv = wallsDestroid.Length - 1;
 
-        for (int i = 0; i < wallsDestroid.Length - 1; i++)
+        for (int i = 0; i < wallsDestroid.Length; i++)
         {
             wallsDestroid[i].SetActive(data[inv]);
             inv--;
         }
+
+        
     }
     
 
@@ -162,7 +149,7 @@ public class GameManagerScript : MonoBehaviour
         purplePower = GameObject.FindGameObjectWithTag("BracoRoxo");
 
         wallsDestroid = GameObject.FindGameObjectsWithTag("CoisasDestrutiveis"); // Unity allawys get by name declining Break3, Break2, Break1, HavetoBreak
-
+        
         lifeScript = Player.GetComponent<LifeManager>();
         moveScript = Player.GetComponent<PlayerMovement>();
         auraScript = Player.GetComponentInChildren<ColorAura>();
@@ -177,6 +164,7 @@ public class GameManagerScript : MonoBehaviour
             SetWorld(SaveScript.instance.GetBinaryWorldSave());
             
         }
+        
     }
 
     public void PlayerWantNewGame(bool setIfIsNewGame)
@@ -186,6 +174,27 @@ public class GameManagerScript : MonoBehaviour
         if(newGame)
         {
             File.Delete(path);
+        }
+    }
+
+    public void ObjectDestroid(GameObject objectDestroid)
+    {
+        if(objectDestroid.name == "HAveToBreak")
+        {
+            Debug.Log("");
+        }
+
+
+        int inv = wallsDestroid.Length - 1;
+
+        for (int i = 0; i < wallsDestroid.Length; i++)
+        {
+            if(wallsDestroid[i].name == objectDestroid.name)
+            {
+                breakedWall[inv] = false;
+            }
+
+            inv--;
         }
     }
 

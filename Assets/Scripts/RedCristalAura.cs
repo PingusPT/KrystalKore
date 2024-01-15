@@ -21,10 +21,12 @@ public class RedCristalAura : MonoBehaviour
         if (Ativar)
         {
            
-            if (collision.gameObject.tag == "CoisasDestrutiveis")
+            if (collision.gameObject.tag == "CoisasDestrutiveis" && collision.gameObject.name != "Break1")
             {
                 
                 collision.gameObject.SetActive(false);
+                GameManagerScript.instance.ObjectDestroid(collision.gameObject);
+                Debug.Log("Objecto destruido = " + collision.gameObject);
                 redCristal.GetComponent<RedCristal>().TurnOfff();
                 Invoke("TurnOff", 0.1f);
             }
