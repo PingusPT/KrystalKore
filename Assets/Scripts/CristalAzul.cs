@@ -21,10 +21,7 @@ public class CristalAzul : MonoBehaviour
             anim.Play("TesteCristal", 0, 1f);
             anim.SetFloat("Speed", 0);
 
-            
-        }
-
-        
+        }        
         
     }
     

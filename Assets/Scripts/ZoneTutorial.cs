@@ -18,13 +18,19 @@ public class ZoneTutorial : MonoBehaviour
         if (collision.gameObject.tag == "Player" && gameObject.tag == "CoveyorZone")
         {
 
-            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.TutorialMusic, transitionMusicDurantion);
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.treadmillMusic, transitionMusicDurantion);
 
         }
         if (collision.gameObject.tag == "Player" && gameObject.tag == "FallZone")
         {
 
-            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.TutorialMusic, transitionMusicDurantion);
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.WaterMusic, transitionMusicDurantion);
+
+        }
+        if (collision.gameObject.tag == "Player" && gameObject.tag == "BombZone")
+        {
+
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.BombMusic, transitionMusicDurantion);
 
         }
     }

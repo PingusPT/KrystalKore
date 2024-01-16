@@ -4,33 +4,28 @@ using UnityEngine;
 
 public class PlataformaRoxaMove : MonoBehaviour
 {
-    BoxCollider2D RoxoCollider;
+    BoxCollider2D RoxoCollider; // tem
 
-    public Transform pointA; 
-    public Transform pointB;
+    public Transform pointA; // tem
+    public Transform pointB;// tem
 
-    public bool Diferent = false;
+    public bool Diferent = false;// tem
+    public bool Vertical = true;// tem
 
     bool flag = true;
 
-    Vector3 currentTarget;
+    Vector3 currentTarget;// tem
 
-    public GameObject barrier;
+    public GameObject barrier;// tem
 
-    public float speed = 2f;
+    public float speed = 2f;// tem
+    public float distanceStopFromBarrier = 5f;// tem
 
     void Start()
     {
 
         RoxoCollider = gameObject.GetComponent<BoxCollider2D>();
-        if(!Diferent)
-        {
-            currentTarget = pointA.position;
-        }
-        else
-        {
-            currentTarget = pointB.position;
-        }
+        currentTarget = Diferent ? pointB.position : pointA.position;
 
 
     }
@@ -52,50 +47,97 @@ public class PlataformaRoxaMove : MonoBehaviour
         }
         else
         {
-            
+            // Parte diferente do com barreira
+
             if (RoxoCollider.enabled)
             {
                 // se o box collider tiver ativo
 
-
-                if(transform.position.y > barrier.transform.position.y)
+                if (Vertical)
                 {
 
-                    if (transform.position.y <= barrier.transform.position.y + 5f)
+
+                    if (transform.position.y > barrier.transform.position.y)
                     {
-                        
 
-                        currentTarget = pointB.position;
+                        if (transform.position.y <= barrier.transform.position.y + distanceStopFromBarrier)
+                        {
 
-                        
+
+                            currentTarget = pointB.position;
+
+
+                        }
+                        if (transform.position == pointB.position)
+                        {
+
+                            currentTarget.y = barrier.transform.position.y + distanceStopFromBarrier;
+                        }
+
+
+
                     }
-                    if (transform.position == pointB.position)
+                    else
                     {
+                        //Esta PARTE FUNCIONA--------------------------------------------------------------------
+                        
+
+                            if (transform.position.y >= barrier.transform.position.y - distanceStopFromBarrier)
+                            {
+                                currentTarget = pointA.position;
+
+                            }
+
+                            if (transform.position == pointA.position)
+                            {
+
+                                currentTarget.y = barrier.transform.position.y - distanceStopFromBarrier;
+                            }
                        
-                        currentTarget.y = barrier.transform.position.y + 5f;
+                            
+                        
                     }
-                    
-
-                    
                 }
                 else
                 {
-                    //Esta PARTE FUNCIONA--------------------------------------------------------------------
-
-                    if (transform.position.y >= barrier.transform.position.y - 5f)
+                    if (transform.position.x > barrier.transform.position.x)
                     {
-                       
-                            
-                        currentTarget = pointA.position;
 
-                        //currentTarget.y = (currentTarget.y == pointA.position.y) ? pointA.position.y : barrier.transform.position.y - 0.2f;
+                        if (transform.position.x <= barrier.transform.position.x + distanceStopFromBarrier)
+                        {
+
+
+                            currentTarget = pointB.position;
+
+
+                        }
+                        if (transform.position == pointB.position)
+                        {
+
+                            currentTarget.x = barrier.transform.position.x + distanceStopFromBarrier;
+                        }
+
+
 
                     }
-
-                    if (transform.position == pointA.position)
+                    else
                     {
-                       
-                        currentTarget.y = barrier.transform.position.y - 5f;
+                        //Esta PARTE FUNCIONA--------------------------------------------------------------------
+
+
+                        if (transform.position.x >= barrier.transform.position.x - distanceStopFromBarrier)
+                        {
+
+                            currentTarget = pointA.position;
+
+                        }
+
+                        if (transform.position == pointA.position)
+                        {
+                            currentTarget.x = barrier.transform.position.x - distanceStopFromBarrier;
+                        }
+    
+
                     }
                 }
 
@@ -124,14 +166,29 @@ public class PlataformaRoxaMove : MonoBehaviour
 
     public void SetTarget()
     {
-        if(currentTarget.y > pointA.position.y && currentTarget != pointA.position) 
+        if (Vertical)
         {
+            if (currentTarget.y > pointA.position.y && currentTarget != pointA.position)
+            {
 
-            currentTarget = pointB.position;
+                currentTarget = pointB.position;
+            }
+            else
+            {
+                currentTarget = pointA.position;
+            }
         }
         else
         {
-            currentTarget = pointA.position;
+            if (currentTarget.x > pointA.position.x && currentTarget != pointA.position)
+            {
+
+                currentTarget = pointB.position;
+            }
+            else
+            {
+                currentTarget = pointA.position;
+            }
         }
 
         flag = false;

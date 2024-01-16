@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorldMusicScript : MonoBehaviour
 {
 
-     [SerializeField] public AudioClip GeneralMusic, TutorialMusic;
+     [SerializeField] public AudioClip GeneralMusic, TutorialMusic, treadmillMusic, BombMusic, WaterMusic;
 
     public static WorldMusicScript intance;
 
@@ -23,10 +23,7 @@ public class WorldMusicScript : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        
-    }
+    
 
     public IEnumerator Fade(bool fadeIn, AudioSource source, float duration, float targetVolume)
     {
@@ -65,7 +62,7 @@ public class WorldMusicScript : MonoBehaviour
     private IEnumerator BaixarVolumeEAtualizarMusica(AudioClip newMusic, float durationTransition)
     {
         float duracaoTotal = durationTransition;
-        float volumeInicial = src.volume;// 1
+        float volumeInicial = 1f;// 1
         Debug.Log("Volume Inicio -  " + src.volume + "Volume Inicio -  " + volumeInicial);
         while (durationTransition > 0)
         {

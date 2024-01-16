@@ -108,9 +108,10 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
-        
-        
-        if(rayHit.distance < 0.56f && rayHit.distance != 0)
+
+        //&& rayHit.distance != 0
+
+        if (rayHit.distance < 0.56f && rayHit.collider != null)
         {
             
             ground = true;
@@ -124,15 +125,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
-            if(PlayerOnWater)
-            {
-                JumpForce = 900;
-                
-            }
-            else
-            {
-                JumpForce = 600;
-            }
+            
             rgd.AddForce(transform.up * JumpForce);
            
         }

@@ -26,7 +26,7 @@ public class WaterShapeController : MonoBehaviour
     // How much to spread to the other springs
     public float spread = 0.006f;
 
-    
+    public bool isLava = false;
 
     void Start()
     {
@@ -175,5 +175,12 @@ public class WaterShapeController : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player" && isLava)
+        {
+            GameManagerScript.instance.lifeScript.TakeDamage();
+        }
+    }
+
 }

@@ -10,11 +10,15 @@ public class RedCristal : MonoBehaviour
 
     [SerializeField] GameObject aura;
 
+    RedCristalAura auraScript;
+
     
 
     // Start is called before the first frame update
     void Start()
     {
+        auraScript = aura.GetComponent<RedCristalAura>();
+
         if(anim)
         {
             Debug.Log("Red Cristal");
@@ -34,7 +38,7 @@ public class RedCristal : MonoBehaviour
 
     public void Explode()
     {
-        aura.GetComponent<RedCristalAura>().AtivarBomb();
+        auraScript.AtivarBomb();
 
     }
 

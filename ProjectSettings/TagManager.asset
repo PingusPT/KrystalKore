@@ -28,6 +28,7 @@ TagManager:
   - TutorialZone
   - CoveyorZone
   - FallZone
+  - BombZone
   layers:
   - Default
   - TransparentFX

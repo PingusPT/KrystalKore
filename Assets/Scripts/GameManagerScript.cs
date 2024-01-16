@@ -14,9 +14,9 @@ public class GameManagerScript : MonoBehaviour
     GameObject purplePower;
     GameObject redArm;
 
-    LifeManager lifeScript;
-    PlayerMovement moveScript;
-    ColorAura auraScript;
+    public LifeManager lifeScript;
+    public PlayerMovement moveScript;
+    public ColorAura auraScript;
 
     GameObject[] wallsDestroid; // Falta Salvar isto------------------------------------------------------------------------------
     bool[] breakedWall = { true, true, true, true, true };

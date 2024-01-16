@@ -5,26 +5,17 @@ using Cinemachine;
 public class DetectionDoor : MonoBehaviour
 {
 
-    [SerializeField] GameObject CamPoint;
     [SerializeField] GameObject Porta;
-    [SerializeField] GameObject Camera;
-
+    
     Animator anim;
-    CinemachineVirtualCamera virtCam;
-    CinemachineTransposer transposer;
 
-    GameObject Player;
+    
     
     
 
     bool flag = true;
     bool flag1 = true;
 
-    bool SoftChange = false;
-    bool VoltarAoNormal = false;
-
-    
-    float camLens = 7.5f;
 
     float time = 4f;
     bool CountDown = false;
@@ -34,40 +25,13 @@ public class DetectionDoor : MonoBehaviour
     {
         
         anim = Porta.GetComponent<Animator>();
-        virtCam = Camera.GetComponent<CinemachineVirtualCamera>();
-        transposer = virtCam.GetCinemachineComponent<CinemachineTransposer>();
-
+ 
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        if(SoftChange)
-        {
-            
-            camLens = Mathf.Lerp(camLens, 15f, 0.02f);
-
-            virtCam.m_Lens.OrthographicSize = camLens;
-
-            if(virtCam.m_Lens.OrthographicSize > 14.89f)
-            {
-                SoftChange = false;
-            }
-        }
-
-        if(VoltarAoNormal)
-        {
-            camLens = Mathf.Lerp(camLens, 7.25f, 0.02f);
-
-            virtCam.m_Lens.OrthographicSize = camLens;
-
-            if (virtCam.m_Lens.OrthographicSize < 7.24)
-            {
-                VoltarAoNormal = false;
-            }
-        }
-        */
+       
         if(CountDown)
         {
             
@@ -76,7 +40,7 @@ public class DetectionDoor : MonoBehaviour
             
             if(time < 0)
             {
-                Player.GetComponent<PlayerMovement>().enabled = true;
+                GameManagerScript.instance.moveScript.enabled = true;
                 CountDown = false;
                 time = 4f;
             }
@@ -87,38 +51,20 @@ public class DetectionDoor : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player" && flag)
         {
-            Player = collision.gameObject;
             
             flag = false;
-            /*
-            SoftChange = true;
-
-            transposer.m_XDamping = 5f;
-            transposer.m_YDamping = 5f;
-            transposer.m_ZDamping = 5f;
-
             
-
-            virtCam.Follow = CamPoint.transform;
-            */
             anim.SetTrigger("fechar");
-            Player.GetComponent<PlayerMovement>().enabled = false;
-
+            GameManagerScript.instance.moveScript.enabled = false;
             CountDown = true;
         }
         if(collision.gameObject.tag == "Chave" && flag1)
         {
-            //virtCam.Follow = Player.transform;
+            
             
             anim.SetTrigger("abrir");
 
-            VoltarAoNormal = true;
-            /*
-            transposer.m_XDamping = 1f;
-            transposer.m_YDamping = 1f;
-            transposer.m_ZDamping = 1f;
 
-            */
             Destroy(collision.gameObject);
         }
     }
