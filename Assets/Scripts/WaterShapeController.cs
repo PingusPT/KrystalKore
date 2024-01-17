@@ -167,14 +167,7 @@ public class WaterShapeController : MonoBehaviour
             }
         }
     }
-    private void Splash(int index, float speed)
-    {
-        if (index >= 0 && index < springs.Count)
-        {
-            springs[index].velocity += speed;
-        }
-    }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player" && isLava)

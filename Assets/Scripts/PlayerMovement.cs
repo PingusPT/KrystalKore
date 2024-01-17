@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     GameObject GrabedObject;
 
     Rigidbody2D rgbGrabed;
-    CircleCollider2D colliderGrabed;
+    CapsuleCollider2D colliderGrabed;
+    
 
     Animator anim;
 
@@ -71,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
         Debug.Log(rayHit.collider);
 
-        if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8)
+        if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8 && !rayGrab.collider.isTrigger)
         {
             
             
@@ -82,7 +83,8 @@ public class PlayerMovement : MonoBehaviour
                     
                     GrabedObject = rayGrab.collider.gameObject;
                     rgbGrabed = GrabedObject.GetComponent<Rigidbody2D>();
-                    colliderGrabed = GrabedObject.GetComponent<CircleCollider2D>();
+                    colliderGrabed = GrabedObject.GetComponent<CapsuleCollider2D>();
+                    
                     GrabedObject.transform.SetParent(GrabPoint.transform);
                 }
                 

@@ -18,7 +18,7 @@ public class GameManagerScript : MonoBehaviour
     public PlayerMovement moveScript;
     public ColorAura auraScript;
 
-    GameObject[] wallsDestroid; // Falta Salvar isto------------------------------------------------------------------------------
+    GameObject[] wallsDestroid; 
     bool[] breakedWall = { true, true, true, true, true };
 
     bool PlayerSeted = false;
@@ -29,7 +29,7 @@ public class GameManagerScript : MonoBehaviour
     public float timeBetweenSaves = 600f;
     float time;
 
-    //Caso de temppo fazer qual dos estados os cristais roxos estao e os azuis tmb
+    
 
 
 

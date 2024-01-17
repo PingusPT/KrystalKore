@@ -2,31 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CristalAtivadorAzul : MonoBehaviour
+public class CristalAtivadorAzul : CristalAzul
 {
 
     [SerializeField] GameObject Barreira;
 
+    
+
     bool flag = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        gameObject.GetComponent<CristalAzul>().ModoAtivador();
-       
-    }
-
+   
     // Update is called once per frame
     void Update()
     {
         if(!Barreira.activeSelf && flag)
         {
             flag = false;
-            gameObject.GetComponent<CristalAzul>().DesativarAtivador();
+            
             ConveyorSpikeController.instance.AticarTereciro();
         }
+
+        base.FixAnimation();
     }
 
+    override public void Grow()
+    {
+        if(!flag)
+        {
+            base.Grow();
+        }
+        
+    }
 
-   
+    public override void Srink()
+    {
+        if(!flag)
+        {
+            base.Srink();
+        }
+        
+    }
+
+    public override void StopAnimation()
+    {
+        base.StopAnimation();
+    }
 }

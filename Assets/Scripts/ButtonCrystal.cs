@@ -2,18 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonCrystal : MonoBehaviour
+public class ButtonCrystal : CristalAzul
 {
     // Start is called before the first frame update
-    Animator anim;
+    
     bool flag = true;
     bool flag2 = true;
-    public bool Invertido = false;
-
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -55,6 +49,8 @@ public class ButtonCrystal : MonoBehaviour
             }
 
         }
+
+        base.FixAnimation();
 
     }
 

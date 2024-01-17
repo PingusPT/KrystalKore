@@ -6,10 +6,10 @@ public class CristalAzul : MonoBehaviour
 {
 
     
-    Animator anim;
+    protected Animator anim;
     public bool Invertido = false;
   
-    bool ativador = false;
+    
    
     AnimatorStateInfo info;
     // Start is called before the first frame update
@@ -28,9 +28,16 @@ public class CristalAzul : MonoBehaviour
 
     private void Update()
     {
+
+        FixAnimation();
+
+    }
+
+    virtual public void FixAnimation()
+    {
         info = anim.GetCurrentAnimatorStateInfo(0);
-        
-        
+
+
 
         if (info.normalizedTime > 1)
         {
@@ -72,42 +79,27 @@ public class CristalAzul : MonoBehaviour
                 anim.Play("CristalRoldana", 0, 0f);
             }
         }
-
-
     }
 
 
-    public void Srink()
+    virtual public void Srink()
     {
-        if(!ativador)
-        {
-            
+        
             if (!Invertido)
             {
                   anim.SetFloat("Speed", -1);
-                   
-                
             }
             else
-            {
-                
-                
-                    anim.SetFloat("Speed", 1);
-                
-                
+            {        
+                    anim.SetFloat("Speed", 1);   
             }
-        }
-        
-
+    
     }
 
-    public void Grow()
+    virtual public void Grow()
     {
-        if(!ativador)
-        {
-            
-            
-            
+        
+
             if (!Invertido)
             {
                
@@ -124,12 +116,11 @@ public class CristalAzul : MonoBehaviour
                     anim.SetFloat("Speed", -1);
                 
             }
-        }
         
-        
+  
     }
 
-    public void StopAnimation()
+    virtual public void StopAnimation()
     {
 
         if(anim != null)
@@ -138,18 +129,6 @@ public class CristalAzul : MonoBehaviour
         }
         
 
-    }
-
-    
-
-    public void ModoAtivador()
-    {
-        ativador = true;
-    }
-
-    public void DesativarAtivador()
-    {
-        ativador = false;
     }
 
 }
