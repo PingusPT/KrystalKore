@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     float dir = 0;
 
     float horizontal;
-    float Vertical;
+    float Vertical = 0;
     bool ground = false;
     
     public bool hasLegs = false;
@@ -47,30 +47,33 @@ public class PlayerMovement : MonoBehaviour
     bool PlayerOnWater = false;
     bool CanWalk = true;
 
+
+    private void Awake()
+    {
+        anim = gameObject.GetComponent<Animator>();
+
+        rgd = gameObject.GetComponent<Rigidbody2D>();
+    }
     // Start is called before the first frame update
     void Start()
     {
-        
-        
-        anim = gameObject.GetComponent<Animator>();
-        
-        rgd = gameObject.GetComponent<Rigidbody2D>();
-        
-
+     
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (hasLegs)
         {
+            
             CanWalk = true;
             speed = 6f;
         }
 
         rayHit = Physics2D.Raycast(JumpPoint.transform.position, -transform.up, 1f, ignorMe);
         Debug.DrawRay(JumpPoint.transform.position, -transform.up * 1f, Color.red);
-        Debug.Log(rayHit.collider);
+        
 
         if (rayGrab.collider != null && rayGrab.collider.gameObject.layer == 8 && !rayGrab.collider.isTrigger)
         {
@@ -111,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        //&& rayHit.distance != 0
+        
 
         if (rayHit.distance < 0.56f && rayHit.collider != null)
         {
@@ -127,23 +130,36 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetButtonDown("Jump") && ground && hasLegs)
         {
-            
+            anim.SetTrigger("jump");
             rgd.AddForce(transform.up * JumpForce);
            
         }
 
-        
-       
 
-        
+        if (movement != Vector2.zero)
+        {
+            
+            anim.SetBool("Idle", false);
+        }
+        else
+        {
+            
+            anim.SetBool("Idle", true);
+        }
+
+        anim.SetBool("ground", ground);
 
     }
     private void FixedUpdate()
-    { 
-
-        //--------------------------------------------------------------------------------------- MovementZone ---------------------------------------------------------------
+    {
 
         horizontal = Input.GetAxis("Horizontal");
+        
+        //--------------------------------------------------------------------------------------- MovementZone ---------------------------------------------------------------
+
+
+
+        
 
         if(PlayerOnWater)
         {
@@ -155,23 +171,24 @@ public class PlayerMovement : MonoBehaviour
             Vertical = 0;
         }
 
+        
 
         if (CanWalk)
         {
             movement = new Vector2(speed * horizontal, Vertical);
-
             movement *= Time.deltaTime;
            
            
         }
         else
         {
-            movement = Vector2.zero;
+            
+            movement = new Vector2(horizontal * 0.01f, Vertical); ;
         }
 
         //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+        
         //------------------------------------------------------------------------------  Grab Hability -----------------------------------------------------------------------
         if (movement.x > 0f)
         {
@@ -209,11 +226,11 @@ public class PlayerMovement : MonoBehaviour
 
             }
         }
-        
-       //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         
-
+        
         //----------------------------------------------------------------------  Animation Zone ----------------------------------
 
         if (movement == Vector2.zero)
@@ -230,9 +247,10 @@ public class PlayerMovement : MonoBehaviour
             //anim.SetFloat("velocity", 1);
             anim.SetFloat("Blend", -1);
         }
-
+        
         //-------------------------------------------------------------------------------------------------------------------------
 
+        
         transform.Translate(movement);
 
     }
@@ -255,7 +273,6 @@ public class PlayerMovement : MonoBehaviour
             colliderGrabed.forceSendLayers = GrabAll;
             GrabedObject.transform.SetParent(null);
             GrabedObject = null;
-            Debug.Log("drop");
             StartCoroutine(AllowGrabimg());
         }
         
@@ -271,7 +288,11 @@ public class PlayerMovement : MonoBehaviour
     {
         CanWalk = false;
     }
-    
+
+    public Animator GetAnimator()
+    {
+        return anim;
+    }
 
 
     public void IsOnWater()

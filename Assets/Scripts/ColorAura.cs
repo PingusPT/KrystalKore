@@ -8,8 +8,12 @@ public class ColorAura : MonoBehaviour
     public AnimationCurve intensityCurve;
     public AnimationCurve DiferentCurve;
 
+    GameObject player;
+
+    Animator anim;
+
     Light2D light2D;
-    Color initialColor;
+    Color CurremtColor;
     public Color CorAzul = new Color(0, 222, 255, 127);
     public Color CorVermelho = new Color(255, 0, 0,127);
     public Color CorRoxo = new Color(255, 0, 255,127);
@@ -17,8 +21,8 @@ public class ColorAura : MonoBehaviour
     public float MaxChangeTime = 0.5f;
 
     public float duration = 1f;
-    
 
+    bool CR_running = false;
     
     bool isChangingColor = false;
 
@@ -41,37 +45,46 @@ public class ColorAura : MonoBehaviour
     void Start()
     {
         light2D = gameObject.GetComponent<Light2D>();
-        light2D.color = Color.white;
-        initialColor = light2D.color;
+        light2D.color = CorWhite;
+        CurremtColor = light2D.color;
 
         TimeBetweenKeysEtoQ = MaxChangeTime;
         TimeBetweenKeysQtoE = MaxChangeTime;
 
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-       if((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E)) && BlueInRange && light2D.color != CorAzul && initialColor != CorAzul)
+        if(anim == null)
+        {
+            anim = GameManagerScript.instance.moveScript.GetAnimator();
+        }
+
+        // Se o Q ou o E estiverem presionados, Tiver algum Cristal em Range --------------------------------------
+
+       if((Input.GetKey(KeyCode.Q) || Input.GetKey(KeyCode.E)) && BlueInRange && CurremtColor != CorAzul) // Apenas 1 frame
        {
             
+            CurremtColor = CorAzul;
+            Debug.Log("CorAzul");
             StartCoroutine(SoftColorChange(CorAzul));
-            initialColor = CorAzul;
        }
 
-        //---------------------------------------------------------------------------------------------------------
+        
+        //------------------------------------Part Funcional AZUL que os cristais efetivamente crescem --------------------------------------------------
 
         if (Input.GetKey(KeyCode.E) && BlueInRange)
         {
-
+            anim.SetBool("usingBlue", true);
             pressing = true;
             CristalControler.instance.myDelegateGrow();
 
         }
         else if (Input.GetKey(KeyCode.Q) && BlueInRange)
         {
-
+            anim.SetBool("usingBlue", true);
             pressing = true;
             CristalControler.instance.Shrink();
 
@@ -81,29 +94,33 @@ public class ColorAura : MonoBehaviour
 
             CristalControler.instance.DelegateStop();
         }
-        //&& CanGrowRoxo && hasPurpleArm ----------------------------------------------------------------------
-        if (Input.GetKeyDown(KeyCode.R) && PurpleInRange && hasPurplePower)
+        //---------------------------------------------------- ----------------------------------------------------------------------
+        if (Input.GetKeyDown(KeyCode.R) && PurpleInRange && hasPurplePower) //Apenas 1 frame, troca a cor para roxo
         {
             CristalRoxoController.instance.myDelegateAppear();
-            StartCoroutine(ChangeIntensityOverTime(bottomIntenity, false));
+            
+            CurremtColor = CorRoxo;
+            Debug.Log("CorRoxo");
             StartCoroutine(SoftColorChange(CorRoxo));
-            //StartCoroutine(ChangeIntensityOverTime(0.66f));
-            initialColor = CorRoxo;
+            
+
+            
         }
 
         if (Input.GetKeyDown(KeyCode.V) && RedInRange && hasRedArm)
         {
+            anim.SetTrigger("RedPower");
+            Debug.Log("CorVermelho");
+            CurremtColor = CorVermelho;
             StartCoroutine(SoftColorChange(CorVermelho));
-            initialColor = CorVermelho;
             RedCristalController.instance.ActivateBombs();
 
-            
+            ChangeNormalColor();
             //StartCoroutine(ChangeIntensityOverTime(0.66f));
             
         }
 
         //----------------------------------------------------------------------------
-
 
         if (Input.GetKeyUp(KeyCode.Q))
         {
@@ -126,146 +143,113 @@ public class ColorAura : MonoBehaviour
         
         if((Time.time - (TimeBetweenKeysEtoQ - MaxChangeTime) < MaxChangeTime || Time.time - (TimeBetweenKeysQtoE - MaxChangeTime) < MaxChangeTime) && Time.time > MaxChangeTime)
         {
-            
-            //pressing = true;
-            
-            
-            
+            anim.SetBool("usingBlue", true);
             isChangingColor = true;
         }
         else
         {
-            
+            //light2D.color == CorAzul && !pressing && CurremtColor != CorWhite
             isChangingColor = false;
-            if(light2D.color == CorAzul && !pressing && initialColor != CorWhite)
+            if(CurremtColor == CorAzul && !pressing)
             {
+                anim.SetBool("usingBlue", false);
                 
-                initialColor = CorWhite;
                 ChangeNormalColor();
             }
-            //ChangeNormalColor();
-        }
-
-       
-        if ((Input.GetKeyDown(KeyCode.Q) && BlueInRange || Input.GetKeyDown(KeyCode.E)) && BlueInRange) //Se Q ou E esta clicado e 1 dos cristais azuis on range  
-        {
-            pressing = true;
-
-            if((light2D.color != CorAzul))
-            {
-
-                
-                StopAllCoroutines();
-                //StartCoroutine(ChangeIntensityOverTime(bottomIntenity, false)); -------------------------------------------- Por isto no Pressinggggggggggg
-                StartCoroutine(SoftColorChange(CorAzul));
-                
-                initialColor = CorAzul;
-                isChangingColor = true;
-            }
             
-
         }
-       
+
+        if(!BlueInRange)
+        {
+            anim.SetBool("usingBlue", false);
+        }
+
+        /*
+         if ((Input.GetKeyDown(KeyCode.Q) && BlueInRange || Input.GetKeyDown(KeyCode.E)) && BlueInRange) //Se Q ou E esta clicado e 1 dos cristais azuis on range  
+         {
+             pressing = true;
+
+             if((light2D.color != CorAzul))
+             {
+
+
+                 CurremtColor = CorAzul;
+                 StartCoroutine(SoftColorChange(CorAzul));
+
+                 isChangingColor = true;
+             }
+
+
+         }
+        */
     }
 
     
     IEnumerator SoftColorChange(Color targetColor)
     {
-        
-        if(!isChangingColor)
-        {
-            Color initialColor = light2D.color;
-
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
+       
+            if (!CR_running && targetColor != Color.clear)
             {
-                float t = elapsedTime / duration;
-                light2D.color = Color.Lerp(initialColor, targetColor, t);
+                CR_running = true;
+
+                if (light2D.color == CorWhite)
+                {
+                    light2D.color = Color.clear;
+                }
+                if (targetColor == CorWhite)
+                {
+
+                    light2D.color = new Color(targetColor.r, targetColor.g, targetColor.b, 4f);
+                    //light2D.color = CorRoxo;
+                }
+
+                if (!isChangingColor)
+                {
+                    Color initialColor2 = light2D.color;
+
+                    float elapsedTime = 0f;
+
+                    while (elapsedTime < duration)
+                    {
+                        float t = elapsedTime / duration;
+                        light2D.color = Color.Lerp(initialColor2, targetColor, t);
 
 
-                elapsedTime += Time.deltaTime *2.5f;
-                yield return null;
+                        elapsedTime += Time.deltaTime;
+                        yield return null;
+                    }
+
+                    CR_running = false;
+                    CurremtColor = targetColor;
+                    light2D.color = targetColor;
+                    
+                    
+                    if(Color.clear == light2D.color)
+                    {
+
+                        CurremtColor = CorAzul;
+                        ChangeNormalColor();
+                    }
+
+                }
+
+                CR_running = false;
+                CurremtColor = targetColor;
+                light2D.color = targetColor;
             }
-
-            // Garante que a cor e intensidade finais sejam exatamente as alvo
-            light2D.color = targetColor;
-        }
-    }
-
-    IEnumerator ChangeIntensityOverTime(float targetIntensity, bool Inverted)
-    {
-        float initialIntensity = 3.07f;
-        float elapsedTime = 0f;
-
-        if (!Inverted)
-        {
-            initialIntensity = 3.07f;
-
-            light2D.intensity = targetIntensity;
-
-           
-        }
-        else
-        {
-            
-
-            light2D.intensity = DiferentCurve.Evaluate(0f);
-           // Debug.Log("Intencidade da Luz - " + light2D.intensity);
-        }
-        
-
-        /*
-        while (elapsedTime < transitionDuration)
-        {
-            float t = elapsedTime / transitionDuration;
-            light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, t);
-
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        // Garante que a intensidade final seja exatamente a original
-        light2D.intensity = initialIntensity;
-        */
-        
-        if(!Inverted)
-        {
-            while (light2D.intensity != initialIntensity)
+            else
             {
+                while (CR_running)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
 
-                light2D.intensity = intensityCurve.Evaluate(elapsedTime);
+                StartCoroutine(SoftColorChange(targetColor));
 
-                //light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, curveValue);
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
             }
-
-            // Garante que a intensidade final seja exatamente a original
-            light2D.intensity = initialIntensity;
-        }
-        else
-        {
-            while (elapsedTime < 0.8f)
-            {
-                
-                light2D.intensity = DiferentCurve.Evaluate(elapsedTime);
-
-                //light2D.intensity = Mathf.Lerp(targetIntensity, initialIntensity, curveValue);
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            // Garante que a intensidade final seja exatamente a original
-            light2D.intensity = initialIntensity;
-        }
         
     }
-
     
-
     public void CantGrow()
     {
         isChangingColor = false;
@@ -273,7 +257,7 @@ public class ColorAura : MonoBehaviour
         BlueInRange = false;
         
         ChangeNormalColor();
-        
+        anim.SetBool("usingBlue", false);
     }
 
     public void CanGrow()
@@ -313,35 +297,26 @@ public class ColorAura : MonoBehaviour
     
     private void ChangeNormalColor()
     {
-
-
-        
-
-        //StopAllCoroutines();
-        if(light2D.color != CorWhite)
+        if(CurremtColor != CorWhite)
         {
-            StartCoroutine(ChangeIntensityOverTime(bottomIntenity, true));
-
-        }
-        StartCoroutine(SoftColorChange(CorWhite));
-
-        StopCoroutine(SoftColorChange(CorWhite));
-        //StartCoroutine(ChangeIntensityOverTime(4f));
-        initialColor = CorWhite;
+            CurremtColor = CorWhite;
+            Debug.Log("CorBranco");
             
+            StartCoroutine(SoftColorChange(CorWhite));
+        }
         
-        
+       
     }
 
     public void CatchRedArm()
     {
-        Debug.Log("Apanhou o braço vermelho");
+        anim.SetBool("HasRedArm", true);
         hasRedArm = true;
     }
 
     public void CatchPuprlePower()
     {
-        Debug.Log("Apanhou o poder roxo");
+       
         hasPurplePower = true;
     }
     
@@ -350,4 +325,6 @@ public class ColorAura : MonoBehaviour
         hasPurplePower = HasPurplePower;
         hasRedArm = HasRedArm;
     }
+
+    
 }

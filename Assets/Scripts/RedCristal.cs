@@ -15,16 +15,7 @@ public class RedCristal : MonoBehaviour
     
     void Start()
     {
-        
-
-        if(anim)
-        {
-            Debug.Log("Red Cristal");
-        }
-        else
-        {
-            Debug.Log("Red Cristal Null");
-        }
+       
     }
 
     private void Awake()
@@ -49,7 +40,7 @@ public class RedCristal : MonoBehaviour
     {
         if ((collision.gameObject.tag == "CoisasDestrutiveis" && collision.gameObject.name != "Break1") || collision.gameObject.tag == "EngrenagemDestrutivel" || collision.gameObject.tag == "Player")
         {
-            Debug.Log("Obejto entrou  - " + collision.gameObject.name);
+            
             arrayDestructibleObjects.Add(collision.gameObject);
 
         }
@@ -60,7 +51,7 @@ public class RedCristal : MonoBehaviour
     {
         if ((collision.gameObject.tag == "CoisasDestrutiveis" && collision.gameObject.name != "Break1") || collision.gameObject.tag == "EngrenagemDestrutivel" || collision.gameObject.tag == "Player")
         {
-            Debug.Log("Obejto saiu  - " + collision.gameObject.name);
+            
             arrayDestructibleObjects.Remove(collision.gameObject);
 
         }
@@ -71,7 +62,7 @@ public class RedCristal : MonoBehaviour
         
         if (!exploded)
         {
-            Debug.Log("AAAA * " + gameObject.name + " + position + " + transform.position );
+            
             foreach (GameObject obj in arrayDestructibleObjects.ToArray())
             {
                 if (obj.gameObject.tag == "CoisasDestrutiveis" && obj.gameObject.name != "Break1")

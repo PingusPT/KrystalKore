@@ -63,17 +63,17 @@ public class WorldMusicScript : MonoBehaviour
     {
         float duracaoTotal = durationTransition;
         float volumeInicial = 1f;// 1
-        Debug.Log("Volume Inicio -  " + src.volume + "Volume Inicio -  " + volumeInicial);
+        
         while (durationTransition > 0)
         {
             src.volume = Mathf.Lerp(volumeInicial, 0, 1 - (durationTransition / duracaoTotal));
             durationTransition -= Time.deltaTime;
-            Debug.Log("Volume Meio -  " + src.volume);
+            
             yield return null;
         }
         
         src.Stop();
-        Debug.Log( "Volume Final -  " + src.volume);
+        
         src.clip = newMusic;
         src.Play();
 

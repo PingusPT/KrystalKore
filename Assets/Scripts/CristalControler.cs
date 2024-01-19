@@ -33,7 +33,7 @@ public class CristalControler : MonoBehaviour
             
         }
 
-        //Debug.Log("A Scene tem " + allObjsAry.Length + " Cristais azuis");
+        
         //DontDestroyOnLoad(gameObject);
         if (instance == null)
         {

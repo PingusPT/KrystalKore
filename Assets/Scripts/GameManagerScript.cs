@@ -9,7 +9,7 @@ public class GameManagerScript : MonoBehaviour
     public static GameManagerScript instance;
 
 
-    GameObject Player;
+    public GameObject Player;
     GameObject legss;
     GameObject purplePower;
     GameObject redArm;
@@ -68,7 +68,7 @@ public class GameManagerScript : MonoBehaviour
 
             if(time < 0)
             {
-                Debug.Log("Player Saved");
+                
                 time = timeBetweenSaves;
                 SavePlayer();
             }
@@ -183,10 +183,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void ObjectDestroid(GameObject objectDestroid)
     {
-        if(objectDestroid.name == "HAveToBreak")
-        {
-            Debug.Log("");
-        }
+       
 
 
         int inv = wallsDestroid.Length - 1;

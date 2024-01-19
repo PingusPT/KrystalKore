@@ -28,7 +28,7 @@ public class RedCristalController : MonoBehaviour
         }
 
         //DontDestroyOnLoad(gameObject);
-        Debug.Log("Ha " + allObjsAry.Length + " Cristais Vermelho");
+        
     }
 
     public void ActivateBombs()

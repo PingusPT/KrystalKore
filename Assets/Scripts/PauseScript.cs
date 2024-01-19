@@ -41,6 +41,6 @@ public class PauseScript : MonoBehaviour
     {
         GameManagerScript.instance.SavePlayer();
         
-        Debug.Log("Player Saved");
+        
     }
 }
