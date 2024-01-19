@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CristalRoxoController : MonoBehaviour
 {
-    List<CristalRoxo> results = new List<CristalRoxo>();
+   
 
 
     
@@ -23,8 +23,6 @@ public class CristalRoxoController : MonoBehaviour
                 continue;
             myDelegateAppear += allObjsAry[i].GetComponent<CristalRoxo>().Appear;
             
-            
-            results.Add(allObjsAry[i]);
         }
 
 

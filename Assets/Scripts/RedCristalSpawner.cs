@@ -5,8 +5,8 @@ using UnityEngine;
 public class RedCristalSpawner : MonoBehaviour
 {
     // Start is called before the first frame update
-    GameObject redCristal;
-    [SerializeField] GameObject Point;
+    
+    
     public static RedCristalSpawner instance;
 
     

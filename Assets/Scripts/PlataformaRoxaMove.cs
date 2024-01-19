@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlataformaRoxaMove : MonoBehaviour
 {
     BoxCollider2D RoxoCollider; // tem
+    CapsuleCollider2D capsule;
+    Rigidbody2D rb;
 
     public Transform pointA; // tem
     public Transform pointB;// tem
@@ -15,26 +17,42 @@ public class PlataformaRoxaMove : MonoBehaviour
     bool flag = true;
 
     Vector3 currentTarget;// tem
+    Vector3 LastTarget;
+    Vector3 direction;
+
+    //[SerializeField] Transform pai;
+    
+    public bool Scaled = false;
 
     public GameObject barrier;// tem
-
-    public float speed = 2f;// tem
+    
+    public float speed = 50f;// tem
     public float distanceStopFromBarrier = 5f;// tem
 
     void Start()
     {
-
+        rb = gameObject.GetComponent<Rigidbody2D>();
         RoxoCollider = gameObject.GetComponent<BoxCollider2D>();
-        currentTarget = Diferent ? pointB.position : pointA.position;
+        capsule = gameObject.GetComponent<CapsuleCollider2D>();
+        currentTarget = Diferent ? pointA.position : pointB.position;
+        LastTarget = currentTarget;
+        if (Diferent && RoxoCollider.enabled)
+        {
+            Debug.Log("AAAAAAAZ" + gameObject.name);
+            currentTarget = barrier.transform.position;
+        }
 
-
+        
+        CalculateDirection();
+       // pai = gameObject.GetComponentInParent<Transform>();
+        
     }
 
     void Update()
     {
+
         
-        transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
-        
+
         if (!Diferent)
         {
 
@@ -51,162 +69,60 @@ public class PlataformaRoxaMove : MonoBehaviour
 
             if (RoxoCollider.enabled)
             {
-                // se o box collider tiver ativo
+                capsule.enabled = true;
 
-                if (Vertical)
+                if (Vector3.Distance(transform.position, barrier.transform.position) < distanceStopFromBarrier)
                 {
-
-
-                    if (transform.position.y > barrier.transform.position.y)
-                    {
-
-                        if (transform.position.y <= barrier.transform.position.y + distanceStopFromBarrier)
-                        {
-
-
-                            currentTarget = pointB.position;
-
-
-                        }
-                        if (transform.position == pointB.position)
-                        {
-
-                            currentTarget.y = barrier.transform.position.y + distanceStopFromBarrier;
-                        }
-
-
-
-                    }
-                    else
-                    {
-                        //Esta PARTE FUNCIONA--------------------------------------------------------------------
-                        
-
-                            if (transform.position.y >= barrier.transform.position.y - distanceStopFromBarrier)
-                            {
-                                currentTarget = pointA.position;
-
-                            }
-
-                            if (transform.position == pointA.position)
-                            {
-
-                                currentTarget.y = barrier.transform.position.y - distanceStopFromBarrier;
-                            }
-                       
-                            
-                        
-                    }
-                }
-                else
-                {
-                    if (transform.position.x > barrier.transform.position.x)
-                    {
-
-                        if (transform.position.x <= barrier.transform.position.x + distanceStopFromBarrier)
-                        {
-
-
-                            currentTarget = pointB.position;
-
-
-                        }
-                        if (transform.position == pointB.position)
-                        {
-
-                            currentTarget.x = barrier.transform.position.x + distanceStopFromBarrier;
-                        }
-
-
-
-                    }
-                    else
-                    {
-                        //Esta PARTE FUNCIONA--------------------------------------------------------------------
-
-
-                        if (transform.position.x >= barrier.transform.position.x - distanceStopFromBarrier)
-                        {
-
-                            currentTarget = pointA.position;
-
-                        }
-
-                        if (transform.position == pointA.position)
-                        {
-                            currentTarget.x = barrier.transform.position.x - distanceStopFromBarrier;
-                        }
-    
-
-                    }
+                    currentTarget = LastTarget;
                 }
 
-                flag = true;
+                if (Vector3.Distance(transform.position, currentTarget) < 0.2f)
+                {
+                    currentTarget = barrier.transform.position;
+                }
+                
 
             }
             else
             {
-                if(flag)
+                capsule.enabled = false;
+
+                if (currentTarget == transform.position)
                 {
-                    SetTarget();
+                    currentTarget = LastTarget;
                 }
 
                 if (Vector3.Distance(transform.position, currentTarget) < 0.1f)
                 {
                     
                     currentTarget = (currentTarget == pointA.position) ? pointB.position : pointA.position;
+                    LastTarget = currentTarget;
                 }
 
                 
             }
         }
-        
+
+
+        CalculateDirection();
+        rb.velocity = direction * speed * Time.deltaTime;
     }
 
-
-    public void SetTarget()
+    private void CalculateDirection()
     {
-        if (Vertical)
-        {
-            if (currentTarget.y > pointA.position.y && currentTarget != pointA.position)
-            {
-
-                currentTarget = pointB.position;
-            }
-            else
-            {
-                currentTarget = pointA.position;
-            }
-        }
-        else
-        {
-            if (currentTarget.x > pointA.position.x && currentTarget != pointA.position)
-            {
-
-                currentTarget = pointB.position;
-            }
-            else
-            {
-                currentTarget = pointA.position;
-            }
-        }
-
-        flag = false;
+        direction = (currentTarget - transform.position).normalized;
+        direction.Normalize();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.transform.SetParent(transform);
+            GameManagerScript.instance.moveScript.InPlataform(rb.velocity);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            collision.transform.SetParent(null);
-        }
-    }
+
+    
 }

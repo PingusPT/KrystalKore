@@ -5,10 +5,6 @@ using UnityEngine.Rendering.Universal;
 
 public class ColorAura : MonoBehaviour
 {
-    public AnimationCurve intensityCurve;
-    public AnimationCurve DiferentCurve;
-
-    GameObject player;
 
     Animator anim;
 
@@ -23,6 +19,7 @@ public class ColorAura : MonoBehaviour
     public float duration = 1f;
 
     bool CR_running = false;
+    bool redDelay = false;
     
     bool isChangingColor = false;
 
@@ -97,18 +94,22 @@ public class ColorAura : MonoBehaviour
         //---------------------------------------------------- ----------------------------------------------------------------------
         if (Input.GetKeyDown(KeyCode.R) && PurpleInRange && hasPurplePower) //Apenas 1 frame, troca a cor para roxo
         {
+            anim.SetTrigger("PurplePower");
+
             CristalRoxoController.instance.myDelegateAppear();
             
             CurremtColor = CorRoxo;
             Debug.Log("CorRoxo");
             StartCoroutine(SoftColorChange(CorRoxo));
-            
 
-            
+
+            ChangeNormalColor();
         }
 
-        if (Input.GetKeyDown(KeyCode.V) && RedInRange && hasRedArm)
+        if (Input.GetKeyDown(KeyCode.V) && RedInRange && hasRedArm && !redDelay)
         {
+            redDelay = true;
+            Invoke("DelayRed", 4f);
             anim.SetTrigger("RedPower");
             Debug.Log("CorVermelho");
             CurremtColor = CorVermelho;
@@ -116,7 +117,6 @@ public class ColorAura : MonoBehaviour
             RedCristalController.instance.ActivateBombs();
 
             ChangeNormalColor();
-            //StartCoroutine(ChangeIntensityOverTime(0.66f));
             
         }
 
@@ -148,7 +148,7 @@ public class ColorAura : MonoBehaviour
         }
         else
         {
-            //light2D.color == CorAzul && !pressing && CurremtColor != CorWhite
+            
             isChangingColor = false;
             if(CurremtColor == CorAzul && !pressing)
             {
@@ -164,24 +164,6 @@ public class ColorAura : MonoBehaviour
             anim.SetBool("usingBlue", false);
         }
 
-        /*
-         if ((Input.GetKeyDown(KeyCode.Q) && BlueInRange || Input.GetKeyDown(KeyCode.E)) && BlueInRange) //Se Q ou E esta clicado e 1 dos cristais azuis on range  
-         {
-             pressing = true;
-
-             if((light2D.color != CorAzul))
-             {
-
-
-                 CurremtColor = CorAzul;
-                 StartCoroutine(SoftColorChange(CorAzul));
-
-                 isChangingColor = true;
-             }
-
-
-         }
-        */
     }
 
     
@@ -198,11 +180,8 @@ public class ColorAura : MonoBehaviour
                 }
                 if (targetColor == CorWhite)
                 {
-
                     light2D.color = new Color(targetColor.r, targetColor.g, targetColor.b, 4f);
-                    //light2D.color = CorRoxo;
                 }
-
                 if (!isChangingColor)
                 {
                     Color initialColor2 = light2D.color;
@@ -230,7 +209,6 @@ public class ColorAura : MonoBehaviour
                         CurremtColor = CorAzul;
                         ChangeNormalColor();
                     }
-
                 }
 
                 CR_running = false;
@@ -247,7 +225,6 @@ public class ColorAura : MonoBehaviour
                 StartCoroutine(SoftColorChange(targetColor));
 
             }
-        
     }
     
     public void CantGrow()
@@ -292,7 +269,7 @@ public class ColorAura : MonoBehaviour
 
         PurpleInRange = false;
 
-        ChangeNormalColor();
+        //ChangeNormalColor();
     }
     
     private void ChangeNormalColor()
@@ -306,6 +283,12 @@ public class ColorAura : MonoBehaviour
         }
         
        
+    }
+
+    public void DelayRed()
+    {
+        Debug.Log("DELAYYYYY");
+        redDelay = false;
     }
 
     public void CatchRedArm()

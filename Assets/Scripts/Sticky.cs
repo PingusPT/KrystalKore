@@ -72,6 +72,6 @@ public class Sticky : MonoBehaviour
 
     public void Walk()
     {
-        speed = 0.5f;
+        speed = 1.5f;
     }
 }

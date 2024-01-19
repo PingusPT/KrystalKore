@@ -6,7 +6,7 @@ public class CristalControler : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    List<CristalAzul> results = new List<CristalAzul>();
+    
     
 
     
@@ -27,7 +27,7 @@ public class CristalControler : MonoBehaviour
                 myDelegateShrink += allObjsAry[i].GetComponent<CristalAzul>().Srink;
                 myDelegateGrow += allObjsAry[i].GetComponent<CristalAzul>().Grow;
                 myDelegateStop += allObjsAry[i].GetComponent<CristalAzul>().StopAnimation;
-                results.Add(allObjsAry[i]);
+                
             }
 
             

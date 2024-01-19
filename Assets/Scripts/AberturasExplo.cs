@@ -68,6 +68,7 @@ public class AberturasExplo : MonoBehaviour
             flag = false;
             GameManagerScript.instance.ObjectDestroid(door);
             door.SetActive(false);
+            gameObject.SetActive(false);
         }
 
     }

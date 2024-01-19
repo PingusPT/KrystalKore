@@ -154,12 +154,9 @@ public class PlayerMovement : MonoBehaviour
     {
 
         horizontal = Input.GetAxis("Horizontal");
-        
+
         //--------------------------------------------------------------------------------------- MovementZone ---------------------------------------------------------------
 
-
-
-        
 
         if(PlayerOnWater)
         {
@@ -326,5 +323,14 @@ public class PlayerMovement : MonoBehaviour
         
         stopGrabing = false;
         
+    }
+
+    public float velocity = 3;
+    public void InPlataform(Vector2 vel)
+    {
+        
+        Debug.Log("Velocidade do Player - " + rgd.velocity + " | Velocidade Resebida pela Plataforma - " + vel);
+        transform.Translate(vel * Time.deltaTime);
+        //rgd.velocity = vel * velocity * Time.deltaTime;
     }
 }
