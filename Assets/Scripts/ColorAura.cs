@@ -35,7 +35,7 @@ public class ColorAura : MonoBehaviour
     float TimeBetweenKeysQtoE;
     float TimeBetweenKeysEtoQ;
 
-    public float bottomIntenity = 0.01f;
+    
 
 
     // Start is called before the first frame update

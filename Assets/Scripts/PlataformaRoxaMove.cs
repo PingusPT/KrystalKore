@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlataformaRoxaMove : MonoBehaviour
+public class PlataformaRoxaMove : CristalRoxo
 {
-    BoxCollider2D RoxoCollider; // tem
+     // tem
     CapsuleCollider2D capsule;
-    Rigidbody2D rb;
+    
 
     public Transform pointA; // tem
     public Transform pointB;// tem
@@ -14,44 +14,45 @@ public class PlataformaRoxaMove : MonoBehaviour
     public bool Diferent = false;// tem
     public bool Vertical = true;// tem
 
-    bool flag = true;
-
     Vector3 currentTarget;// tem
     Vector3 LastTarget;
     Vector3 direction;
 
     //[SerializeField] Transform pai;
     
-    public bool Scaled = false;
+    
 
     public GameObject barrier;// tem
     
     public float speed = 50f;// tem
     public float distanceStopFromBarrier = 5f;// tem
 
-    void Start()
+
+    private void Start()
+    {
+        BegingObject();
+    }
+    public override void BegingObject()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
-        RoxoCollider = gameObject.GetComponent<BoxCollider2D>();
+
         capsule = gameObject.GetComponent<CapsuleCollider2D>();
         currentTarget = Diferent ? pointA.position : pointB.position;
         LastTarget = currentTarget;
-        if (Diferent && RoxoCollider.enabled)
+        if (Diferent && collider2d.enabled)
         {
-            Debug.Log("AAAAAAAZ" + gameObject.name);
+            
             currentTarget = barrier.transform.position;
         }
+        Debug.Log("AAAAAAAZ" + gameObject.name);
 
-        
         CalculateDirection();
-       // pai = gameObject.GetComponentInParent<Transform>();
-        
+
+        base.BegingObject();
     }
 
     void Update()
     {
-
-        
 
         if (!Diferent)
         {
@@ -67,7 +68,7 @@ public class PlataformaRoxaMove : MonoBehaviour
         {
             // Parte diferente do com barreira
 
-            if (RoxoCollider.enabled)
+            if (collider2d.enabled)
             {
                 capsule.enabled = true;
 
@@ -106,6 +107,8 @@ public class PlataformaRoxaMove : MonoBehaviour
 
         CalculateDirection();
         rb.velocity = direction * speed * Time.deltaTime;
+
+        base.FixAnimation();
     }
 
     private void CalculateDirection()
@@ -123,6 +126,13 @@ public class PlataformaRoxaMove : MonoBehaviour
         }
     }
 
+    public override void Appear()
+    {
+        base.Appear();
+    }
 
-    
+    public override void TurnOffCollider()
+    {
+        base.TurnOffCollider();
+    }
 }

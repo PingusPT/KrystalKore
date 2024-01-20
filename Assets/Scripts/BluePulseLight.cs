@@ -85,22 +85,5 @@ public class BluePulseLight : MonoBehaviour
         time = SwitchIntensityTime;
         isShrink = true;
     }
-    /*
-    private IEnumerator LessIntensity()
-    {
-        float time = SwitchIntensityTime;
-
-        isShrink = true;
-
-        while (light2d.intensity > StartLightIntensity)
-        {
-            time -= Time.deltaTime;
-            light2d.intensity = animationCurve.Evaluate(time);
-            Debug.Log("AAAA");
-        }
-        yield return new WaitForSeconds(2f);
-
-        yield return StartCoroutine(MoreIntensity());
-    }
-    */
+    
 }
