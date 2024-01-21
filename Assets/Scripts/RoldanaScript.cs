@@ -20,16 +20,13 @@ public class RoldanaScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-       dir = anim.GetFloat("Speed");
-    }
+    
 
     private void FixedUpdate()
     {
-        
-        
-            if (dir == 0)
+        dir = anim.GetFloat("Speed");
+
+        if (dir == 0)
             {
                 rgd.velocity = Vector2.zero;
             }

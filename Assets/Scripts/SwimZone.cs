@@ -20,6 +20,7 @@ public class SwimZone : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
+            collision.gameObject.GetComponent<PlayerSounds>().WaterSounds();
             collision.gameObject.GetComponent<PlayerMovement>().IsOnWater();
         }
     }

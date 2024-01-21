@@ -59,6 +59,7 @@ public class CamChange : MonoBehaviour
             if (camLens >= 1)
             {
                 
+                virtCam.m_Lens.OrthographicSize = DefaultCamLens * (percentageGrow + camLens);
                 TimeCurve = SetTimeCurve;
                 SoftChange = false;
             }
@@ -78,6 +79,7 @@ public class CamChange : MonoBehaviour
             {
                 TimeCurve = 0;
                 VoltarAoNormal = false;
+                virtCam.m_Lens.OrthographicSize = DefaultCamLens;
             }
         }
         
@@ -85,7 +87,7 @@ public class CamChange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && !isCamChanged)
+        if (collision.gameObject.tag == "Player" && !isCamChanged && !SoftChange)
         {
             Player = collision.gameObject;
 
@@ -93,8 +95,10 @@ public class CamChange : MonoBehaviour
             virtCam.Follow = CamPoint.transform;
           
             isCamChanged = true;
-
+            VoltarAoNormal = false;
             SoftChange = true;
+            
+            
            
             virtCam.Follow = CamPoint.transform;
           
@@ -113,7 +117,7 @@ public class CamChange : MonoBehaviour
             isCamChanged = false;
 
             virtCam.Follow = Player.transform;
-
+            SoftChange = false;
             VoltarAoNormal = true;
 
             

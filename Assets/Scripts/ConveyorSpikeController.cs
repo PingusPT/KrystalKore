@@ -7,8 +7,8 @@ public class ConveyorSpikeController : MonoBehaviour
     GameObject[] Conveyor1;
     GameObject[] Conveyor2;
     GameObject Conveyor3;
-    float SpeedConveyor1 = 1.5f;
-    float SpeedConveyor2 = 1.5f;
+    float SpeedConveyor1 = 5f;
+    float SpeedConveyor2 = 5f;
 
     public static ConveyorSpikeController instance;
     public delegate void MultiDelegate();
@@ -59,6 +59,7 @@ public class ConveyorSpikeController : MonoBehaviour
         for(int i = 0; i < Conveyor1.Length; ++i)
         {
             Conveyor1[i].GetComponent<SurfaceEffector2D>().speed = SpeedConveyor1;
+            Conveyor1[i].GetComponent<Animator>().SetFloat("speed", SpeedConveyor1 / Mathf.Abs(SpeedConveyor1));
         }
 
         myDelegateChangeRotationSpikes1();
@@ -70,6 +71,7 @@ public class ConveyorSpikeController : MonoBehaviour
         for (int i = 0; i < Conveyor2.Length; ++i)
         {
             Conveyor2[i].GetComponent<SurfaceEffector2D>().speed = SpeedConveyor2;
+            Conveyor2[i].GetComponent<Animator>().SetFloat("speed", SpeedConveyor2 / Mathf.Abs(SpeedConveyor2));
         }
 
         myDelegateChangeRotationSpikes2();
@@ -79,6 +81,7 @@ public class ConveyorSpikeController : MonoBehaviour
         if(terceiro)
         {
             Conveyor3.GetComponent<SurfaceEffector2D>().speed = SpeedConveyor1;
+            Conveyor3.GetComponent<Animator>().SetFloat("speed", SpeedConveyor1 / Mathf.Abs(SpeedConveyor1));
             myDelegateChangeRotationSpikes3();
         }
        

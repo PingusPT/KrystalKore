@@ -75,7 +75,10 @@ public class RedCristal : MonoBehaviour
             {
                 if (obj.gameObject.tag == "CoisasDestrutiveis" && obj.gameObject.name != "Break1")
                 {
-                    obj.gameObject.SetActive(false);
+                    
+                    obj.GetComponent<Animator>().SetFloat("speed", 1f);
+                    StartCoroutine(DelayDestroi(obj));
+                    
                     GameManagerScript.instance.ObjectDestroid(obj.gameObject);
 
                 }
@@ -92,5 +95,11 @@ public class RedCristal : MonoBehaviour
 
             exploded = true;
         }
+    }
+
+    public IEnumerator DelayDestroi(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.7f);
+        obj.SetActive(false);
     }
 }

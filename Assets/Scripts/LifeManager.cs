@@ -7,6 +7,8 @@ public class LifeManager : MonoBehaviour
 {
     [SerializeField] GameObject[] vidas;
 
+    Animator anim;
+
     PlayerMovement player;
 
     public  Vector2 LastCheckPoint;
@@ -32,7 +34,8 @@ public class LifeManager : MonoBehaviour
     {
         if(GameManagerScript.instance.isPlayerSeted() && !player)
         {
-            player = GameManagerScript.instance.ReturnPlayer(); 
+            player = GameManagerScript.instance.ReturnPlayer();
+            anim = player.GetComponent<Animator>();
         }
         
 
@@ -64,7 +67,7 @@ public class LifeManager : MonoBehaviour
                         vidas[life].SetActive(false);
                         life--;
                         player.DroppGrabed();
-                        Respawn();
+                        anim.SetTrigger("Die");
                         return;
                     }
                 case 1:
