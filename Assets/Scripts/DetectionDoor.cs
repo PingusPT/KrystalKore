@@ -9,10 +9,6 @@ public class DetectionDoor : MonoBehaviour
     
     Animator anim;
 
-    
-    
-    
-
     bool flag = true;
     bool flag1 = true;
 

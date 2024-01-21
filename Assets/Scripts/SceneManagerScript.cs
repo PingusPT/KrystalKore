@@ -10,6 +10,9 @@ public class SceneManagerScript : MonoBehaviour
     public static SceneManagerScript instance;
 
     // Start is called before the first frame update
+
+    bool newGame = false;
+
     void Start()
     {
         
@@ -19,20 +22,17 @@ public class SceneManagerScript : MonoBehaviour
         instance = this;
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            LoadMenuScene();
-        }
-    }
+   
 
     public string ActualSceneName()
     {
         Scene currentScene = SceneManager.GetActiveScene();
         return currentScene.name;
     }
-
+    public bool NeedNewGame()
+    {
+        return newGame;
+    }
     public void LoadMenuScene()
     {
         SceneManager.LoadScene(0);
@@ -41,7 +41,7 @@ public class SceneManagerScript : MonoBehaviour
     public void LoadNewGameScene()
     {
         GameManagerScript.instance.PlayerWantNewGame(true);
-        SceneManager.LoadScene(1);
+        newGame = true;
     }
 
     public void LoadExistingGameScene()
@@ -54,6 +54,11 @@ public class SceneManagerScript : MonoBehaviour
             SceneManager.LoadScene(1);
 
         }
+    }
+
+    public void LoadNewScene()
+    {
+        SceneManager.LoadScene(1);
     }
 
     public void ExitGame()

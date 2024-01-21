@@ -47,8 +47,6 @@ public class ConveyorSpikeController : MonoBehaviour
                 allObjsAry[i].GetComponent<Sticky>().Stop();
             }
             
-            
-
         }
     }
 
@@ -84,7 +82,6 @@ public class ConveyorSpikeController : MonoBehaviour
             Conveyor3.GetComponent<Animator>().SetFloat("speed", SpeedConveyor1 / Mathf.Abs(SpeedConveyor1));
             myDelegateChangeRotationSpikes3();
         }
-       
     }
     
     public void AticarTereciro()

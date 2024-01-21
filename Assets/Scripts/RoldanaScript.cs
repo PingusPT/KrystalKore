@@ -27,17 +27,17 @@ public class RoldanaScript : MonoBehaviour
         dir = anim.GetFloat("Speed");
 
         if (dir == 0)
-            {
-                rgd.velocity = Vector2.zero;
-            }
-            else if (dir > 0)
-            {
-                rgd.velocity = transform.right * -speed;
-            }
-            else if (dir < 0)
-            {
-                rgd.velocity = transform.right * speed;
-            }
+        {
+           rgd.velocity = Vector2.zero;
+        }
+        else if (dir > 0)
+        {
+           rgd.velocity = transform.right * -speed;
+        }
+        else if (dir < 0)
+        {
+           rgd.velocity = transform.right * speed;
+        }
     
 
     }
