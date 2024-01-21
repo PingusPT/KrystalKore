@@ -12,10 +12,16 @@ public class RedCristal : MonoBehaviour
 
     bool exploded = false;
 
+    AudioSource src;
+    [SerializeField] AudioClip heartBeat, explode;
+
     
     void Start()
     {
-       
+        src = gameObject.GetComponent<AudioSource>();
+        src.loop = true;
+        src.clip = heartBeat;
+        src.Play();
     }
 
     private void Awake()
@@ -33,6 +39,8 @@ public class RedCristal : MonoBehaviour
 
     public void StartExplo()
     {
+
+        src.PlayOneShot(explode);
         anim.SetTrigger("Ativar");
     }
 

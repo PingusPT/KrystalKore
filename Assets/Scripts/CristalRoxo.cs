@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CristalRoxo : MonoBehaviour
 {
+    [SerializeField] AudioClip apeerSound, disapeerSound;
+
+    AudioSource src;
+
     protected Rigidbody2D rb;
 
     protected Animator anim;
@@ -51,7 +55,8 @@ public class CristalRoxo : MonoBehaviour
 
     virtual public void BegingObject()
     {
-        
+        src = GetComponent<AudioSource>();
+        src.loop = false;
 
         if (invertido)
         {
@@ -79,10 +84,12 @@ public class CristalRoxo : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0)
         {
+            src.PlayOneShot(apeerSound);
             anim.Play("aparecer", 0, 0f);
         }
         else if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
+            src.PlayOneShot(disapeerSound);
             anim.Play("aparecer", 0, 1f);
         }
     }

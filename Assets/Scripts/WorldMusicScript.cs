@@ -5,25 +5,56 @@ using UnityEngine;
 public class WorldMusicScript : MonoBehaviour
 {
 
-     [SerializeField] public AudioClip GeneralMusic, TutorialMusic, treadmillMusic, BombMusic, WaterMusic;
+    [SerializeField] public AudioClip GeneralMusic, TutorialMusicInicio, TutorialMusic, treadmillMusicInicio, treadmillMusic, BombMusicInicio, BombMusic, WaterMusicInicio, WaterMusic;
 
     public static WorldMusicScript intance;
 
     AudioSource src;
 
+    [Range(0f, 2f)]
+    public float targetVolume = 1;
 
-    
     void Start()
     {
         intance = this;
         src = gameObject.GetComponent<AudioSource>();
-        src.clip = TutorialMusic;
+        src.clip = TutorialMusicInicio;
         src.volume = 1f;
         src.Play();
+        src.loop = false;
 
     }
 
-    
+    private void Update()
+    {
+        if (!src.isPlaying)
+        {
+            if (src.clip == TutorialMusicInicio)
+            {
+                src.clip = TutorialMusic;
+                src.loop = true;
+                src.Play();
+            }
+            else if (src.clip == treadmillMusicInicio)
+            {
+                src.clip = treadmillMusic;
+                src.loop = true;
+                src.Play();
+            }
+            else if (src.clip == BombMusicInicio)
+            {
+                src.clip = BombMusic;
+                src.loop = true;
+                src.Play();
+            }
+            else if (src.clip == WaterMusicInicio)
+            {
+                src.clip = WaterMusic;
+                src.loop = true;
+                src.Play();
+            }
+        }
+    }
 
     public IEnumerator Fade(bool fadeIn, AudioSource source, float duration, float targetVolume)
     {
@@ -62,7 +93,7 @@ public class WorldMusicScript : MonoBehaviour
     private IEnumerator BaixarVolumeEAtualizarMusica(AudioClip newMusic, float durationTransition)
     {
         float duracaoTotal = durationTransition;
-        float volumeInicial = 1f;// 1
+        float volumeInicial = targetVolume;// 1
         
         while (durationTransition > 0)
         {
