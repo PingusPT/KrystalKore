@@ -183,8 +183,6 @@ public class GameManagerScript : MonoBehaviour
 
     public void ObjectDestroid(GameObject objectDestroid)
     {
-       
-
 
         int inv = wallsDestroid.Length - 1;
 
@@ -199,5 +197,20 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    
+    public void PlayerCach(GameObject player)
+    {
+        StartCoroutine(PlayerLegs(player));
+    }
+
+    public IEnumerator PlayerLegs(GameObject player)
+    {
+        Vector2 scale = player.transform.localScale;
+        moveScript.enabled = false;
+        yield return new WaitForSeconds(0.2f);
+        player.transform.position = new Vector2(player.transform.position.x - 0.5f, player.transform.position.y + 1f);
+        player.transform.localScale = new Vector2(0.5138532f, 0.5138532f);
+        yield return new WaitForSeconds(3.32f);
+        player.transform.localScale = scale;
+        moveScript.enabled = true;
+    }
 }

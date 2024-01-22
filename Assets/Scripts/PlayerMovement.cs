@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             
-            movement = new Vector2(horizontal * 0.001f, Vertical); ;
+            movement = new Vector2(horizontal * 0.001f, Vertical); ;//0.5138532
         }
 
         //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -255,9 +255,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void CatchLegs()
     {
+        
         CanWalk = true;
         hasLegs = true;
         anim.SetBool("HasLegs", hasLegs);
+        GameManagerScript.instance.PlayerCach(gameObject);
     }
 
     public void DroppGrabed()
@@ -333,4 +335,8 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(vel * Time.deltaTime);
         //rgd.velocity = vel * velocity * Time.deltaTime;
     }
+
+    
+
+   
 }

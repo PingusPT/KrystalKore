@@ -52,7 +52,10 @@ public class MenuScript : MonoBehaviour
             StartCoroutine(FadeOut(Load));
         }
 
-        
+        if(video.isPlaying && (Input.GetKey(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        {
+            video.time = video.length - 0.4;
+        }
     }
 
     void OnVideoEnd(VideoPlayer vp)

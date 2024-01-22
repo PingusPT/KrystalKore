@@ -51,6 +51,7 @@ public class DetectionDoor : MonoBehaviour
             flag = false;
             
             anim.SetTrigger("fechar");
+            collision.gameObject.GetComponent<Animator>().SetBool("Idle", true);
             GameManagerScript.instance.moveScript.enabled = false;
             CountDown = true;
         }
