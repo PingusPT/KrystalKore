@@ -8,7 +8,8 @@ public class GameManagerScript : MonoBehaviour
 
     public static GameManagerScript instance;
 
-
+    GameObject EndGame;
+    Animator endGameAnim;
     public GameObject Player;
     GameObject legss;
     GameObject purplePower;
@@ -147,7 +148,9 @@ public class GameManagerScript : MonoBehaviour
     public void GetComponents()
     {
         PlayerSeted = true;
+        EndGame = GameObject.FindGameObjectWithTag("EndGame");
         Player = GameObject.FindGameObjectWithTag("Player");
+        endGameAnim = EndGame.GetComponent<Animator>();
         legss = GameObject.FindGameObjectWithTag("Legs");
         redArm = GameObject.FindGameObjectWithTag("BracoVermelho");
         purplePower = GameObject.FindGameObjectWithTag("BracoRoxo");
@@ -159,6 +162,7 @@ public class GameManagerScript : MonoBehaviour
         auraScript = Player.GetComponentInChildren<ColorAura>();
         //auraScript = Player.GetComponent<ColorAura>(); //// NAO ESTAS A PEGAR O SCRIPT DO CHILD tens de pegar do child  
 
+        EndGame.SetActive(true);
         Time.timeScale = 1;
 
         if (File.Exists(path) && !newGame)
@@ -212,5 +216,10 @@ public class GameManagerScript : MonoBehaviour
         yield return new WaitForSeconds(3.32f);
         player.transform.localScale = scale;
         moveScript.enabled = true;
+    }
+
+    public void DoEndAnimation()
+    {
+        endGameAnim.SetTrigger("End");
     }
 }

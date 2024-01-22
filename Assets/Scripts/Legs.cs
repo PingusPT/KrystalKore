@@ -35,6 +35,10 @@ public class Legs : MonoBehaviour
             //collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
             Destroy(gameObject);
         }
+        if (collision.gameObject.tag == "Player" && gameObject.tag == "ObjectEnd")
+        {
+            GameManagerScript.instance.DoEndAnimation();
+        }
     }
 
 

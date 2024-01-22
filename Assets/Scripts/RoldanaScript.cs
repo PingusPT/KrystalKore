@@ -41,4 +41,12 @@ public class RoldanaScript : MonoBehaviour
     
 
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            GameManagerScript.instance.moveScript.InPlataform(rgd.velocity / 2);
+        }
+    }
 }

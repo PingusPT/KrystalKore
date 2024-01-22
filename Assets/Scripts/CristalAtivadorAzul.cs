@@ -15,10 +15,10 @@ public class CristalAtivadorAzul : CristalAzul
     // Update is called once per frame
     void Update()
     {
-        if(!Barreira.activeSelf && flag)
+        if(!Barreira.activeSelf && flag && Barreira.name != "Break2")
         {
             flag = false;
-            
+            Debug.Log(Barreira.name);
             ConveyorSpikeController.instance.AticarTereciro();
         }
 

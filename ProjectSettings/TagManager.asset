@@ -29,6 +29,8 @@ TagManager:
   - CoveyorZone
   - FallZone
   - BombZone
+  - EndGame
+  - ObjectEnd
   layers:
   - Default
   - TransparentFX
@@ -40,7 +42,7 @@ TagManager:
   - Player
   - Objects
   - Peso
-  - 
+  - Conveyors
   - 
   - 
   - 

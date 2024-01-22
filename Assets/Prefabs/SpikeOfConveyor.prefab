@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignorMe:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
   feet: {fileID: 5245276948893822103}
   speed: 1.5
   invertido: 0
