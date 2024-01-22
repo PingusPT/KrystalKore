@@ -84,12 +84,12 @@ public class CristalRoxo : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0)
         {
-            src.PlayOneShot(apeerSound);
+            
             anim.Play("aparecer", 0, 0f);
         }
         else if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
         {
-            src.PlayOneShot(disapeerSound);
+            
             anim.Play("aparecer", 0, 1f);
         }
     }
@@ -99,10 +99,12 @@ public class CristalRoxo : MonoBehaviour
        
         if(anim.GetFloat("speed") > 0)
         {
+            src.PlayOneShot(apeerSound);
             anim.SetFloat("speed", -1);
         }
         else
         {
+            src.PlayOneShot(disapeerSound);
             anim.SetFloat("speed", 1);
         }
     }

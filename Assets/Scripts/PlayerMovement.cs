@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             
-            movement = new Vector2(horizontal * 0.01f, Vertical); ;
+            movement = new Vector2(horizontal * 0.001f, Vertical); ;
         }
 
         //---------------------------------------------------------------------------------------------------------------------------------------------------------------------

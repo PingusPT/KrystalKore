@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7357790f233dcf4abc21841acd6ee2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apeerSound: {fileID: 0}
-  disapeerSound: {fileID: 0}
+  apeerSound: {fileID: 8300000, guid: 3d7afb692c01d864cbaaee2207bbb7eb, type: 3}
+  disapeerSound: {fileID: 8300000, guid: afa258d8a6c63814c81f2ffc19c69717, type: 3}
   invertido: 1
   MassSet: 60
 --- !u!82 &3698139317866632445
@@ -137,17 +137,17 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 20
+  Priority: 256
+  DopplerLevel: 0.97
+  MinDistance: 4.71
+  MaxDistance: 12.6
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -180,7 +180,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -210,7 +210,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.776
       inSlope: 0
       outSlope: 0
       tangentMode: 0
