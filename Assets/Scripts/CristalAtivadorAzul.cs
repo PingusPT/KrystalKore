@@ -18,7 +18,7 @@ public class CristalAtivadorAzul : CristalAzul
         if(!Barreira.activeSelf && flag && Barreira.name != "Break2")
         {
             flag = false;
-            Debug.Log(Barreira.name);
+           
             ConveyorSpikeController.instance.AticarTereciro();
         }
 

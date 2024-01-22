@@ -65,7 +65,7 @@ public class ColorAura : MonoBehaviour
        {
             
             CurremtColor = CorAzul;
-            Debug.Log("CorAzul");
+           
             StartCoroutine(SoftColorChange(CorAzul));
        }
 
@@ -99,7 +99,7 @@ public class ColorAura : MonoBehaviour
             CristalRoxoController.instance.myDelegateAppear();
             
             CurremtColor = CorRoxo;
-            Debug.Log("CorRoxo");
+            
             StartCoroutine(SoftColorChange(CorRoxo));
 
 
@@ -111,7 +111,7 @@ public class ColorAura : MonoBehaviour
             redDelay = true;
             Invoke("DelayRed", 4f);
             anim.SetTrigger("RedPower");
-            Debug.Log("CorVermelho");
+            
             CurremtColor = CorVermelho;
             StartCoroutine(SoftColorChange(CorVermelho));
             RedCristalController.instance.ActivateBombs();
@@ -277,7 +277,7 @@ public class ColorAura : MonoBehaviour
         if(CurremtColor != CorWhite)
         {
             CurremtColor = CorWhite;
-            Debug.Log("CorBranco");
+           
             
             StartCoroutine(SoftColorChange(CorWhite));
         }
@@ -287,7 +287,7 @@ public class ColorAura : MonoBehaviour
 
     public void DelayRed()
     {
-        Debug.Log("DELAYYYYY");
+        
         redDelay = false;
     }
 

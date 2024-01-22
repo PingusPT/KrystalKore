@@ -44,7 +44,7 @@ public class PlataformaRoxaMove : CristalRoxo
             
             currentTarget = barrier.transform.position;
         }
-        Debug.Log("AAAAAAAZ" + gameObject.name);
+        
 
         CalculateDirection();
 
@@ -72,9 +72,33 @@ public class PlataformaRoxaMove : CristalRoxo
             {
                 capsule.enabled = true;
 
+                Debug.Log(Vector3.Distance(transform.position, barrier.transform.position) < distanceStopFromBarrier);
+
                 if (Vector3.Distance(transform.position, barrier.transform.position) < distanceStopFromBarrier)
                 {
-                    currentTarget = LastTarget;
+                    if (Vertical)
+                    {
+                        if (transform.position.y < barrier.transform.position.y)
+                        {
+                            currentTarget = pointA.position;
+                        }
+                        else
+                        {
+                            currentTarget = pointB.position;
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position.x < barrier.transform.position.x)
+                        {
+                            currentTarget = pointA.position;
+                        }
+                        else
+                        {
+                            currentTarget = pointB.position;
+                        }
+                    }
+                    //currentTarget = LastTarget;
                 }
 
                 if (Vector3.Distance(transform.position, currentTarget) < 0.2f)
@@ -87,10 +111,22 @@ public class PlataformaRoxaMove : CristalRoxo
             else
             {
                 capsule.enabled = false;
-
+                /*
                 if (currentTarget == transform.position)
                 {
                     currentTarget = LastTarget;
+                }
+                */
+                if(currentTarget == barrier.transform.position)
+                {
+                    if(LastTarget == pointB.transform.position)
+                    {
+                        currentTarget = pointA.position;
+                    }
+                    else
+                    {
+                        currentTarget = pointB.position;
+                    }
                 }
 
                 if (Vector3.Distance(transform.position, currentTarget) < 0.1f)

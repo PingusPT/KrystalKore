@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSounds : MonoBehaviour
 {
-    [SerializeField] AudioClip Step1, Step2, Drag, Water1, Water2, Water3;
+    [SerializeField] AudioClip Step1, Step2, Drag, Water1, Water2, Water3, Landing;
 
     static public PlayerSounds instance;
 
@@ -62,22 +62,27 @@ public class PlayerSounds : MonoBehaviour
         {
             case 1:
                 {
-                    Debug.Log("Playe Sound");
+                    
                     src.PlayOneShot(Water1);
                     break;
                 }
             case 2:
                 {
-                    Debug.Log("Playe Sound");
+                    
                     src.PlayOneShot(Water2);
                     break;
                 }
             case 3:
                 {
-                    Debug.Log("Playe Sound");
+                    
                     src.PlayOneShot(Water3);
                     break;
                 }
         }
+    }
+
+    public void LandingSound()
+    {
+        src.PlayOneShot(Landing);
     }
 }

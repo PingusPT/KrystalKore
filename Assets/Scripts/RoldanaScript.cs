@@ -5,6 +5,9 @@ using UnityEngine;
 public class RoldanaScript : MonoBehaviour
 {
     [SerializeField] GameObject CristalRoldana;
+    [SerializeField] GameObject Platform;
+
+    Rigidbody2D rgbPlat;
     Animator anim;
     Rigidbody2D rgd;
     public float speed = 5f;
@@ -15,7 +18,7 @@ public class RoldanaScript : MonoBehaviour
     void Start()
     {
         rgd = GetComponent<Rigidbody2D>();
-
+        rgbPlat = Platform.GetComponent<Rigidbody2D>();
         anim = CristalRoldana.GetComponent<Animator>();
     }
 
@@ -42,11 +45,16 @@ public class RoldanaScript : MonoBehaviour
 
     }
 
+    //public float divisionVel = 1.7f;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            GameManagerScript.instance.moveScript.InPlataform(rgd.velocity / 2);
+            
+            //Debug.Log("Empurrar " + rgbPlat.velocity);
+            //GameManagerScript.instance.moveScript.InPlataform(new Vector2(Platform.transform.position.x, Platform.transform.position.y + 1f));
+            GameManagerScript.instance.moveScript.InPlataform(new Vector2(rgbPlat.velocity.x * 10, 0));
         }
     }
 }

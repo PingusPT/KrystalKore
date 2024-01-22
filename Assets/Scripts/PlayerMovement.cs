@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
 
     
     GameObject GrabedObject;
+    PlayerSounds soundScripts;
 
     Rigidbody2D rgbGrabed;
     CapsuleCollider2D colliderGrabed;
@@ -51,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         anim = gameObject.GetComponent<Animator>();
-
+        soundScripts = gameObject.GetComponent<PlayerSounds>();
         rgd = gameObject.GetComponent<Rigidbody2D>();
     }
     // Start is called before the first frame update
@@ -331,12 +332,17 @@ public class PlayerMovement : MonoBehaviour
     public void InPlataform(Vector2 vel)
     {
         
-        Debug.Log("Velocidade do Player - " + rgd.velocity + " | Velocidade Resebida pela Plataforma - " + vel);
         transform.Translate(vel * Time.deltaTime);
-        //rgd.velocity = vel * velocity * Time.deltaTime;
+
     }
 
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(ground && rayHit.collider != null)
+        {
+            soundScripts.LandingSound();
+        }
+    }
 
-   
+
 }

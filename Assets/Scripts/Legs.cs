@@ -4,36 +4,46 @@ using UnityEngine;
 
 public class Legs : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] AudioClip LegsSound, ArmSound, PuprleSound;
+
+    AudioSource src;
+    CircleCollider2D circle;
     void Start()
     {
+        if(gameObject.tag == "Legs" || gameObject.tag == "BracoVermelho" || gameObject.tag == "BracoRoxo")
+        {
+            circle = GetComponent<CircleCollider2D>();
+        }
         
+        src = GetComponent<AudioSource>();
+        src.loop = false;
     }
-
-    // Update is called once per frame
-    
-
-
     
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player" && gameObject.tag == "Legs")
         {
+            circle.enabled = false;
+            src.PlayOneShot(LegsSound);
             collision.gameObject.GetComponent<PlayerMovement>().CatchLegs();
-            Destroy(gameObject);
+            Invoke("delaySetActive", 0.5f);
         }
         if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoVermelho")
         {
+            circle.enabled = false;
+            src.PlayOneShot(ArmSound);
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchRedArm();
             //collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
-            Destroy(gameObject);
+            Invoke("delaySetActive", 0.5f);
         }
         if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoRoxo")
         {
+            circle.enabled = false;
+            src.PlayOneShot(PuprleSound);
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchPuprlePower();
             //collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
-            Destroy(gameObject);
+            Invoke("delaySetActive", 0.5f);
         }
         if (collision.gameObject.tag == "Player" && gameObject.tag == "ObjectEnd")
         {
@@ -41,5 +51,8 @@ public class Legs : MonoBehaviour
         }
     }
 
-
+    private void delaySetActive()
+    {
+        gameObject.SetActive(false);
+    }
 }

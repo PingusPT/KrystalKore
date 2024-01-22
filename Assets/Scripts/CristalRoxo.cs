@@ -99,11 +99,13 @@ public class CristalRoxo : MonoBehaviour
        
         if(anim.GetFloat("speed") > 0)
         {
+            src.Pause();
             src.PlayOneShot(apeerSound);
             anim.SetFloat("speed", -1);
         }
         else
         {
+            src.Pause();
             src.PlayOneShot(disapeerSound);
             anim.SetFloat("speed", 1);
         }

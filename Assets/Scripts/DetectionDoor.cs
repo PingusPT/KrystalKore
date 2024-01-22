@@ -6,6 +6,10 @@ public class DetectionDoor : MonoBehaviour
 {
 
     [SerializeField] GameObject Porta;
+
+    [SerializeField] AudioClip PortaAbre, PortaFecha;
+
+    AudioSource src;
     
     Animator anim;
 
@@ -19,7 +23,8 @@ public class DetectionDoor : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        src = GetComponent<AudioSource>();
+        src.loop = false;
         anim = Porta.GetComponent<Animator>();
  
     }
@@ -49,7 +54,7 @@ public class DetectionDoor : MonoBehaviour
         {
             
             flag = false;
-            
+            src.PlayOneShot(PortaFecha);
             anim.SetTrigger("fechar");
             collision.gameObject.GetComponent<Animator>().SetBool("Idle", true);
             GameManagerScript.instance.moveScript.enabled = false;
@@ -57,8 +62,8 @@ public class DetectionDoor : MonoBehaviour
         }
         if(collision.gameObject.tag == "Chave" && flag1)
         {
-            
-            
+
+            src.PlayOneShot(PortaAbre);
             anim.SetTrigger("abrir");
 
 
