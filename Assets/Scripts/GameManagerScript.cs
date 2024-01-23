@@ -223,15 +223,7 @@ public class GameManagerScript : MonoBehaviour
         endGameAnim.SetTrigger("End");
     }
 
-    public void CallCamera(Animator anim, float delay)
-    {
-        StartCoroutine(CamChange(anim, delay));
-    }
+   
 
-    public IEnumerator CamChange(Animator anim, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        anim.SetFloat("speed", -1f);
-
-    }
+    
 }

@@ -27,7 +27,7 @@ public class Legs : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && gameObject.tag == "Legs")
+        if (collision.gameObject.tag == "Player" && gameObject.tag == "Legs" && circle.enabled)
         {
             camAnim.SetFloat("speed", 1);
             circle.enabled = false;
@@ -35,7 +35,7 @@ public class Legs : MonoBehaviour
             collision.gameObject.GetComponent<PlayerMovement>().CatchLegs();
             Invoke("delaySetActive", 0.5f);
         }
-        if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoVermelho")
+        if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoVermelho" && circle.enabled)
         {
             camAnim.SetFloat("speed", 1);
             circle.enabled = false;
@@ -44,7 +44,7 @@ public class Legs : MonoBehaviour
             //collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
             Invoke("delaySetActive", 0.5f);
         }
-        if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoRoxo")
+        if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoRoxo" && circle.enabled)
         {
             camAnim.SetFloat("speed", 1);
             circle.enabled = false;
@@ -61,8 +61,8 @@ public class Legs : MonoBehaviour
 
     private void delaySetActive()
     {
-
-        GameManagerScript.instance.CallCamera(camAnim, 2f);
         gameObject.SetActive(false);
     }
+
+
 }
