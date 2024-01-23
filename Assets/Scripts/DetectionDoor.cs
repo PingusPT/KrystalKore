@@ -65,7 +65,7 @@ public class DetectionDoor : MonoBehaviour
 
             src.PlayOneShot(PortaAbre);
             anim.SetTrigger("abrir");
-
+            flag1 = false;
 
             Destroy(collision.gameObject);
         }
