@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Legs : MonoBehaviour
 {
     [SerializeField] AudioClip LegsSound, ArmSound, PuprleSound;
 
+    CinemachineVirtualCamera cam;
+    Animator camAnim;
     AudioSource src;
     CircleCollider2D circle;
     void Start()
     {
         if(gameObject.tag == "Legs" || gameObject.tag == "BracoVermelho" || gameObject.tag == "BracoRoxo")
         {
+            cam = FindAnyObjectByType<CinemachineVirtualCamera>();
+            camAnim = cam.GetComponent<Animator>();
             circle = GetComponent<CircleCollider2D>();
         }
         
@@ -24,6 +29,7 @@ public class Legs : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && gameObject.tag == "Legs")
         {
+            camAnim.SetFloat("speed", 1);
             circle.enabled = false;
             src.PlayOneShot(LegsSound);
             collision.gameObject.GetComponent<PlayerMovement>().CatchLegs();
@@ -31,6 +37,7 @@ public class Legs : MonoBehaviour
         }
         if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoVermelho")
         {
+            camAnim.SetFloat("speed", 1);
             circle.enabled = false;
             src.PlayOneShot(ArmSound);
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchRedArm();
@@ -39,6 +46,7 @@ public class Legs : MonoBehaviour
         }
         if(collision.gameObject.tag == "Player" && gameObject.tag == "BracoRoxo")
         {
+            camAnim.SetFloat("speed", 1);
             circle.enabled = false;
             src.PlayOneShot(PuprleSound);
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchPuprlePower();
@@ -53,6 +61,8 @@ public class Legs : MonoBehaviour
 
     private void delaySetActive()
     {
+
+        GameManagerScript.instance.CallCamera(camAnim, 2f);
         gameObject.SetActive(false);
     }
 }

@@ -13,6 +13,8 @@ public class CamChange : MonoBehaviour
     CinemachineVirtualCamera virtCam;
     CinemachineTransposer transposer;
 
+    
+
     GameObject Player;
 
     public AnimationCurve animationCurve;
@@ -25,8 +27,10 @@ public class CamChange : MonoBehaviour
     public float DefaultCamLens = 7.5f;
     float camLens = 7.5f;
 
-    [Range(0, 2f)] public float percentageGrow = 0.8f;
+    [Range(0f, 2f)] public float percentageGrow = 0.8f;
 
+    public bool DestroiAfertUse = false;
+    public bool ZoomOut = true;
     public float SetTimeCurve = 1.5f;
     float TimeCurve = 0f;
     
@@ -37,7 +41,7 @@ public class CamChange : MonoBehaviour
         
         virtCam = Camera.GetComponent<CinemachineVirtualCamera>();
         transposer = virtCam.GetCinemachineComponent<CinemachineTransposer>();
-
+        
         
     }
 
@@ -49,19 +53,27 @@ public class CamChange : MonoBehaviour
         if (SoftChange)
         {
 
-            
+            Debug.Log(camLens + " aqui esta  aser aplicado" + TimeCurve);
             camLens = animationCurve.Evaluate(TimeCurve);
             TimeCurve += Time.deltaTime;
 
 
-            virtCam.m_Lens.OrthographicSize = DefaultCamLens * (percentageGrow + camLens);
-            
+            //virtCam.m_Lens.OrthographicSize = DefaultCamLens * (percentageGrow + camLens);
+
+            virtCam.m_Lens.OrthographicSize = (ZoomOut) ? DefaultCamLens * (percentageGrow + camLens) : DefaultCamLens * ((camLens * 0.6f) + 0.4f);
+
+
             if (camLens >= 1)
             {
                 
-                virtCam.m_Lens.OrthographicSize = DefaultCamLens * (percentageGrow + camLens);
+                //virtCam.m_Lens.OrthographicSize = DefaultCamLens * (percentageGrow + camLens);
                 TimeCurve = SetTimeCurve;
                 SoftChange = false;
+
+                if(DestroiAfertUse)
+                {
+                    gameObject.SetActive(false);
+                }
             }
             
         }
@@ -73,13 +85,15 @@ public class CamChange : MonoBehaviour
             TimeCurve -= Time.deltaTime;
 
             // 13.5
-            virtCam.m_Lens.OrthographicSize = DefaultCamLens * ( 1f + camLens);
+            //virtCam.m_Lens.OrthographicSize = DefaultCamLens * ( percentageGrow + camLens);//1f
+
+            virtCam.m_Lens.OrthographicSize = (!ZoomOut) ? DefaultCamLens * ((camLens * 0.6f) + 0.4f) : DefaultCamLens * (1 + camLens);
 
             if (camLens == 0)
             {
                 TimeCurve = 0;
                 VoltarAoNormal = false;
-                virtCam.m_Lens.OrthographicSize = DefaultCamLens;
+                //virtCam.m_Lens.OrthographicSize = DefaultCamLens;
             }
         }
         
@@ -90,19 +104,23 @@ public class CamChange : MonoBehaviour
         if (collision.gameObject.tag == "Player" && !isCamChanged && !SoftChange)
         {
             Player = collision.gameObject;
-
             SetCamDamping();
-            virtCam.Follow = CamPoint.transform;
-          
-            isCamChanged = true;
-            VoltarAoNormal = false;
-            SoftChange = true;
-            
-            
-           
-            virtCam.Follow = CamPoint.transform;
-          
-
+            if (ZoomOut)
+            {
+                virtCam.Follow = CamPoint.transform;
+                TimeCurve = 0;
+                isCamChanged = true;
+                VoltarAoNormal = false;
+                SoftChange = true;
+            }
+            else
+            {
+                isCamChanged = true;
+                TimeCurve = SetTimeCurve;
+                virtCam.Follow = Player.transform;
+                SoftChange = false;
+                VoltarAoNormal = true;
+            }
             
 
         }
@@ -114,14 +132,25 @@ public class CamChange : MonoBehaviour
         if (collision.gameObject.tag == "Player" && isCamChanged)
         {
             ResetCamDamping();
-            isCamChanged = false;
 
-            virtCam.Follow = Player.transform;
-            SoftChange = false;
-            VoltarAoNormal = true;
-
-            
-
+            if(ZoomOut)
+            {
+                isCamChanged = false;
+                TimeCurve = SetTimeCurve;
+                virtCam.Follow = Player.transform;
+                SoftChange = false;
+                VoltarAoNormal = true;
+            }
+            else
+            {
+                virtCam.Follow = CamPoint.transform;
+                TimeCurve = 0.5f;
+                Debug.Log(TimeCurve + " esta é o tempo");
+                isCamChanged = false;
+                VoltarAoNormal = false;
+                SoftChange = true;
+            }
+   
         }
     }
 
@@ -130,6 +159,8 @@ public class CamChange : MonoBehaviour
         transposer.m_XDamping = 5f;
         transposer.m_YDamping = 5f;
         transposer.m_ZDamping = 5f;
+
+        transposer.m_FollowOffset.y = 0f;
     }
 
 
@@ -138,5 +169,7 @@ public class CamChange : MonoBehaviour
         transposer.m_XDamping = 1f;
         transposer.m_YDamping = 1f;
         transposer.m_ZDamping = 1f;
+
+        transposer.m_FollowOffset.y = 4.7f; //default game
     }
 }

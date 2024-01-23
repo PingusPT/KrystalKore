@@ -73,13 +73,13 @@ public class LifeManager : MonoBehaviour
                 case 1:
                     {
                         vidas[life].SetActive(false);
-                        
+                        anim.SetTrigger("Damage");
                         life--;
                         return;
                     }
                 case 2:
                     {
-                        
+                        anim.SetTrigger("Damage");
                         vidas[life].SetActive(false);
                         life--;
                         return;
@@ -87,7 +87,7 @@ public class LifeManager : MonoBehaviour
                 case 3:
                     {
                         vidas[life].SetActive(false);
-                        
+                        anim.SetTrigger("Damage");
                         life--;
                         return;
                     }
