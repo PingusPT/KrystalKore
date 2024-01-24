@@ -33,7 +33,7 @@ public class WaterShapeController : MonoBehaviour
     void OnValidate()
     {
         // Clean waterpoints 
-        StartCoroutine(CreateWaves());
+        //StartCoroutine(CreateWaves());
     }
     IEnumerator CreateWaves()
     {
