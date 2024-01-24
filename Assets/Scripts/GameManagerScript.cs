@@ -37,6 +37,8 @@ public class GameManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 100;
+
         if(!instance)
         {
             instance = this;
@@ -213,7 +215,7 @@ public class GameManagerScript : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         player.transform.position = new Vector2(player.transform.position.x - 0.5f, player.transform.position.y + 1f);
         player.transform.localScale = new Vector2(0.5138532f, 0.5138532f);
-        yield return new WaitForSeconds(3.32f);
+        yield return new WaitForSeconds(3.3f);
         player.transform.localScale = scale;
         moveScript.enabled = true;
     }

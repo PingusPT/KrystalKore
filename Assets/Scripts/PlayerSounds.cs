@@ -91,12 +91,12 @@ public class PlayerSounds : MonoBehaviour
     {
         if(dieSound)
         {
-            Debug.Log("Die1");
+            
             src.PlayOneShot(Die1);
         }
         else
         {
-            Debug.Log("Die2");
+            
             src.PlayOneShot(Die2);
         }
 

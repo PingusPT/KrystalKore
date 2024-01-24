@@ -15,7 +15,7 @@ public class CristalAtivadorAzul : CristalAzul
     // Update is called once per frame
     void Update()
     {
-        if(!Barreira.activeSelf && flag && Barreira.name != "Break2")
+        if(!Barreira.activeSelf && flag)
         {
             flag = false;
            

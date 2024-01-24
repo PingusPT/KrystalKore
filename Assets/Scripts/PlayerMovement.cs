@@ -115,9 +115,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        
+        Debug.Log("Colodiu com + " + rayGrab.collider);
 
-        if (rayHit.distance < 0.56f && rayHit.collider != null)
+        if (rayHit.distance < 0.7f && rayHit.collider != null)
         {
             
             ground = true;
@@ -174,9 +174,9 @@ public class PlayerMovement : MonoBehaviour
         if (CanWalk)
         {
             movement = new Vector2(speed * horizontal, Vertical);
-            movement *= Time.deltaTime;
-           
-           
+            
+
+            
         }
         else
         {
@@ -190,8 +190,8 @@ public class PlayerMovement : MonoBehaviour
         //------------------------------------------------------------------------------  Grab Hability -----------------------------------------------------------------------
         if (movement.x > 0f)
         {
-            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-            Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
+            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 0.5f, LayerMask.GetMask("Objects"));
+            Debug.DrawRay(GrabPoint.transform.position, -transform.right * 0.5f, Color.green);
 
             if (GrabPoint.transform.localPosition.x < 0)
             {
@@ -201,8 +201,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(movement.x < 0f)
         {
-            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
-            Debug.DrawRay(GrabPoint.transform.position, transform.right * 1.2f, Color.green);
+            rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 0.5f, LayerMask.GetMask("Objects"));
+            Debug.DrawRay(GrabPoint.transform.position, transform.right * 0.5f, Color.green);
 
             if (GrabPoint.transform.localPosition.x > 0)
             {
@@ -214,13 +214,13 @@ public class PlayerMovement : MonoBehaviour
         {
             if(dir == 1)
             {
-                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 1.2f, LayerMask.GetMask("Objects"));
-                Debug.DrawRay(GrabPoint.transform.position, -transform.right * 1.2f, Color.green);
+                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, -transform.right, 0.5f, LayerMask.GetMask("Objects"));
+                Debug.DrawRay(GrabPoint.transform.position, -transform.right * 0.5f, Color.green);
             }
             else
             {
-                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 1.2f, LayerMask.GetMask("Objects"));
-                Debug.DrawRay(GrabPoint.transform.position, transform.right * 1.2f, Color.green);
+                rayGrab = Physics2D.Raycast(GrabPoint.transform.position, transform.right, 0.5f, LayerMask.GetMask("Objects"));
+                Debug.DrawRay(GrabPoint.transform.position, transform.right * 0.5f, Color.green);
 
             }
         }
@@ -245,11 +245,18 @@ public class PlayerMovement : MonoBehaviour
             //anim.SetFloat("velocity", 1);
             anim.SetFloat("Blend", -1);
         }
-        
+
         //-------------------------------------------------------------------------------------------------------------------------
 
-        
-        transform.Translate(movement);
+        Debug.Log(movement.normalized + "- isto é");
+        if(CanWalk)
+        {
+            transform.Translate(movement.normalized * Time.deltaTime * speed);
+        }
+        else
+        {
+            transform.Translate(movement.normalized * Time.deltaTime );
+        }
 
     }
 
@@ -265,16 +272,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void DroppGrabed()
     {
-        if(GrabedObject)
-        {
+        
+            GrabedObject.transform.SetParent(null);
             stopGrabing = true;
             rgbGrabed.bodyType = RigidbodyType2D.Dynamic;
             colliderGrabed.forceReceiveLayers = GrabAll;
             colliderGrabed.forceSendLayers = GrabAll;
-            GrabedObject.transform.SetParent(null);
             GrabedObject = null;
             StartCoroutine(AllowGrabimg());
-        }
+        
         
 
     }
@@ -314,14 +320,14 @@ public class PlayerMovement : MonoBehaviour
         {
             CatchLegs();
         }
-       
+        
         gameObject.transform.position = new Vector2(PositionX, PositionY);
     }
 
 
     private IEnumerator AllowGrabimg()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(02f);
 
         
         stopGrabing = false;

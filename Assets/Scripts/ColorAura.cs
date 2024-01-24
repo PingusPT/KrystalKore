@@ -51,6 +51,11 @@ public class ColorAura : MonoBehaviour
         
     }
 
+    private void Awake()
+    {
+        anim = GetComponentInParent<Animator>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -307,6 +312,10 @@ public class ColorAura : MonoBehaviour
     {
         hasPurplePower = HasPurplePower;
         hasRedArm = HasRedArm;
+
+        
+        anim.SetBool("HasRedArm", hasRedArm);
+        
     }
 
     

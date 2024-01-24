@@ -53,7 +53,7 @@ public class CamChange : MonoBehaviour
         if (SoftChange)
         {
 
-            Debug.Log(camLens + " aqui esta  aser aplicado" + TimeCurve);
+            
             camLens = animationCurve.Evaluate(TimeCurve);
             TimeCurve += Time.deltaTime;
 
@@ -145,7 +145,7 @@ public class CamChange : MonoBehaviour
             {
                 virtCam.Follow = CamPoint.transform;
                 TimeCurve = 0.5f;
-                Debug.Log(TimeCurve + " esta é o tempo");
+                
                 isCamChanged = false;
                 VoltarAoNormal = false;
                 SoftChange = true;
