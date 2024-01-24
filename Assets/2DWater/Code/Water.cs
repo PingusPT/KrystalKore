@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 namespace Bundos.WaterSystem
 {
     public class Spring
@@ -14,7 +15,7 @@ namespace Bundos.WaterSystem
         public bool interactive = true;
         public float splashInfluence = 0.005f;
         public float waveHeight = .25f;
-        public bool Lava = false;
+        
 
         [Header("Constant Waves Settings")]
         public bool hasConstantWaves = true;
@@ -209,6 +210,7 @@ namespace Bundos.WaterSystem
             springs[index].weightPosition = (sink ? Vector2.down : Vector2.up) * waveHeight;
         }
 
+        public bool Lava = false;
         void OnTriggerEnter2D(Collider2D other)
         {
             if (!interactive)
