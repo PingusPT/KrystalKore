@@ -66,8 +66,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.00024998188, y: 0, z: 0}
-    m_Extent: {x: 0.99715, y: 0.9981, z: 0}
+    m_Center: {x: 0.00025001168, y: -0.00019997358, z: 0}
+    m_Extent: {x: 0.99794996, y: 0.9975, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartBeat: {fileID: 8300000, guid: c0b3dba3fa1b344a8bb82cb1540f7326, type: 3}
-  explode: {fileID: 8300000, guid: 047eec0990c6c494c86a6f6c995d5f8e, type: 3}
+  explode: {fileID: 8300000, guid: 98ad5d1c7ff252e4e8ceaef3f9bbdc80, type: 3}
 --- !u!95 &7399177735661756445
 Animator:
   serializedVersion: 5
