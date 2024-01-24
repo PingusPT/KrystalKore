@@ -21,7 +21,7 @@ public class RedCristal : MonoBehaviour
         src = gameObject.GetComponent<AudioSource>();
         src.loop = true;
         src.clip = heartBeat;
-        src.Play();
+        src.PlayDelayed(1f);
     }
 
     private void Awake()
@@ -32,21 +32,14 @@ public class RedCristal : MonoBehaviour
 
     public void TurnOfff()
     {
-        RedCristalSpawner.instance.StartRespawnTime(gameObject,point,anim);
+        RedCristalSpawner.instance.StartRespawnTime(gameObject,point,anim, src, heartBeat);
         gameObject.SetActive(false);
         exploded = false;
     }
 
     public void StartExplo()
     {
-        if (src != null && explode != null)
-        {
-            src.PlayOneShot(explode);
-        }
-        else
-        {
-            Debug.LogError("erro neste Game Object" + gameObject.name);
-        }
+        
         anim.SetTrigger("Ativar");
     }
 
@@ -71,12 +64,28 @@ public class RedCristal : MonoBehaviour
         }
     }
 
+    private void Sound()
+    {
+        if (src != null && explode != null)
+        {
+            src.Stop();
+            src.clip = explode;
+            src.loop = false;
+            src.Play();
+
+        }
+        else
+        {
+            Debug.LogError("erro neste Game Object" + gameObject.name);
+        }
+    }
+
     private void Explode()
     {
         
         if (!exploded)
         {
-            
+           
             foreach (GameObject obj in arrayDestructibleObjects.ToArray())
             {
                 if (obj.gameObject.tag == "CoisasDestrutiveis" && obj.gameObject.name != "Break1")

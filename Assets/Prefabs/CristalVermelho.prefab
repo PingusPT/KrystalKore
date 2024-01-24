@@ -66,8 +66,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.00025001168, y: -0.00019997358, z: 0}
-    m_Extent: {x: 0.99794996, y: 0.9975, z: 0}
+    m_Center: {x: -0.000049978495, y: 0.00020000339, z: 0}
+    m_Extent: {x: 0.99735, y: 0.9977, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -353,8 +353,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 256
   DopplerLevel: 0.97
-  MinDistance: 4.71
-  MaxDistance: 12.6
+  MinDistance: 7.4
+  MaxDistance: 23.52
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0

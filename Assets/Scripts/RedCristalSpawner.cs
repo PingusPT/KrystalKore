@@ -18,7 +18,7 @@ public class RedCristalSpawner : MonoBehaviour
 
 
 
-    private IEnumerator Respawn(GameObject redCristal, Vector2 Spawn, Animator anim)
+    private IEnumerator Respawn(GameObject redCristal, Vector2 Spawn, Animator anim, AudioSource src, AudioClip beat)
     {
         yield return new WaitForSeconds(6);
 
@@ -26,10 +26,14 @@ public class RedCristalSpawner : MonoBehaviour
         redCristal.transform.position = Spawn;
         anim.Play("Explode", 0, 0);
         anim.SetTrigger("Desativar");
+        src.Stop();
+        src.clip = beat;
+        src.loop = true;
+        src.Play();
     }
 
-    public void StartRespawnTime(GameObject redCristal, Vector2 Spawn, Animator anim)
+    public void StartRespawnTime(GameObject redCristal, Vector2 Spawn, Animator anim, AudioSource src, AudioClip beat)
     {
-        StartCoroutine(Respawn(redCristal, Spawn, anim));
+        StartCoroutine(Respawn(redCristal, Spawn, anim, src, beat));
     }
 }
