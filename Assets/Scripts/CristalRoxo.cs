@@ -104,6 +104,10 @@ public class CristalRoxo : MonoBehaviour
             {
                 src.PlayOneShot(apeerSound);
             }
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
             
             anim.SetFloat("speed", -1);
         }
@@ -114,7 +118,11 @@ public class CristalRoxo : MonoBehaviour
             {
                 src.PlayOneShot(disapeerSound);
             }
-                
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
+
             anim.SetFloat("speed", 1);
         }
     }

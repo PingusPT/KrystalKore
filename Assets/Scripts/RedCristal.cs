@@ -43,7 +43,10 @@ public class RedCristal : MonoBehaviour
         {
             src.PlayOneShot(explode);
         }
-        
+        else
+        {
+            Debug.LogError("erro neste Game Object" + gameObject.name);
+        }
         anim.SetTrigger("Ativar");
     }
 

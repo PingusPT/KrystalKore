@@ -35,7 +35,10 @@ public class Legs : MonoBehaviour
             {
                 src.PlayOneShot(LegsSound);
             }
-            
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
             collision.gameObject.GetComponent<PlayerMovement>().CatchLegs();
             Invoke("delaySetActive", 0.5f);
         }
@@ -47,7 +50,10 @@ public class Legs : MonoBehaviour
             {
                 src.PlayOneShot(ArmSound);
             }
-            
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchRedArm();
             //collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
             Invoke("delaySetActive", 0.5f);
@@ -60,7 +66,10 @@ public class Legs : MonoBehaviour
             {
                 src.PlayOneShot(PuprleSound);
             }
-            
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchPuprlePower();
             //collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
             Invoke("delaySetActive", 0.5f);

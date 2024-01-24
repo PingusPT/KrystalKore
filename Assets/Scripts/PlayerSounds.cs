@@ -39,7 +39,10 @@ public class PlayerSounds : MonoBehaviour
                 {
                     src.PlayOneShot(Step1);
                 }
-                
+                else
+                {
+                    Debug.LogError("erro neste Game Object" + gameObject.name);
+                }
             }
                 
         }
@@ -51,7 +54,10 @@ public class PlayerSounds : MonoBehaviour
                 {
                     src.PlayOneShot(Step2);
                 }
-                
+                else
+                {
+                    Debug.LogError("erro neste Game Object" + gameObject.name);
+                }
             }
         }
 
@@ -64,7 +70,10 @@ public class PlayerSounds : MonoBehaviour
         {
             src.PlayOneShot(Drag);
         }
-        
+        else
+        {
+            Debug.LogError("erro neste Game Object" + gameObject.name);
+        }
     }
 
     
@@ -79,7 +88,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Water1);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 2:
@@ -88,7 +100,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Water2);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 3:
@@ -97,7 +112,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Water3);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
         }
@@ -109,7 +127,10 @@ public class PlayerSounds : MonoBehaviour
         {
             src.PlayOneShot(Landing);
         }
-        
+        else
+        {
+            Debug.LogError("erro neste Game Object" + gameObject.name);
+        }
     }
 
     private void DieSound()
@@ -120,7 +141,10 @@ public class PlayerSounds : MonoBehaviour
             {
                 src.PlayOneShot(Die1);
             }
-            
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
         }
         else
         {
@@ -128,7 +152,10 @@ public class PlayerSounds : MonoBehaviour
             {
                 src.PlayOneShot(Die2);
             }
-            
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
         }
 
         dieSound = !dieSound;
@@ -144,7 +171,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Damage1);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 2:
@@ -153,7 +183,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Damage2);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 3:
@@ -162,7 +195,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Damage3);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 4:
@@ -171,7 +207,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Damage4);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 5:
@@ -180,7 +219,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Damage5);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
             case 6:
@@ -189,7 +231,10 @@ public class PlayerSounds : MonoBehaviour
                     {
                         src.PlayOneShot(Damage6);
                     }
-                    
+                    else
+                    {
+                        Debug.LogError("erro neste Game Object" + gameObject.name);
+                    }
                     break;
                 }
         }

@@ -58,7 +58,10 @@ public class DetectionDoor : MonoBehaviour
             {
                 src.PlayOneShot(PortaFecha);
             }
-                
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
             anim.SetTrigger("fechar");
             collision.gameObject.GetComponent<Animator>().SetBool("Idle", true);
             GameManagerScript.instance.moveScript.enabled = false;
@@ -70,7 +73,10 @@ public class DetectionDoor : MonoBehaviour
             {
                 src.PlayOneShot(PortaAbre);
             }
-                
+            else
+            {
+                Debug.LogError("erro neste Game Object" + gameObject.name);
+            }
             anim.SetTrigger("abrir");
             flag1 = false;
 

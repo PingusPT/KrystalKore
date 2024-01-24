@@ -43,7 +43,10 @@ public class PauseScript : MonoBehaviour
         {
             src.PlayOneShot(PauseIntro);
         }
-        
+        else
+        {
+            Debug.LogError("erro neste Game Object" + gameObject.name);
+        }
         Time.timeScale = (wantToPause) ? 0 : 1;
     }
 
