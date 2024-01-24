@@ -30,12 +30,12 @@ public class Aura : MonoBehaviour
         {
             script.CanGrow();
         }
-        if(collision.gameObject.tag == "CristalVermelho" && hasRedArm)
+        if(collision.gameObject.tag == "CristalVermelho" && hasRedArm && !collision.isTrigger)
         {
-            //script.ChangeColorToRed();
+            
             collision.gameObject.GetComponent<Animator>().SetTrigger("Ativar");
         }
-        if (collision.gameObject.tag == "CristalVermelho")
+        if (collision.gameObject.tag == "CristalVermelho" && !collision.isTrigger)
         {
             script.CanExplodeRed();
         }

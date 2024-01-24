@@ -39,8 +39,11 @@ public class WaterShapeController : MonoBehaviour
     }
     IEnumerator CreateWaves()
     {
+        Debug.Log("Criar Waves");
+
         foreach (Transform child in wavePoints.transform)
         {
+            Debug.Log("+1 Wave");
             StartCoroutine(Destroy(child.gameObject));
         }
         yield return null;
@@ -106,8 +109,8 @@ public class WaterShapeController : MonoBehaviour
             // WaveSpring waveSpring = wavePoint.GetComponent<WaveSpring>();
             // waveSpring.Init(spriteShapeController);
         }
-
-        //Splash(5,1f);
+        Debug.Log("Set Waves");
+        Splash(5,1f);
     }
     private void Smoothen(Spline waterSpline, int index)
     {
@@ -152,7 +155,7 @@ public class WaterShapeController : MonoBehaviour
         int count = springs.Count;
         float[] left_deltas = new float[count];
         float[] right_deltas = new float[count];
-
+        Debug.Log("Update Spings");
         for (int i = 0; i < count; i++)
         {
             if (i > 0)
@@ -175,5 +178,11 @@ public class WaterShapeController : MonoBehaviour
             GameManagerScript.instance.lifeScript.TakeDamage();
         }
     }
-
+    private void Splash(int index, float speed)
+    {
+        if (index >= 0 && index < springs.Count)
+        {
+            springs[index].velocity += speed;
+        }
+    }
 }

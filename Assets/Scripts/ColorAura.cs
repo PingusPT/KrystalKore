@@ -314,7 +314,13 @@ public class ColorAura : MonoBehaviour
         hasRedArm = HasRedArm;
 
         
-        anim.SetBool("HasRedArm", hasRedArm);
+        
+
+        if(hasRedArm)
+        {
+            anim.SetBool("HasRedArm", hasRedArm);
+            anim.Play("GetredArm", 0, 1f);
+        }
         
     }
 

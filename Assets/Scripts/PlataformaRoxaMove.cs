@@ -72,7 +72,7 @@ public class PlataformaRoxaMove : CristalRoxo
             {
                 capsule.enabled = true;
 
-                Debug.Log(Vector3.Distance(transform.position, barrier.transform.position) < distanceStopFromBarrier);
+                
 
                 if (Vector3.Distance(transform.position, barrier.transform.position) < distanceStopFromBarrier)
                 {

@@ -37,7 +37,7 @@ public class PauseScript : MonoBehaviour
 
     public void Pause(bool wantToPause)
     {
-        Debug.Log("Pause");
+        
         MenuPause.SetActive(wantToPause);
         src.PlayOneShot(PauseIntro);
         Time.timeScale = (wantToPause) ? 0 : 1;
@@ -46,6 +46,6 @@ public class PauseScript : MonoBehaviour
     public void SaveWorld()
     {
         GameManagerScript.instance.SavePlayer();
-        Debug.Log("WorldSabed");
+        
     }
 }

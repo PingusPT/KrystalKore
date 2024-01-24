@@ -115,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        Debug.Log("Colodiu com + " + rayGrab.collider);
+        
 
         if (rayHit.distance < 0.7f && rayHit.collider != null)
         {
@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
 
         //-------------------------------------------------------------------------------------------------------------------------
 
-        Debug.Log(movement.normalized + "- isto é");
+        
         if(CanWalk)
         {
             transform.Translate(movement.normalized * Time.deltaTime * speed);
@@ -272,7 +272,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void DroppGrabed()
     {
-        
+        if (GrabedObject)
+        {
+
+
             GrabedObject.transform.SetParent(null);
             stopGrabing = true;
             rgbGrabed.bodyType = RigidbodyType2D.Dynamic;
@@ -280,8 +283,8 @@ public class PlayerMovement : MonoBehaviour
             colliderGrabed.forceSendLayers = GrabAll;
             GrabedObject = null;
             StartCoroutine(AllowGrabimg());
-        
-        
+
+        }
 
     }
 
@@ -319,6 +322,7 @@ public class PlayerMovement : MonoBehaviour
         if(hasLegs)
         {
             CatchLegs();
+            anim.Play("Obterpernas 0", 0, 1f);
         }
         
         gameObject.transform.position = new Vector2(PositionX, PositionY);
@@ -342,13 +346,21 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    bool delayOnGround = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(ground && rayHit.collider != null)
+        if(ground && rayHit.collider != null && !delayOnGround)
         {
+            Invoke("delayGround", 1f); 
+            delayOnGround = true;
             soundScripts.LandingSound();
         }
     }
 
+    private void delayGround()
+    {
+        delayOnGround = false;
+    }
 
 }
