@@ -39,7 +39,11 @@ public class PauseScript : MonoBehaviour
     {
         
         MenuPause.SetActive(wantToPause);
-        src.PlayOneShot(PauseIntro);
+        if (src != null && PauseIntro != null)
+        {
+            src.PlayOneShot(PauseIntro);
+        }
+        
         Time.timeScale = (wantToPause) ? 0 : 1;
     }
 

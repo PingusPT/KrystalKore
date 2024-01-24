@@ -35,7 +35,11 @@ public class PlayerSounds : MonoBehaviour
         {
             if (!PlayerOnWater)
             {
-                src.PlayOneShot(Step1);
+                if (src != null && Step1 != null)
+                {
+                    src.PlayOneShot(Step1);
+                }
+                
             }
                 
         }
@@ -43,7 +47,11 @@ public class PlayerSounds : MonoBehaviour
         {
             if (!PlayerOnWater)
             {
-                src.PlayOneShot(Step2);
+                if (src != null && Step2 != null)
+                {
+                    src.PlayOneShot(Step2);
+                }
+                
             }
         }
 
@@ -52,7 +60,11 @@ public class PlayerSounds : MonoBehaviour
 
     private void DragSound()
     {
-        src.PlayOneShot(Drag);
+        if (src != null && Drag != null)
+        {
+            src.PlayOneShot(Drag);
+        }
+        
     }
 
     
@@ -63,20 +75,29 @@ public class PlayerSounds : MonoBehaviour
         {
             case 1:
                 {
+                    if (src != null && Water1 != null)
+                    {
+                        src.PlayOneShot(Water1);
+                    }
                     
-                    src.PlayOneShot(Water1);
                     break;
                 }
             case 2:
                 {
+                    if (src != null && Water2 != null)
+                    {
+                        src.PlayOneShot(Water2);
+                    }
                     
-                    src.PlayOneShot(Water2);
                     break;
                 }
             case 3:
                 {
+                    if (src != null && Water3 != null)
+                    {
+                        src.PlayOneShot(Water3);
+                    }
                     
-                    src.PlayOneShot(Water3);
                     break;
                 }
         }
@@ -84,20 +105,30 @@ public class PlayerSounds : MonoBehaviour
 
     public void LandingSound()
     {
-        src.PlayOneShot(Landing);
+        if (src != null && Landing != null)
+        {
+            src.PlayOneShot(Landing);
+        }
+        
     }
 
     private void DieSound()
     {
         if(dieSound)
         {
+            if (src != null && Die1 != null)
+            {
+                src.PlayOneShot(Die1);
+            }
             
-            src.PlayOneShot(Die1);
         }
         else
         {
+            if (src != null && Die2 != null)
+            {
+                src.PlayOneShot(Die2);
+            }
             
-            src.PlayOneShot(Die2);
         }
 
         dieSound = !dieSound;
@@ -109,35 +140,56 @@ public class PlayerSounds : MonoBehaviour
         {
             case 1:
                 {
-
-                    src.PlayOneShot(Damage1);
+                    if (src != null && Damage1 != null)
+                    {
+                        src.PlayOneShot(Damage1);
+                    }
+                    
                     break;
                 }
             case 2:
                 {
-
-                    src.PlayOneShot(Damage2);
+                    if (src != null && Damage2 != null)
+                    {
+                        src.PlayOneShot(Damage2);
+                    }
+                    
                     break;
                 }
             case 3:
                 {
-
-                    src.PlayOneShot(Damage3);
+                    if (src != null && Damage3 != null)
+                    {
+                        src.PlayOneShot(Damage3);
+                    }
+                    
                     break;
                 }
             case 4:
                 {
-                    src.PlayOneShot(Damage4);
+                    if (src != null && Damage4 != null)
+                    {
+                        src.PlayOneShot(Damage4);
+                    }
+                    
                     break;
                 }
             case 5:
                 {
-                    src.PlayOneShot(Damage5);
+                    if (src != null && Damage5 != null)
+                    {
+                        src.PlayOneShot(Damage5);
+                    }
+                    
                     break;
                 }
             case 6:
                 {
-                    src.PlayOneShot(Damage6);
+                    if (src != null && Damage6 != null)
+                    {
+                        src.PlayOneShot(Damage6);
+                    }
+                    
                     break;
                 }
         }

@@ -31,7 +31,11 @@ public class Legs : MonoBehaviour
         {
             camAnim.SetFloat("speed", 1);
             circle.enabled = false;
-            src.PlayOneShot(LegsSound);
+            if(src != null && LegsSound != null)
+            {
+                src.PlayOneShot(LegsSound);
+            }
+            
             collision.gameObject.GetComponent<PlayerMovement>().CatchLegs();
             Invoke("delaySetActive", 0.5f);
         }
@@ -39,7 +43,11 @@ public class Legs : MonoBehaviour
         {
             camAnim.SetFloat("speed", 1);
             circle.enabled = false;
-            src.PlayOneShot(ArmSound);
+            if (src != null && ArmSound != null)
+            {
+                src.PlayOneShot(ArmSound);
+            }
+            
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchRedArm();
             //collision.gameObject.GetComponentInChildren<Aura>().CatchRedArm();
             Invoke("delaySetActive", 0.5f);
@@ -48,7 +56,11 @@ public class Legs : MonoBehaviour
         {
             camAnim.SetFloat("speed", 1);
             circle.enabled = false;
-            src.PlayOneShot(PuprleSound);
+            if (src != null && PuprleSound != null)
+            {
+                src.PlayOneShot(PuprleSound);
+            }
+            
             collision.gameObject.GetComponentInChildren<ColorAura>().CatchPuprlePower();
             //collision.gameObject.GetComponentInChildren<PlayerMovement>().CatchPurpleArm();
             Invoke("delaySetActive", 0.5f);

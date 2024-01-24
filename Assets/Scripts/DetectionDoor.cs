@@ -54,7 +54,11 @@ public class DetectionDoor : MonoBehaviour
         {
             
             flag = false;
-            src.PlayOneShot(PortaFecha);
+            if (src != null && PortaFecha != null)
+            {
+                src.PlayOneShot(PortaFecha);
+            }
+                
             anim.SetTrigger("fechar");
             collision.gameObject.GetComponent<Animator>().SetBool("Idle", true);
             GameManagerScript.instance.moveScript.enabled = false;
@@ -62,8 +66,11 @@ public class DetectionDoor : MonoBehaviour
         }
         if(collision.gameObject.tag == "Chave" && flag1)
         {
-
-            src.PlayOneShot(PortaAbre);
+            if (src != null && PortaAbre != null)
+            {
+                src.PlayOneShot(PortaAbre);
+            }
+                
             anim.SetTrigger("abrir");
             flag1 = false;
 

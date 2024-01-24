@@ -26,8 +26,6 @@ public class WaterShapeController : MonoBehaviour
     // How much to spread to the other springs
     public float spread = 0.006f;
 
-    public bool isLava = false;
-
     void Start()
     {
 
@@ -39,11 +37,8 @@ public class WaterShapeController : MonoBehaviour
     }
     IEnumerator CreateWaves()
     {
-        Debug.Log("Criar Waves");
-
         foreach (Transform child in wavePoints.transform)
         {
-            Debug.Log("+1 Wave");
             StartCoroutine(Destroy(child.gameObject));
         }
         yield return null;
@@ -109,8 +104,8 @@ public class WaterShapeController : MonoBehaviour
             // WaveSpring waveSpring = wavePoint.GetComponent<WaveSpring>();
             // waveSpring.Init(spriteShapeController);
         }
-        Debug.Log("Set Waves");
-        Splash(5,1f);
+
+        //Splash(5,1f);
     }
     private void Smoothen(Spline waterSpline, int index)
     {
@@ -155,7 +150,7 @@ public class WaterShapeController : MonoBehaviour
         int count = springs.Count;
         float[] left_deltas = new float[count];
         float[] right_deltas = new float[count];
-        Debug.Log("Update Spings");
+
         for (int i = 0; i < count; i++)
         {
             if (i > 0)
@@ -168,14 +163,6 @@ public class WaterShapeController : MonoBehaviour
                 right_deltas[i] = spread * (springs[i].height - springs[i + 1].height);
                 springs[i + 1].velocity += right_deltas[i];
             }
-        }
-    }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player" && isLava)
-        {
-            GameManagerScript.instance.lifeScript.TakeDamage();
         }
     }
     private void Splash(int index, float speed)

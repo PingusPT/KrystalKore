@@ -39,8 +39,11 @@ public class RedCristal : MonoBehaviour
 
     public void StartExplo()
     {
-
-        src.PlayOneShot(explode);
+        if (src != null && explode != null)
+        {
+            src.PlayOneShot(explode);
+        }
+        
         anim.SetTrigger("Ativar");
     }
 

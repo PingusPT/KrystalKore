@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 
 public class WaterSpring : MonoBehaviour
 {
-    
+
 
     public float velocity = 0;
     public float force = 0;
@@ -19,10 +19,9 @@ public class WaterSpring : MonoBehaviour
     private int waveIndex = 0;
     private List<WaterSpring> springs = new();
     private float resistance = 40f;
-
     public void Init(SpriteShapeController ssc)
     {
-
+        Debug.Log("AAAAAAAAAAAAAAAACOMEAÇA");
         var index = transform.GetSiblingIndex();
         waveIndex = index + 1;
 
@@ -35,6 +34,7 @@ public class WaterSpring : MonoBehaviour
     // adding the dampening to the force
     public void WaveSpringUpdate(float springStiffness, float dampening)
     {
+        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAGUAAAAAAAAAAAAAAAAAAAAaMOVE");
         height = transform.localPosition.y;
         // maximum extension
         var x = height - target_height;
@@ -48,6 +48,8 @@ public class WaterSpring : MonoBehaviour
     }
     public void WavePointUpdate()
     {
+
+        Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAGUAAAAAAAAAAAAAAAAAAAAa");
         if (spriteShapeController != null)
         {
             Spline waterSpline = spriteShapeController.spline;
@@ -58,7 +60,7 @@ public class WaterSpring : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag.Equals("Player"))
+        if (other.gameObject.tag == "Player")
         {
             PlayerMovement fallingObject = other.gameObject.GetComponent<PlayerMovement>();
             Rigidbody2D rb = fallingObject.GetComponent<Rigidbody2D>();
