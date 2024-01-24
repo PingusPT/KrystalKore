@@ -1,7 +1,7 @@
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-#endif
+
 using System.Collections;
 
 [CustomEditor(typeof(MeshRenderer))]
@@ -41,3 +41,4 @@ public class MeshRendererSortingLayersEditor : Editor
 		EditorGUILayout.EndHorizontal();
 	}
 }
+#endif
