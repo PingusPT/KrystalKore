@@ -78,14 +78,11 @@ public class CamChange : MonoBehaviour
             
         }
 
-        if (VoltarAoNormal)
+        if (VoltarAoNormal) // Go back to default 
         {
             
             camLens = animationCurve.Evaluate(TimeCurve);
             TimeCurve -= Time.deltaTime;
-
-            // 13.5
-            //virtCam.m_Lens.OrthographicSize = DefaultCamLens * ( percentageGrow + camLens);//1f
 
             virtCam.m_Lens.OrthographicSize = (!ZoomOut) ? DefaultCamLens * ((camLens * 0.6f) + 0.4f) : DefaultCamLens * (1 + camLens);
 
@@ -93,7 +90,7 @@ public class CamChange : MonoBehaviour
             {
                 TimeCurve = 0;
                 VoltarAoNormal = false;
-                //virtCam.m_Lens.OrthographicSize = DefaultCamLens;
+                
             }
         }
         

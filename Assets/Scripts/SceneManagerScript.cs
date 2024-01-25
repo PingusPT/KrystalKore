@@ -34,7 +34,9 @@ public class SceneManagerScript : MonoBehaviour
     }
     public void LoadMenuScene()
     {
+        
         SceneManager.LoadScene(0);
+        
     }
 
     public void LoadNewGameScene()

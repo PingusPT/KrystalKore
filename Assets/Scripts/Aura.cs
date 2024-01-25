@@ -8,7 +8,7 @@ public class Aura : MonoBehaviour
     ColorAura script;
 
     bool isPlayerCanGrow = true;
-    bool hasRedArm = false;
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -20,20 +20,16 @@ public class Aura : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "CristalRoxo" && isPlayerCanGrow)
+        if (collision.gameObject.tag == "CristalRoxo")
         {
 
-            script.CanGrowPurple();
+            script.CanGrowPurple(); 
         }
         if (collision.gameObject.tag == "CristalAzul" || collision.gameObject.tag == "CristalAzulElevador" || collision.gameObject.tag == "CristalAzulRoldana")
         {
             script.CanGrow();
         }
-        if(collision.gameObject.tag == "CristalVermelho" && hasRedArm && !collision.isTrigger)
-        {
-            
-            collision.gameObject.GetComponent<Animator>().SetTrigger("Ativar");
-        }
+        
         if (collision.gameObject.tag == "CristalVermelho" && !collision.isTrigger)
         {
             script.CanExplodeRed();
@@ -58,8 +54,5 @@ public class Aura : MonoBehaviour
         }
     }
 
-    public void CatchRedArm()
-    {
-        hasRedArm = true;
-    }
+   
 }

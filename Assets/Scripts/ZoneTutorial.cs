@@ -6,9 +6,9 @@ public class ZoneTutorial : MonoBehaviour
 
     [SerializeField] float transitionMusicDurantion = 1f;
     
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision )
     {
-        if(collision.gameObject.tag == "Player" && gameObject.tag == "TutorialZone")
+        if(collision.gameObject.tag == "Player" && gameObject.tag == "TutorialZone" && WorldMusicScript.intance != null)
         {
             
             WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.TutorialMusicInicio, transitionMusicDurantion);
@@ -36,11 +36,11 @@ public class ZoneTutorial : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && WorldMusicScript.intance != null)
         {
-
-            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.GeneralMusic, transitionMusicDurantion);
             
+            WorldMusicScript.intance.ChangeTrack(WorldMusicScript.intance.GeneralMusic, transitionMusicDurantion);
+
         }
     }
 }

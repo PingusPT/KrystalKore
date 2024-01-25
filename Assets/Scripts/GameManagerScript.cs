@@ -20,7 +20,7 @@ public class GameManagerScript : MonoBehaviour
     public ColorAura auraScript;
 
     GameObject[] wallsDestroid; 
-    bool[] breakedWall = { true, true, true, true, true };
+    bool[] breakedWall = { true, true, true, true, true }; // After Upgrade to a scalable array :)
 
     bool PlayerSeted = false;
     
@@ -37,7 +37,7 @@ public class GameManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = 100;
+        Application.targetFrameRate = 100; // frame Rate
 
         if(!instance)
         {
@@ -48,23 +48,18 @@ public class GameManagerScript : MonoBehaviour
             Destroy(gameObject);
         }
 
-        path = Application.persistentDataPath + "/player.brocode";
+        path = Application.persistentDataPath + "/player.brocode"; // save path
         time = timeBetweenSaves;
         DontDestroyOnLoad(gameObject);
-        //SampleScene
+        
     }
 
-    private void Awake()
-    {
-
-       
-
-    }
+   
 
     // Update is called once per frame
     void Update()
     {
-        if (SceneManagerScript.instance.ActualSceneName() == "Joao")// Trocar para SampleScene dps TA A FAZER NO UPDATE E TA SEMPRE A IR BUSCAR
+        if (SceneManagerScript.instance.ActualSceneName() == "Joao") // Sim a scene tem o meu nome :)
         {
             time -= Time.deltaTime;
            
@@ -72,14 +67,14 @@ public class GameManagerScript : MonoBehaviour
             if(time < 0)
             {
                 
-                time = timeBetweenSaves;
+                time = timeBetweenSaves; //Automatic save periodic tive
                 SavePlayer();
             }
 
             if(!PlayerSeted)
             {
                 
-                GetComponents();
+                GetComponents(); // Get components from Scene
                 
             }
            
@@ -97,13 +92,13 @@ public class GameManagerScript : MonoBehaviour
 
     public void SavePlayer()
     {
-        SaveScript.instance.SaveBinaryPlayer(moveScript, lifeScript, auraScript);
-        SaveScript.instance.SaveBinaryWorld(breakedWall);
+        SaveScript.instance.SaveBinaryPlayer(moveScript, lifeScript, auraScript); // Save Player
+        SaveScript.instance.SaveBinaryWorld(breakedWall); // Save World
     }
 
-    public void SetPlayer(PlayerData data)
+    public void SetPlayer(PlayerData data) // Set Player from the Save
     {
-        // ta a tentar dar Set sem estar na scene correta e ainda nao tem os components
+        
         moveScript.SetPlayerMovementPropreties(data.legs, data.position[0], data.position[1]);
         lifeScript.SetLifeManagerProperties(data.health, data.lastSpawnPoint[0], data.lastSpawnPoint[1]);
         auraScript.SetColorAuraProperties(data.RedArm, data.PurplePower);
@@ -123,7 +118,7 @@ public class GameManagerScript : MonoBehaviour
         
     }
 
-    public void SetWorld(bool[] data)
+    public void SetWorld(bool[] data) // Sets the World from save
     {
         int inv = wallsDestroid.Length - 1;
 
@@ -136,18 +131,13 @@ public class GameManagerScript : MonoBehaviour
         
     }
     
-    public bool isPlayerSeted()
+    public bool isPlayerSeted() // if the player was seted 
     {
         return PlayerSeted;
     }
 
-    public PlayerMovement ReturnPlayer()
-    {
-        return moveScript;
-    }
-
-
-    public void GetComponents()
+ 
+    public void GetComponents() // Gets the Components from the Scene, time.scale = 1, if saveExiste and new game wanted set player 
     {
         PlayerSeted = true;
         EndGame = GameObject.FindGameObjectWithTag("EndGame");
@@ -162,7 +152,7 @@ public class GameManagerScript : MonoBehaviour
         lifeScript = Player.GetComponent<LifeManager>();
         moveScript = Player.GetComponent<PlayerMovement>();
         auraScript = Player.GetComponentInChildren<ColorAura>();
-        //auraScript = Player.GetComponent<ColorAura>(); //// NAO ESTAS A PEGAR O SCRIPT DO CHILD tens de pegar do child  
+        
 
         EndGame.SetActive(true);
         Time.timeScale = 1;
@@ -177,7 +167,7 @@ public class GameManagerScript : MonoBehaviour
         
     }
 
-    public void PlayerWantNewGame(bool setIfIsNewGame)
+    public void PlayerWantNewGame(bool setIfIsNewGame) // new game, delete path
     {
         newGame = setIfIsNewGame;
 
@@ -187,7 +177,7 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    public void ObjectDestroid(GameObject objectDestroid)
+    public void ObjectDestroid(GameObject objectDestroid) // Check wall destroid
     {
 
         int inv = wallsDestroid.Length - 1;
@@ -203,12 +193,12 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    public void PlayerCach(GameObject player)
+    public void PlayerCach(GameObject player) // ISTO NAO ERA PARA ESTAR AQUI LEIA A Comment de baixo
     {
         StartCoroutine(PlayerLegs(player));
     }
 
-    public IEnumerator PlayerLegs(GameObject player)
+    public IEnumerator PlayerLegs(GameObject player) // isto ta aqui pq a ana n quis arranjar uma animação, a escala dela, tava toda bugada, eu n tenho de a aturar ent tive de mudar a scale by code, for the sake of the game
     {
         Vector2 scale = player.transform.localScale;
         moveScript.enabled = false;
@@ -220,12 +210,10 @@ public class GameManagerScript : MonoBehaviour
         moveScript.enabled = true;
     }
 
-    public void DoEndAnimation()
+    public void DoEndAnimation() // End game Animation, Credits etc.
     {
         endGameAnim.SetTrigger("End");
     }
 
-   
 
-    
 }

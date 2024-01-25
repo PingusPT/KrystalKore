@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+
+    static public MenuScript intance;
+
     AudioSource src;
     [SerializeField] AudioClip MainMusic, MainMusicLoop;
 
@@ -14,10 +17,33 @@ public class MenuScript : MonoBehaviour
     VideoPlayer video;
 
     bool flag = true;
+    bool flag2 = true;
     public float fadeSpeed =0.5f;
+    float elapsedTime = 0f;
 
     // Start is called before the first frame update
     void Start()
+    {
+        Time.timeScale = 1f;
+
+        if (!intance)
+        {
+            intance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
+        StartObject();
+    }
+
+    private void Awake()
+    {
+        StartObject();
+    }
+
+    public void StartObject()
     {
         src = gameObject.GetComponent<AudioSource>();
         video = gameObject.GetComponent<VideoPlayer>();
@@ -27,7 +53,6 @@ public class MenuScript : MonoBehaviour
         video.Pause();
 
         video.loopPointReached += OnVideoEnd;
-
     }
 
     // Update is called once per frame
@@ -41,11 +66,11 @@ public class MenuScript : MonoBehaviour
             src.Play();
         }
 
-        if(SceneManagerScript.instance.NeedNewGame())
+        if(SceneManagerScript.instance.NeedNewGame() && flag2)
         {
             src.Stop();
             video.Play();
-
+            flag2 = false;
             StartCoroutine(FadeOut(Logo));
             StartCoroutine(FadeOut(Play));
             StartCoroutine(FadeOut(Quit));
@@ -65,13 +90,15 @@ public class MenuScript : MonoBehaviour
     }
     private IEnumerator FadeOut(Image targetImage)
     {
+        
+        Debug.Log("ALABASTA " + targetImage);
         Color originalColor = targetImage.color;
-        float elapsedTime = 0f;
+        
 
         while (elapsedTime < fadeSpeed)
         {
-            
-            targetImage.color = Color.Lerp(originalColor, new Color(originalColor.r, originalColor.g, originalColor.b, 0f), elapsedTime / fadeSpeed);
+            Debug.Log(elapsedTime +  " ! " + fadeSpeed);
+            targetImage.color = Color.Lerp(originalColor, Color.clear, elapsedTime / fadeSpeed);
 
             elapsedTime += Time.deltaTime;
             yield return null;

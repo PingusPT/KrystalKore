@@ -22,7 +22,7 @@ public class LifeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LastCheckPoint = gameObject.transform.position;
+        LastCheckPoint = gameObject.transform.position; // start check point
         timeInvencible = DefaultTimeInvencible;
         life = vidas.Length - 1;
         
@@ -31,15 +31,15 @@ public class LifeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManagerScript.instance.isPlayerSeted() && !player)
+        if(GameManagerScript.instance.isPlayerSeted() && !player) // get player
         {
-            player = GameManagerScript.instance.ReturnPlayer();
+            player = GameManagerScript.instance.moveScript;
             anim = player.GetComponent<Animator>();
         }
         
 
 
-        if (invencible)
+        if (invencible)// invecible delay 
         {
             timeInvencible -= Time.deltaTime;
 
@@ -52,7 +52,7 @@ public class LifeManager : MonoBehaviour
        
     }
 
-    public void TakeDamage()
+    public void TakeDamage()// take damage 
     {
         
         if(!invencible)
@@ -97,7 +97,7 @@ public class LifeManager : MonoBehaviour
 
     }
 
-    public void UpdateCheckPoint(Vector2 check)
+    public void UpdateCheckPoint(Vector2 check) // update check point
     {
         if (check != LastCheckPoint)
         {
@@ -106,13 +106,13 @@ public class LifeManager : MonoBehaviour
 
     }
 
-    private void Respawn()
+    private void Respawn() 
     {
         gameObject.transform.position = LastCheckPoint;
         ResetLifes();
     }
 
-    private void ResetLifes()
+    private void ResetLifes() 
     {
         life = vidas.Length - 1;
 
@@ -122,27 +122,9 @@ public class LifeManager : MonoBehaviour
         }
     }
 
-    public void SetLifes()
+    public void SetLifes()// Set lifes from the save
     {
-        /*
-        if(life <= 3)
-        {
-            vidas[3].SetActive(false);
-        }
-
-        if (life < 2)
-        {
-            vidas[2].SetActive(false);
-        }
-        if (life < 1)
-        {
-            vidas[1].SetActive(false);
-        }
-        if (life < 0)
-        {
-            vidas[0].SetActive(false);
-        }
-        */
+        
         for (int i = 0; i <= vidas.Length - 1; i++)
         {
             vidas[i].SetActive(life >= i);
@@ -150,7 +132,7 @@ public class LifeManager : MonoBehaviour
 
     }
 
-    public void SetLifeManagerProperties(int Life, float SpawnX, float SpawnY)
+    public void SetLifeManagerProperties(int Life, float SpawnX, float SpawnY)// get heath from the save and set position
     {
         life = Life;
 

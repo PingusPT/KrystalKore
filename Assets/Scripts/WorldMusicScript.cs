@@ -13,10 +13,14 @@ public class WorldMusicScript : MonoBehaviour
 
     [Range(0f, 2f)]
     public float targetVolume = 1;
-
-    void Start()
+    private void Awake()
     {
         intance = this;
+        
+    }
+    void Start()
+    {
+       
         src = gameObject.GetComponent<AudioSource>();
         src.clip = TutorialMusicInicio;
         src.volume = 1f;
